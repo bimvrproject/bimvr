@@ -1,0 +1,40 @@
+HELP.md
+target/
+/src/main/webapp/project/**
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/java/**
+!**/src/main/resources/**
+!**/src/main/webapp/config/**
+!**/src/main/webapp/css/**
+!**/src/main/webapp/fonts/**
+!**/src/main/webapp/img/**
+!**/src/main/webapp/js/**
+
+!**/src/test/**
+!**/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+
+### VS Code ###
+.vscode/

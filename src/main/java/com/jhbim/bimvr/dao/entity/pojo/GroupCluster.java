@@ -1,0 +1,84 @@
+package com.jhbim.bimvr.dao.entity.pojo;
+
+import java.io.Serializable;
+import java.util.Date;
+
+public class GroupCluster implements Serializable {
+    private Integer id;
+
+    private Integer roleId;
+
+    private Integer usergroupId;
+
+    private Integer userId;
+
+    private Integer level;
+
+    private Date createtime;
+
+    private static final long serialVersionUID = 1L;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
+    }
+
+    public Integer getUsergroupId() {
+        return usergroupId;
+    }
+
+    public void setUsergroupId(Integer usergroupId) {
+        this.usergroupId = usergroupId;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
+    public Date getCreatetime() {
+        return createtime;
+    }
+
+    public void setCreatetime(Date createtime) {
+        this.createtime = createtime;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", id=").append(id);
+        sb.append(", roleId=").append(roleId);
+        sb.append(", usergroupId=").append(usergroupId);
+        sb.append(", userId=").append(userId);
+        sb.append(", level=").append(level);
+        sb.append(", createtime=").append(createtime);
+        sb.append("]");
+        return sb.toString();
+    }
+}

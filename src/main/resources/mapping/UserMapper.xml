@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jhbim.bimvr.dao.mapper.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.jhbim.bimvr.dao.entity.pojo.User" >
+    <id column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="role_id" property="roleId" jdbcType="INTEGER" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="updata_time" property="updataTime" jdbcType="TIMESTAMP" />
+    <result column="login_flag" property="loginFlag" jdbcType="INTEGER" />
+    <result column="pricture" property="pricture" jdbcType="VARCHAR" />
+    <result column="posotion" property="posotion" jdbcType="VARCHAR" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="companyname" property="companyname" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    user_id, role_id, user_name, password, phone, create_time, updata_time, login_flag, 
+    pricture, posotion, remarks, companyname, state
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where phone =#{phone,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from user
+    where phone =#{phone,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jhbim.bimvr.dao.entity.pojo.User" >
+    insert into user (user_id, role_id, user_name, 
+      password, phone, create_time, 
+      updata_time, login_flag, pricture, 
+      posotion, remarks, companyname, 
+      state)
+    values (#{userId,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updataTime,jdbcType=TIMESTAMP}, #{loginFlag,jdbcType=INTEGER}, #{pricture,jdbcType=VARCHAR}, 
+      #{posotion,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, #{companyname,jdbcType=VARCHAR}, 
+      #{state,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jhbim.bimvr.dao.entity.pojo.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="roleId != null" >
+        role_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updataTime != null" >
+        updata_time,
+      </if>
+      <if test="loginFlag != null" >
+        login_flag,
+      </if>
+      <if test="pricture != null" >
+        pricture,
+      </if>
+      <if test="posotion != null" >
+        posotion,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="companyname != null" >
+        companyname,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="roleId != null" >
+        #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updataTime != null" >
+        #{updataTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loginFlag != null" >
+        #{loginFlag,jdbcType=INTEGER},
+      </if>
+      <if test="pricture != null" >
+        #{pricture,jdbcType=VARCHAR},
+      </if>
+      <if test="posotion != null" >
+        #{posotion,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="companyname != null" >
+        #{companyname,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jhbim.bimvr.dao.entity.pojo.User" >
+    update user
+    <set >
+      <if test="roleId != null" >
+        role_id = #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updataTime != null" >
+        updata_time = #{updataTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loginFlag != null" >
+        login_flag = #{loginFlag,jdbcType=INTEGER},
+      </if>
+      <if test="pricture != null" >
+        pricture = #{pricture,jdbcType=VARCHAR},
+      </if>
+      <if test="posotion != null" >
+        posotion = #{posotion,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="companyname != null" >
+        companyname = #{companyname,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jhbim.bimvr.dao.entity.pojo.User" >
+    update user
+    set role_id = #{roleId,jdbcType=INTEGER},
+      user_name = #{userName,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      updata_time = #{updataTime,jdbcType=TIMESTAMP},
+      login_flag = #{loginFlag,jdbcType=INTEGER},
+      pricture = #{pricture,jdbcType=VARCHAR},
+      posotion = #{posotion,jdbcType=VARCHAR},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      companyname = #{companyname,jdbcType=VARCHAR},
+      state = #{state,jdbcType=INTEGER}
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <!--修改登录状态-->
+  <update id="updatestate" parameterType="com.jhbim.bimvr.dao.entity.pojo.User">
+    update user set state = #{state,jdbcType=INTEGER} where phone = #{phone,jdbcType=VARCHAR}
+  </update>
+  <!--修改密码-->
+  <update id="updatePwd" parameterType="com.jhbim.bimvr.dao.entity.pojo.User" >
+    update user
+    set password = #{password,jdbcType=VARCHAR}
+    where phone = #{phone,jdbcType=VARCHAR}
+  </update>
+  <!--修改用户昵称-->
+  <update id="updatausername"  parameterType="java.lang.String">
+    update user
+      set  user_name = #{userName,jdbcType=VARCHAR}
+      where phone = #{phone,jdbcType=VARCHAR}
+  </update>
+  <!--修改所属公司-->
+  <update id="updatacompanyname"  parameterType="java.lang.String">
+    update user
+      set  companyname =  #{companyname,jdbcType=VARCHAR}
+      where phone = #{phone,jdbcType=VARCHAR}
+  </update>
+  <!--修改职位-->
+  <update id="updataposition"  parameterType="java.lang.String">
+    update user
+      set   posotion = #{posotion,jdbcType=VARCHAR}
+      where phone = #{phone,jdbcType=VARCHAR}
+  </update>
+  <!--修改备注-->
+  <update id="updataremarks"  parameterType="java.lang.String">
+    update user
+      set   remarks =  #{remarks,jdbcType=VARCHAR}
+      where phone = #{phone,jdbcType=VARCHAR}
+  </update>
+</mapper>
