@@ -46,7 +46,7 @@ public class DictionariesController {
      * @return
      */
     @RequestMapping("/findByPaging")
-    public Map<String,Object> findByPaging(Integer parentid, Integer pageNum){
+    public Result findByPaging(Integer parentid, Integer pageNum){
         //默认一页6张
         Integer pageSize=6;
         Page<Dictionaries> page= PageHelper.offsetPage(pageNum,pageSize);
@@ -55,6 +55,6 @@ public class DictionariesController {
         map.put("data",list);
         map.put("pages",page.getPages());
         map.put("total",page.getTotal());
-        return map;
+        return new Result(ResultStatusCode.SUCCESS,map);
     }
 }
