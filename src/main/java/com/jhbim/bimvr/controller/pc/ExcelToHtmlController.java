@@ -4,7 +4,6 @@ import com.jhbim.bimvr.dao.entity.vo.Result;
 import com.jhbim.bimvr.dao.mapper.MeterialMapper;
 import com.jhbim.bimvr.system.enums.ResultStatusCode;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,8 +21,11 @@ public class ExcelToHtmlController {
      * @param projectId
      * @return
      */
-    @RequestMapping("/getprojectid/{projectId}")
-    public Result getprojectid(@PathVariable Integer projectId){
+    @RequestMapping("/getprojectid")
+    public Result getprojectid(String projectId){
+        if(projectId==null || projectId == "" || projectId.isEmpty()){
+            return new Result(ResultStatusCode.BAD_REQUEST);
+        }
         return new Result(ResultStatusCode.OK,meterialMapper.getprojectid(projectId));
     }
 
@@ -51,7 +53,10 @@ public class ExcelToHtmlController {
      */
     @RequestMapping("/updateexceltype")
     public Result updateexceltype(Integer[] ids){
+        if(ids==null || ids.length==0){
+            return new Result(ResultStatusCode.BAD_REQUEST);
+        }
         meterialMapper.batchUpdate(ids);
-        return new Result(ResultStatusCode.OK,"修改成功");
+        return new Result(ResultStatusCode.OK,"清单type修改成功");
     }
 }

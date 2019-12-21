@@ -138,9 +138,15 @@
       type = #{type,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="getprojectdrawing" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+  <!--查询该项目下的图纸-->
+  <select id="getprojectdrawing" resultMap="BaseResultMap" parameterType="java.lang.String">
     select
     <include refid="Base_Column_List" />
-    from drawing where  project_id = #{projectId,jdbcType=VARCHAR} order by id desc
+    from drawing where  project_id = #{projectId,jdbcType=VARCHAR} and type=0 order by id desc
   </select>
+  <!--拖拽图纸批量修改type-->
+  <update id="drawingbatchUpdate" parameterType="java.lang.Integer">
+    update drawing set type = 1 where id in
+    <foreach collection="array" item="id" open="(" separator="," close=")">#{id}</foreach>
+  </update>
 </mapper>

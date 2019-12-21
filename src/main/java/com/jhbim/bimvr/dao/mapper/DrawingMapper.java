@@ -22,5 +22,12 @@ public interface DrawingMapper {
      * @param projectid
      * @return
      */
-    List<Drawing> getprojectdrawing(Integer projectid);
+    List<Drawing> getprojectdrawing(String projectid);
+
+    /**
+     * 拖拽图纸批量修改type
+     * @param ids
+     * @return
+     */
+    int drawingbatchUpdate(Integer[] ids);
 }

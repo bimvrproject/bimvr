@@ -22,7 +22,7 @@ public interface MeterialMapper {
      * @param projectid
      * @return
      */
-    List<Meterial> getprojectid(Integer projectid);
+    List<Meterial> getprojectid(String projectid);
 
     /**
      * 拖拽清单批量修改type

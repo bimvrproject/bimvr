@@ -139,10 +139,10 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <!--根据项目id展示相对应的excel清单-->
-  <select id="getprojectid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+  <select id="getprojectid" resultMap="BaseResultMap" parameterType="java.lang.String">
     select
     <include refid="Base_Column_List"/>
-    from meterial where project_id = #{projectId,jdbcType=VARCHAR} order by id desc
+    from meterial where project_id = #{projectId,jdbcType=VARCHAR} and type=0 order by id desc
   </select>
     <!--拖拽清单批量修改type-->
     <update id="batchUpdate" parameterType="java.lang.Integer">
