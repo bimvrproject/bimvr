@@ -23,4 +23,11 @@ public interface MeterialMapper {
      * @return
      */
     List<Meterial> getprojectid(Integer projectid);
+
+    /**
+     * 拖拽清单批量修改type
+     * @param ids
+     * @return
+     */
+    int batchUpdate(Integer[] ids);
 }

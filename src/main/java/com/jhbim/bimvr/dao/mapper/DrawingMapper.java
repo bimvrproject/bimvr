@@ -2,6 +2,8 @@ package com.jhbim.bimvr.dao.mapper;
 
 import com.jhbim.bimvr.dao.entity.pojo.Drawing;
 
+import java.util.List;
+
 public interface DrawingMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +16,11 @@ public interface DrawingMapper {
     int updateByPrimaryKeySelective(Drawing record);
 
     int updateByPrimaryKey(Drawing record);
+
+    /**
+     * 查询该项目下的图纸
+     * @param projectid
+     * @return
+     */
+    List<Drawing> getprojectdrawing(Integer projectid);
 }

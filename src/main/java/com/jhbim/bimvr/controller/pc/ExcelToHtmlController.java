@@ -41,7 +41,17 @@ public class ExcelToHtmlController {
 //        return  new Result(ResultStatusCode.OK,url);
         String address="https://view.officeapps.live.com/op/view.aspx?src=http://21z9804m0.zicp.vip:8080/";
         String url=address+addressurl;
-        System.out.println(url);
         return new Result(ResultStatusCode.OK,url);
+    }
+
+    /**
+     * 拖拽清单批量修改type
+     * @param ids
+     * @return
+     */
+    @RequestMapping("/updateexceltype")
+    public Result updateexceltype(Integer[] ids){
+        meterialMapper.batchUpdate(ids);
+        return new Result(ResultStatusCode.OK,"修改成功");
     }
 }
