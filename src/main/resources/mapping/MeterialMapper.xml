@@ -9,9 +9,11 @@
     <result column="url" property="url" jdbcType="VARCHAR" />
     <result column="meterial_name" property="meterialName" jdbcType="VARCHAR" />
     <result column="mtime" property="mtime" jdbcType="TIMESTAMP" />
+    <result column="foldername" property="foldername" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, model_id, project_id, user_id, url, meterial_name, mtime
+    id, model_id, project_id, user_id, url, meterial_name, mtime, foldername, type
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -26,10 +28,12 @@
   <insert id="insert" parameterType="com.jhbim.bimvr.dao.entity.pojo.Meterial" >
     insert into meterial (id, model_id, project_id, 
       user_id, url, meterial_name, 
-      mtime)
+      mtime, foldername, type
+      )
     values (#{id,jdbcType=INTEGER}, #{modelId,jdbcType=INTEGER}, #{projectId,jdbcType=VARCHAR}, 
       #{userId,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{meterialName,jdbcType=VARCHAR}, 
-      #{mtime,jdbcType=TIMESTAMP})
+      #{mtime,jdbcType=TIMESTAMP}, #{foldername,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.jhbim.bimvr.dao.entity.pojo.Meterial" >
     insert into meterial
@@ -55,6 +59,12 @@
       <if test="mtime != null" >
         mtime,
       </if>
+      <if test="foldername != null" >
+        foldername,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -77,6 +87,12 @@
       </if>
       <if test="mtime != null" >
         #{mtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="foldername != null" >
+        #{foldername,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -101,6 +117,12 @@
       <if test="mtime != null" >
         mtime = #{mtime,jdbcType=TIMESTAMP},
       </if>
+      <if test="foldername != null" >
+        foldername = #{foldername,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -111,9 +133,12 @@
       user_id = #{userId,jdbcType=INTEGER},
       url = #{url,jdbcType=VARCHAR},
       meterial_name = #{meterialName,jdbcType=VARCHAR},
-      mtime = #{mtime,jdbcType=TIMESTAMP}
+      mtime = #{mtime,jdbcType=TIMESTAMP},
+      foldername = #{foldername,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <!--根据项目id展示相对应的excel清单-->
   <select id="getprojectid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
     select
     <include refid="Base_Column_List"/>

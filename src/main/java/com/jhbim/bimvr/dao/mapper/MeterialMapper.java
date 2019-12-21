@@ -18,7 +18,7 @@ public interface MeterialMapper {
     int updateByPrimaryKey(Meterial record);
 
     /**
-     * 根据项目id展示相对应的excel表格
+     * 根据项目id展示相对应的excel清单表格
      * @param projectid
      * @return
      */

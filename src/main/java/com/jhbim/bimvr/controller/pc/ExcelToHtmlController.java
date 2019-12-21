@@ -3,7 +3,6 @@ package com.jhbim.bimvr.controller.pc;
 import com.jhbim.bimvr.dao.entity.vo.Result;
 import com.jhbim.bimvr.dao.mapper.MeterialMapper;
 import com.jhbim.bimvr.system.enums.ResultStatusCode;
-import com.jhbim.bimvr.utils.ExcelToHtml;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,10 +34,14 @@ public class ExcelToHtmlController {
      */
     @GetMapping("/exceltohtml")
     public Result exceltohtml(String addressurl){
-        ExcelToHtml excelToHtml=new ExcelToHtml();
-        String convertByFile = excelToHtml.SubmitPost("http://dcs.yozosoft.com:80/upload", "C:/ftp/"+addressurl, "0");
-        System.out.println(convertByFile);
-        String url= String.valueOf(convertByFile.subSequence(21,86));
-        return  new Result(ResultStatusCode.OK,url);
+//        ExcelToHtml excelToHtml=new ExcelToHtml();
+//        String convertByFile = excelToHtml.SubmitPost("http://dcs.yozosoft.com:80/upload", "C:/ftp/"+addressurl, "0");
+//        System.out.println(convertByFile);
+//        String url= String.valueOf(convertByFile.subSequence(21,86));
+//        return  new Result(ResultStatusCode.OK,url);
+        String address="https://view.officeapps.live.com/op/view.aspx?src=http://21z9804m0.zicp.vip:8080/";
+        String url=address+addressurl;
+        System.out.println(url);
+        return new Result(ResultStatusCode.OK,url);
     }
 }

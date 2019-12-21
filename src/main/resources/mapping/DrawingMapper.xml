@@ -9,9 +9,11 @@
     <result column="url" property="url" jdbcType="VARCHAR" />
     <result column="draw_name" property="drawName" jdbcType="VARCHAR" />
     <result column="dtime" property="dtime" jdbcType="TIMESTAMP" />
+    <result column="foldername" property="foldername" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, model_id, project_id, user_id, url, draw_name, dtime
+    id, model_id, project_id, user_id, url, draw_name, dtime, foldername, type
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -26,10 +28,12 @@
   <insert id="insert" parameterType="com.jhbim.bimvr.dao.entity.pojo.Drawing" >
     insert into drawing (id, model_id, project_id, 
       user_id, url, draw_name, 
-      dtime)
+      dtime, foldername, type
+      )
     values (#{id,jdbcType=INTEGER}, #{modelId,jdbcType=INTEGER}, #{projectId,jdbcType=VARCHAR}, 
       #{userId,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{drawName,jdbcType=VARCHAR}, 
-      #{dtime,jdbcType=TIMESTAMP})
+      #{dtime,jdbcType=TIMESTAMP}, #{foldername,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.jhbim.bimvr.dao.entity.pojo.Drawing" >
     insert into drawing
@@ -55,6 +59,12 @@
       <if test="dtime != null" >
         dtime,
       </if>
+      <if test="foldername != null" >
+        foldername,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -77,6 +87,12 @@
       </if>
       <if test="dtime != null" >
         #{dtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="foldername != null" >
+        #{foldername,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -101,6 +117,12 @@
       <if test="dtime != null" >
         dtime = #{dtime,jdbcType=TIMESTAMP},
       </if>
+      <if test="foldername != null" >
+        foldername = #{foldername,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -111,7 +133,9 @@
       user_id = #{userId,jdbcType=INTEGER},
       url = #{url,jdbcType=VARCHAR},
       draw_name = #{drawName,jdbcType=VARCHAR},
-      dtime = #{dtime,jdbcType=TIMESTAMP}
+      dtime = #{dtime,jdbcType=TIMESTAMP},
+      foldername = #{foldername,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

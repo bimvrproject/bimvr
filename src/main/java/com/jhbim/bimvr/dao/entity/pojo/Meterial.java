@@ -18,6 +18,10 @@ public class Meterial implements Serializable {
 
     private Date mtime;
 
+    private String foldername;
+
+    private Integer type;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -76,6 +80,22 @@ public class Meterial implements Serializable {
         this.mtime = mtime;
     }
 
+    public String getFoldername() {
+        return foldername;
+    }
+
+    public void setFoldername(String foldername) {
+        this.foldername = foldername == null ? null : foldername.trim();
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -89,6 +109,8 @@ public class Meterial implements Serializable {
         sb.append(", url=").append(url);
         sb.append(", meterialName=").append(meterialName);
         sb.append(", mtime=").append(mtime);
+        sb.append(", foldername=").append(foldername);
+        sb.append(", type=").append(type);
         sb.append("]");
         return sb.toString();
     }

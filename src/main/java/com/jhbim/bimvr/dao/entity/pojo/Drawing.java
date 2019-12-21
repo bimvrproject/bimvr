@@ -18,6 +18,10 @@ public class Drawing implements Serializable {
 
     private Date dtime;
 
+    private String foldername;
+
+    private Integer type;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -76,6 +80,22 @@ public class Drawing implements Serializable {
         this.dtime = dtime;
     }
 
+    public String getFoldername() {
+        return foldername;
+    }
+
+    public void setFoldername(String foldername) {
+        this.foldername = foldername == null ? null : foldername.trim();
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -89,6 +109,8 @@ public class Drawing implements Serializable {
         sb.append(", url=").append(url);
         sb.append(", drawName=").append(drawName);
         sb.append(", dtime=").append(dtime);
+        sb.append(", foldername=").append(foldername);
+        sb.append(", type=").append(type);
         sb.append("]");
         return sb.toString();
     }
