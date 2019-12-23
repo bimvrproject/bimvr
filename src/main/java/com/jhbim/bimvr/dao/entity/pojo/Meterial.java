@@ -16,7 +16,7 @@ public class Meterial implements Serializable {
 
     private String meterialName;
 
-    private Date mtime;
+    private String mtime;
 
     private String foldername;
 
@@ -72,11 +72,11 @@ public class Meterial implements Serializable {
         this.meterialName = meterialName == null ? null : meterialName.trim();
     }
 
-    public Date getMtime() {
+    public String getMtime() {
         return mtime;
     }
 
-    public void setMtime(Date mtime) {
+    public void setMtime(String mtime) {
         this.mtime = mtime;
     }
 

@@ -21,9 +21,17 @@ public interface MeterialFolderMapper {
 
     /**
      * 根据日期和文件夹名称查询文件夹下面的文件
-     * @param mftime
-     * @param foldername
+     * @param mftime  时间
+     * @param foldername    文件夹
      * @return
      */
-    List<MeterialFolder> listAll(@Param("mftime") Date mftime, @Param("foldername") String foldername);
+    List<MeterialFolder> listAll(@Param("mftime") String mftime, @Param("foldername") String foldername);
+
+    /**
+     * 根据创建时间修改文件夹的名称
+     * @param foldername 文件夹
+     * @param mftime    时间
+     * @return
+     */
+    int updatefolder(@Param("foldername")String foldername,@Param("mftime")String mftime);
 }

@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -26,8 +24,8 @@ public class MeterialFolderController {
 
     /**
      * 根据日期和文件夹名称查询文件夹下面的文件
-     * @param mftime
-     * @param foldername
+     * @param mftime 时间
+     * @param foldername    文件夹
      * @return
      * @throws ParseException
      */
@@ -36,14 +34,29 @@ public class MeterialFolderController {
         if(mftime.isEmpty() || foldername.isEmpty()){
             return new Result(ResultStatusCode.BAD_REQUEST);
         }
-        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date date=sdf.parse(mftime);
-        List<MeterialFolder> mflist=meterialFolderMapper.listAll(date,foldername);
+        List<MeterialFolder> mflist=meterialFolderMapper.listAll(mftime,foldername);
         List<Meterial> meterialList=new ArrayList<>();
         for (MeterialFolder meterialFolder:mflist) {
             Meterial meterial= meterialMapper.selectByPrimaryKey(Integer.valueOf(meterialFolder.getMeterialId()));
             meterialList.add(meterial);
         }
         return new Result(ResultStatusCode.OK,meterialList);
+    }
+
+    /**
+     * 根据创建时间修改文件夹的名称
+     * @param foldername 文件夹
+     * @param mftime    时间
+     * @return
+     */
+    @RequestMapping("/updatefolder")
+    public Result updatefolder(String foldername,String mftime){
+        if(foldername.isEmpty() || mftime.isEmpty()){
+            return new Result(ResultStatusCode.BAD_REQUEST);
+        }
+        //修改清单表和它的关联关系表
+        meterialMapper.meterialupdatefolder(foldername,mftime);
+        meterialFolderMapper.updatefolder(foldername,mftime);
+        return new Result(ResultStatusCode.OK,"文件夹修改成功");
     }
 }

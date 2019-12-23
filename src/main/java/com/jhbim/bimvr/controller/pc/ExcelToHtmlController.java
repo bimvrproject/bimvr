@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @RestController
@@ -91,7 +92,7 @@ public class ExcelToHtmlController {
      * @return
      */
     @RequestMapping("/DragdropExcel")
-    public Result DragdropExcel(String projectid,String foldername,Integer[] ids){
+        public Result DragdropExcel(String projectid,String foldername,Integer[] ids){
         if(projectid.isEmpty() || foldername.isEmpty() || ids.length == 0){
             return new Result(ResultStatusCode.BAD_REQUEST);
         }
@@ -101,7 +102,8 @@ public class ExcelToHtmlController {
         meterial.setProjectId(projectid);
         meterial.setUserId(user.getUserId());
         meterial.setFoldername(foldername);
-        meterial.setMtime(new Date());
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        meterial.setMtime(sdf.format(new Date()));
         meterialMapper.insertSelective(meterial);
         MeterialFolder mf=new MeterialFolder();
         for (int i=0;i<ids.length;i++){

@@ -12,7 +12,7 @@ public class MeterialFolder implements Serializable {
 
     private Integer userId;
 
-    private Date mftime;
+    private String mftime;
 
     private static final long serialVersionUID = 1L;
 
@@ -48,11 +48,11 @@ public class MeterialFolder implements Serializable {
         this.userId = userId;
     }
 
-    public Date getMftime() {
+    public String getMftime() {
         return mftime;
     }
 
-    public void setMftime(Date mftime) {
+    public void setMftime(String mftime) {
         this.mftime = mftime;
     }
 

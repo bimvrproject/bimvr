@@ -8,7 +8,7 @@
     <result column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="url" property="url" jdbcType="VARCHAR" />
     <result column="meterial_name" property="meterialName" jdbcType="VARCHAR" />
-    <result column="mtime" property="mtime" jdbcType="TIMESTAMP" />
+    <result column="mtime" property="mtime" jdbcType="VARCHAR" />
     <result column="foldername" property="foldername" jdbcType="VARCHAR" />
     <result column="type" property="type" jdbcType="INTEGER" />
   </resultMap>
@@ -32,7 +32,7 @@
       )
     values (#{id,jdbcType=INTEGER}, #{modelId,jdbcType=INTEGER}, #{projectId,jdbcType=VARCHAR}, 
       #{userId,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{meterialName,jdbcType=VARCHAR}, 
-      #{mtime,jdbcType=TIMESTAMP}, #{foldername,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}
+      #{mtime,jdbcType=VARCHAR}, #{foldername,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.jhbim.bimvr.dao.entity.pojo.Meterial" >
@@ -86,7 +86,7 @@
         #{meterialName,jdbcType=VARCHAR},
       </if>
       <if test="mtime != null" >
-        #{mtime,jdbcType=TIMESTAMP},
+        #{mtime,jdbcType=VARCHAR},
       </if>
       <if test="foldername != null" >
         #{foldername,jdbcType=VARCHAR},
@@ -115,7 +115,7 @@
         meterial_name = #{meterialName,jdbcType=VARCHAR},
       </if>
       <if test="mtime != null" >
-        mtime = #{mtime,jdbcType=TIMESTAMP},
+        mtime = #{mtime,jdbcType=VARCHAR},
       </if>
       <if test="foldername != null" >
         foldername = #{foldername,jdbcType=VARCHAR},
@@ -133,7 +133,7 @@
       user_id = #{userId,jdbcType=INTEGER},
       url = #{url,jdbcType=VARCHAR},
       meterial_name = #{meterialName,jdbcType=VARCHAR},
-      mtime = #{mtime,jdbcType=TIMESTAMP},
+      mtime = #{mtime,jdbcType=VARCHAR},
       foldername = #{foldername,jdbcType=VARCHAR},
       type = #{type,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
@@ -158,5 +158,10 @@
     update meterial
       set meterial_name = #{meterialName,jdbcType=VARCHAR}
       where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="meterialupdatefolder" parameterType="com.jhbim.bimvr.dao.entity.pojo.Meterial">
+    update meterial
+    set foldername = #{foldername,jdbcType=VARCHAR}
+    where  mtime = #{mtime,jdbcType=VARCHAR}
   </update>
 </mapper>

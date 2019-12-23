@@ -39,4 +39,12 @@ public interface MeterialMapper {
      * @return
      */
     int Updateexcelname(@Param("meterialName") String meterialName, @Param("id") Integer id);
+
+    /**
+     * 根据创建时间修改文件夹的名称
+     * @param foldername 文件夹
+     * @param mtime 时间
+     * @return
+     */
+    int meterialupdatefolder(@Param("foldername")String foldername,@Param("mtime")String mtime);
 }
