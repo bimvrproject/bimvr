@@ -1,15 +1,18 @@
 package com.jhbim.bimvr.dao.entity.pojo;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class DrawingFolder implements Serializable {
     private Integer id;
 
     private String foldername;
 
-    private Integer drawingId;
+    private String drawingId;
 
     private Integer userId;
+
+    private Date dftime;
 
     private static final long serialVersionUID = 1L;
 
@@ -29,12 +32,12 @@ public class DrawingFolder implements Serializable {
         this.foldername = foldername == null ? null : foldername.trim();
     }
 
-    public Integer getDrawingId() {
+    public String getDrawingId() {
         return drawingId;
     }
 
-    public void setDrawingId(Integer drawingId) {
-        this.drawingId = drawingId;
+    public void setDrawingId(String drawingId) {
+        this.drawingId = drawingId == null ? null : drawingId.trim();
     }
 
     public Integer getUserId() {
@@ -43,6 +46,14 @@ public class DrawingFolder implements Serializable {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public Date getDftime() {
+        return dftime;
+    }
+
+    public void setDftime(Date dftime) {
+        this.dftime = dftime;
     }
 
     @Override
@@ -55,6 +66,7 @@ public class DrawingFolder implements Serializable {
         sb.append(", foldername=").append(foldername);
         sb.append(", drawingId=").append(drawingId);
         sb.append(", userId=").append(userId);
+        sb.append(", dftime=").append(dftime);
         sb.append("]");
         return sb.toString();
     }

@@ -1,15 +1,18 @@
 package com.jhbim.bimvr.dao.entity.pojo;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class MeterialFolder implements Serializable {
     private Integer id;
 
     private String foldername;
 
-    private Integer meterialId;
+    private String meterialId;
 
     private Integer userId;
+
+    private Date mftime;
 
     private static final long serialVersionUID = 1L;
 
@@ -29,12 +32,12 @@ public class MeterialFolder implements Serializable {
         this.foldername = foldername == null ? null : foldername.trim();
     }
 
-    public Integer getMeterialId() {
+    public String getMeterialId() {
         return meterialId;
     }
 
-    public void setMeterialId(Integer meterialId) {
-        this.meterialId = meterialId;
+    public void setMeterialId(String meterialId) {
+        this.meterialId = meterialId == null ? null : meterialId.trim();
     }
 
     public Integer getUserId() {
@@ -43,6 +46,14 @@ public class MeterialFolder implements Serializable {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public Date getMftime() {
+        return mftime;
+    }
+
+    public void setMftime(Date mftime) {
+        this.mftime = mftime;
     }
 
     @Override
@@ -55,6 +66,7 @@ public class MeterialFolder implements Serializable {
         sb.append(", foldername=").append(foldername);
         sb.append(", meterialId=").append(meterialId);
         sb.append(", userId=").append(userId);
+        sb.append(", mftime=").append(mftime);
         sb.append("]");
         return sb.toString();
     }

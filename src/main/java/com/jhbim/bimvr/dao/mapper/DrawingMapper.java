@@ -1,6 +1,7 @@
 package com.jhbim.bimvr.dao.mapper;
 
 import com.jhbim.bimvr.dao.entity.pojo.Drawing;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -30,4 +31,12 @@ public interface DrawingMapper {
      * @return
      */
     int drawingbatchUpdate(Integer[] ids);
+
+    /**
+     * 修改图纸的名称
+     * @param drawName
+     * @param id
+     * @return
+     */
+    int updateDrawingname(@Param("drawName") String drawName, @Param("id") Integer id);
 }

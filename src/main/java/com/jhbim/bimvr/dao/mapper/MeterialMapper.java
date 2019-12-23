@@ -1,6 +1,7 @@
 package com.jhbim.bimvr.dao.mapper;
 
 import com.jhbim.bimvr.dao.entity.pojo.Meterial;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -30,4 +31,12 @@ public interface MeterialMapper {
      * @return
      */
     int batchUpdate(Integer[] ids);
+
+    /**
+     * 修改excel文件的名称
+     * @param meterialName
+     * @param id
+     * @return
+     */
+    int Updateexcelname(@Param("meterialName") String meterialName, @Param("id") Integer id);
 }

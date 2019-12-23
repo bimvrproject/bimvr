@@ -153,4 +153,10 @@
               #{id}
             </foreach>
     </update>
+  <!--修改excel文件的名称-->
+  <update id="Updateexcelname"  parameterType="com.jhbim.bimvr.dao.entity.pojo.Meterial">
+    update meterial
+      set meterial_name = #{meterialName,jdbcType=VARCHAR}
+      where id = #{id,jdbcType=INTEGER}
+  </update>
 </mapper>

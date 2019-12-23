@@ -4,11 +4,12 @@
   <resultMap id="BaseResultMap" type="com.jhbim.bimvr.dao.entity.pojo.DrawingFolder" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="foldername" property="foldername" jdbcType="VARCHAR" />
-    <result column="drawing_id" property="drawingId" jdbcType="INTEGER" />
+    <result column="drawing_id" property="drawingId" jdbcType="VARCHAR" />
     <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="dftime" property="dftime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, foldername, drawing_id, user_id
+    id, foldername, drawing_id, user_id, dftime
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -22,9 +23,9 @@
   </delete>
   <insert id="insert" parameterType="com.jhbim.bimvr.dao.entity.pojo.DrawingFolder" >
     insert into drawing_folder (id, foldername, drawing_id, 
-      user_id)
-    values (#{id,jdbcType=INTEGER}, #{foldername,jdbcType=VARCHAR}, #{drawingId,jdbcType=INTEGER}, 
-      #{userId,jdbcType=INTEGER})
+      user_id, dftime)
+    values (#{id,jdbcType=INTEGER}, #{foldername,jdbcType=VARCHAR}, #{drawingId,jdbcType=VARCHAR}, 
+      #{userId,jdbcType=INTEGER}, #{dftime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.jhbim.bimvr.dao.entity.pojo.DrawingFolder" >
     insert into drawing_folder
@@ -41,6 +42,9 @@
       <if test="userId != null" >
         user_id,
       </if>
+      <if test="dftime != null" >
+        dftime,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -50,10 +54,13 @@
         #{foldername,jdbcType=VARCHAR},
       </if>
       <if test="drawingId != null" >
-        #{drawingId,jdbcType=INTEGER},
+        #{drawingId,jdbcType=VARCHAR},
       </if>
       <if test="userId != null" >
         #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="dftime != null" >
+        #{dftime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -64,10 +71,13 @@
         foldername = #{foldername,jdbcType=VARCHAR},
       </if>
       <if test="drawingId != null" >
-        drawing_id = #{drawingId,jdbcType=INTEGER},
+        drawing_id = #{drawingId,jdbcType=VARCHAR},
       </if>
       <if test="userId != null" >
         user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="dftime != null" >
+        dftime = #{dftime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -75,8 +85,9 @@
   <update id="updateByPrimaryKey" parameterType="com.jhbim.bimvr.dao.entity.pojo.DrawingFolder" >
     update drawing_folder
     set foldername = #{foldername,jdbcType=VARCHAR},
-      drawing_id = #{drawingId,jdbcType=INTEGER},
-      user_id = #{userId,jdbcType=INTEGER}
+      drawing_id = #{drawingId,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      dftime = #{dftime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

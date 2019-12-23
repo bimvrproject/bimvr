@@ -149,4 +149,10 @@
     update drawing set type = 1 where id in
     <foreach collection="array" item="id" open="(" separator="," close=")">#{id}</foreach>
   </update>
+  <!--修改图纸的名称-->
+  <update id="updateDrawingname" parameterType="com.jhbim.bimvr.dao.entity.pojo.Drawing">
+    update drawing
+      set  draw_name = #{drawName,jdbcType=VARCHAR}
+       where id = #{id,jdbcType=INTEGER}
+  </update>
 </mapper>
