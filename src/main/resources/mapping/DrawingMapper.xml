@@ -8,7 +8,7 @@
     <result column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="url" property="url" jdbcType="VARCHAR" />
     <result column="draw_name" property="drawName" jdbcType="VARCHAR" />
-    <result column="dtime" property="dtime" jdbcType="TIMESTAMP" />
+    <result column="dtime" property="dtime" jdbcType="VARCHAR" />
     <result column="foldername" property="foldername" jdbcType="VARCHAR" />
     <result column="type" property="type" jdbcType="INTEGER" />
   </resultMap>
@@ -32,7 +32,7 @@
       )
     values (#{id,jdbcType=INTEGER}, #{modelId,jdbcType=INTEGER}, #{projectId,jdbcType=VARCHAR}, 
       #{userId,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{drawName,jdbcType=VARCHAR}, 
-      #{dtime,jdbcType=TIMESTAMP}, #{foldername,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}
+      #{dtime,jdbcType=VARCHAR}, #{foldername,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.jhbim.bimvr.dao.entity.pojo.Drawing" >
@@ -86,7 +86,7 @@
         #{drawName,jdbcType=VARCHAR},
       </if>
       <if test="dtime != null" >
-        #{dtime,jdbcType=TIMESTAMP},
+        #{dtime,jdbcType=VARCHAR},
       </if>
       <if test="foldername != null" >
         #{foldername,jdbcType=VARCHAR},
@@ -115,7 +115,7 @@
         draw_name = #{drawName,jdbcType=VARCHAR},
       </if>
       <if test="dtime != null" >
-        dtime = #{dtime,jdbcType=TIMESTAMP},
+        dtime = #{dtime,jdbcType=VARCHAR},
       </if>
       <if test="foldername != null" >
         foldername = #{foldername,jdbcType=VARCHAR},
@@ -133,7 +133,7 @@
       user_id = #{userId,jdbcType=INTEGER},
       url = #{url,jdbcType=VARCHAR},
       draw_name = #{drawName,jdbcType=VARCHAR},
-      dtime = #{dtime,jdbcType=TIMESTAMP},
+      dtime = #{dtime,jdbcType=VARCHAR},
       foldername = #{foldername,jdbcType=VARCHAR},
       type = #{type,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
@@ -154,5 +154,10 @@
     update drawing
       set  draw_name = #{drawName,jdbcType=VARCHAR}
        where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updatedDrawingFolder" parameterType="com.jhbim.bimvr.dao.entity.pojo.Drawing">
+    update drawing
+      set foldername = #{foldername,jdbcType=VARCHAR}
+       where dtime = #{dtime,jdbcType=VARCHAR}
   </update>
 </mapper>

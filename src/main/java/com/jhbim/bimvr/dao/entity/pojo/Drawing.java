@@ -16,7 +16,7 @@ public class Drawing implements Serializable {
 
     private String drawName;
 
-    private Date dtime;
+    private String dtime;
 
     private String foldername;
 
@@ -72,11 +72,11 @@ public class Drawing implements Serializable {
         this.drawName = drawName == null ? null : drawName.trim();
     }
 
-    public Date getDtime() {
+    public String getDtime() {
         return dtime;
     }
 
-    public void setDtime(Date dtime) {
+    public void setDtime(String dtime) {
         this.dtime = dtime;
     }
 

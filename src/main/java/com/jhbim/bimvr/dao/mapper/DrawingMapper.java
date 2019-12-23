@@ -39,4 +39,12 @@ public interface DrawingMapper {
      * @return
      */
     int updateDrawingname(@Param("drawName") String drawName, @Param("id") Integer id);
+
+    /**
+     * 根据创建时间修改文件夹的名称
+     * @param dtime 时间
+     * @param foldername 文件夹
+     * @return
+     */
+    int updatedDrawingFolder(@Param("dtime") String dtime, @Param("foldername") String foldername);
 }

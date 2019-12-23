@@ -114,6 +114,6 @@ public class ExcelToHtmlController {
             meterialFolderMapper.insertSelective(mf);
         }
         meterialMapper.batchUpdate(ids);
-        return new Result(ResultStatusCode.OK,"增加成功");
+        return new Result(ResultStatusCode.OK,"Excel拖动成功");
     }
 }

@@ -12,7 +12,7 @@ public class DrawingFolder implements Serializable {
 
     private Integer userId;
 
-    private Date dftime;
+    private String dftime;
 
     private static final long serialVersionUID = 1L;
 
@@ -48,11 +48,11 @@ public class DrawingFolder implements Serializable {
         this.userId = userId;
     }
 
-    public Date getDftime() {
+    public String getDftime() {
         return dftime;
     }
 
-    public void setDftime(Date dftime) {
+    public void setDftime(String dftime) {
         this.dftime = dftime;
     }
 
