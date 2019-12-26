@@ -107,15 +107,14 @@ public class UserController {
 
     /**
      * 根据用户手机号或昵称查询
-     * @param phone
-     * @param username
+     * @param phoneusername
      * @return
      */
     @RequestMapping("/findByuserphoneorusername")
-    public Result findByuserphoneorusername(String phone,String username){
-        if(phone.isEmpty() && username.isEmpty()){
+    public Result findByuserphoneorusername(String phoneusername){
+        if(phoneusername==null || phoneusername.equals("")){
             return new Result(ResultStatusCode.OK);
         }
-        return new Result(ResultStatusCode.OK,userMapper.findByuserphoneorusername(phone,username));
+        return new Result(ResultStatusCode.OK,userMapper.findByuserphoneorusername(phoneusername,phoneusername));
     }
 }
