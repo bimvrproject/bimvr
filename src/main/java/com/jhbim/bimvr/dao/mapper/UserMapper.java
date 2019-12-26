@@ -3,6 +3,7 @@ package com.jhbim.bimvr.dao.mapper;
 import com.jhbim.bimvr.dao.entity.pojo.User;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface UserMapper {
@@ -31,4 +32,7 @@ public interface UserMapper {
     int updataremarks(@Param("remarks") String remarks,@Param("phone") String phone);
     //根据用户手机号或昵称查询
     List<User> findByuserphoneorusername(@Param("phone") String phone,@Param("userName") String userName);
+
+    //用户列表
+    List<User> userList(ArrayList<String> list);
 }

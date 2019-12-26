@@ -90,4 +90,8 @@
       type = #{type,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="friendList" resultType="java.lang.String">
+    select friendphone from user_friend where userphone = #{userphone,jdbcType=VARCHAR} and islike = #{islike,jdbcType=VARCHAR}
+  </select>
 </mapper>

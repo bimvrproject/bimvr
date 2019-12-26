@@ -2,6 +2,9 @@ package com.jhbim.bimvr.dao.mapper;
 
 import com.jhbim.bimvr.dao.entity.pojo.UserFriend;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public interface UserFriendMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +17,6 @@ public interface UserFriendMapper {
     int updateByPrimaryKeySelective(UserFriend record);
 
     int updateByPrimaryKey(UserFriend record);
+
+    ArrayList<String> friendList(String userphone, Integer islike);
 }
