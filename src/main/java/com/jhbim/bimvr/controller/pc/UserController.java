@@ -104,4 +104,18 @@ public class UserController {
     public Result getuserAll( String phone){
         return new Result(ResultStatusCode.OK,userMapper.selectByPrimaryKey(phone));
     }
+
+    /**
+     * 根据用户手机号或昵称查询
+     * @param phone
+     * @param username
+     * @return
+     */
+    @RequestMapping("/findByuserphoneorusername")
+    public Result findByuserphoneorusername(String phone,String username){
+        if(phone.isEmpty() && username.isEmpty()){
+            return new Result(ResultStatusCode.OK);
+        }
+        return new Result(ResultStatusCode.OK,userMapper.findByuserphoneorusername(phone,username));
+    }
 }

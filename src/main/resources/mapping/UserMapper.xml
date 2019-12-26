@@ -219,4 +219,18 @@
       set   remarks =  #{remarks,jdbcType=VARCHAR}
       where phone = #{phone,jdbcType=VARCHAR}
   </update>
+  <!--根据用户手机号或昵称查询-->
+  <select id="findByuserphoneorusername" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from user
+    <where>
+      <if test="phone!=null and phone!=''">
+        phone =#{phone,jdbcType=VARCHAR}
+      </if>
+      <if test="userName!=null and userName!=''">
+        or user_name = #{userName,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
 </mapper>

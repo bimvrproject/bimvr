@@ -2,31 +2,31 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.jhbim.bimvr.dao.mapper.UserMessageMapper" >
   <resultMap id="BaseResultMap" type="com.jhbim.bimvr.dao.entity.pojo.UserMessage" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="Hairuser_id" property="hairuserId" jdbcType="INTEGER" />
-    <result column="Closeduser_id" property="closeduserId" jdbcType="INTEGER" />
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="Hairuser_phone" property="hairuserPhone" jdbcType="VARCHAR" />
+    <result column="Closeduser_phone" property="closeduserPhone" jdbcType="VARCHAR" />
     <result column="information" property="information" jdbcType="VARCHAR" />
     <result column="Createtine" property="createtine" jdbcType="TIMESTAMP" />
     <result column="endtime" property="endtime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, Hairuser_id, Closeduser_id, information, Createtine, endtime
+    id, Hairuser_phone, Closeduser_phone, information, Createtine, endtime
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from user_message
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from user_message
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.jhbim.bimvr.dao.entity.pojo.UserMessage" >
-    insert into user_message (id, Hairuser_id, Closeduser_id, 
+    insert into user_message (id, Hairuser_phone, Closeduser_phone, 
       information, Createtine, endtime
       )
-    values (#{id,jdbcType=INTEGER}, #{hairuserId,jdbcType=INTEGER}, #{closeduserId,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=VARCHAR}, #{hairuserPhone,jdbcType=VARCHAR}, #{closeduserPhone,jdbcType=VARCHAR}, 
       #{information,jdbcType=VARCHAR}, #{createtine,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}
       )
   </insert>
@@ -36,11 +36,11 @@
       <if test="id != null" >
         id,
       </if>
-      <if test="hairuserId != null" >
-        Hairuser_id,
+      <if test="hairuserPhone != null" >
+        Hairuser_phone,
       </if>
-      <if test="closeduserId != null" >
-        Closeduser_id,
+      <if test="closeduserPhone != null" >
+        Closeduser_phone,
       </if>
       <if test="information != null" >
         information,
@@ -54,13 +54,13 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
-        #{id,jdbcType=INTEGER},
+        #{id,jdbcType=VARCHAR},
       </if>
-      <if test="hairuserId != null" >
-        #{hairuserId,jdbcType=INTEGER},
+      <if test="hairuserPhone != null" >
+        #{hairuserPhone,jdbcType=VARCHAR},
       </if>
-      <if test="closeduserId != null" >
-        #{closeduserId,jdbcType=INTEGER},
+      <if test="closeduserPhone != null" >
+        #{closeduserPhone,jdbcType=VARCHAR},
       </if>
       <if test="information != null" >
         #{information,jdbcType=VARCHAR},
@@ -76,11 +76,11 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.jhbim.bimvr.dao.entity.pojo.UserMessage" >
     update user_message
     <set >
-      <if test="hairuserId != null" >
-        Hairuser_id = #{hairuserId,jdbcType=INTEGER},
+      <if test="hairuserPhone != null" >
+        Hairuser_phone = #{hairuserPhone,jdbcType=VARCHAR},
       </if>
-      <if test="closeduserId != null" >
-        Closeduser_id = #{closeduserId,jdbcType=INTEGER},
+      <if test="closeduserPhone != null" >
+        Closeduser_phone = #{closeduserPhone,jdbcType=VARCHAR},
       </if>
       <if test="information != null" >
         information = #{information,jdbcType=VARCHAR},
@@ -92,15 +92,15 @@
         endtime = #{endtime,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.jhbim.bimvr.dao.entity.pojo.UserMessage" >
     update user_message
-    set Hairuser_id = #{hairuserId,jdbcType=INTEGER},
-      Closeduser_id = #{closeduserId,jdbcType=INTEGER},
+    set Hairuser_phone = #{hairuserPhone,jdbcType=VARCHAR},
+      Closeduser_phone = #{closeduserPhone,jdbcType=VARCHAR},
       information = #{information,jdbcType=VARCHAR},
       Createtine = #{createtine,jdbcType=TIMESTAMP},
       endtime = #{endtime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

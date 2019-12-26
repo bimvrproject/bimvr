@@ -4,13 +4,13 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Email implements Serializable {
-    private Integer id;
+    private String id;
 
     private Integer roleId;
 
-    private Integer hairuserId;
+    private String hairuserPhone;
 
-    private Integer closeduserId;
+    private String closeduserPhone;
 
     private String mail;
 
@@ -20,12 +20,12 @@ public class Email implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
     }
 
     public Integer getRoleId() {
@@ -36,20 +36,20 @@ public class Email implements Serializable {
         this.roleId = roleId;
     }
 
-    public Integer getHairuserId() {
-        return hairuserId;
+    public String getHairuserPhone() {
+        return hairuserPhone;
     }
 
-    public void setHairuserId(Integer hairuserId) {
-        this.hairuserId = hairuserId;
+    public void setHairuserPhone(String hairuserPhone) {
+        this.hairuserPhone = hairuserPhone == null ? null : hairuserPhone.trim();
     }
 
-    public Integer getCloseduserId() {
-        return closeduserId;
+    public String getCloseduserPhone() {
+        return closeduserPhone;
     }
 
-    public void setCloseduserId(Integer closeduserId) {
-        this.closeduserId = closeduserId;
+    public void setCloseduserPhone(String closeduserPhone) {
+        this.closeduserPhone = closeduserPhone == null ? null : closeduserPhone.trim();
     }
 
     public String getMail() {
@@ -84,8 +84,8 @@ public class Email implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", roleId=").append(roleId);
-        sb.append(", hairuserId=").append(hairuserId);
-        sb.append(", closeduserId=").append(closeduserId);
+        sb.append(", hairuserPhone=").append(hairuserPhone);
+        sb.append(", closeduserPhone=").append(closeduserPhone);
         sb.append(", mail=").append(mail);
         sb.append(", sendtime=").append(sendtime);
         sb.append(", receivetime=").append(receivetime);

@@ -2,33 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.jhbim.bimvr.dao.mapper.EmailMapper" >
   <resultMap id="BaseResultMap" type="com.jhbim.bimvr.dao.entity.pojo.Email" >
-    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="id" property="id" jdbcType="VARCHAR" />
     <result column="Role_id" property="roleId" jdbcType="INTEGER" />
-    <result column="hairUser_id" property="hairuserId" jdbcType="INTEGER" />
-    <result column="Closeduser_id" property="closeduserId" jdbcType="INTEGER" />
+    <result column="hairUser_phone" property="hairuserPhone" jdbcType="VARCHAR" />
+    <result column="Closeduser_phone" property="closeduserPhone" jdbcType="VARCHAR" />
     <result column="Mail" property="mail" jdbcType="VARCHAR" />
     <result column="sendtime" property="sendtime" jdbcType="TIMESTAMP" />
     <result column="receivetime" property="receivetime" jdbcType="TIMESTAMP" />
   </resultMap>
-  <sql id="Base_Column_List" >
-    id, Role_id, hairUser_id, Closeduser_id, Mail, sendtime, receivetime
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from email
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from email
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
   <insert id="insert" parameterType="com.jhbim.bimvr.dao.entity.pojo.Email" >
-    insert into email (id, Role_id, hairUser_id, 
-      Closeduser_id, Mail, sendtime, 
+    insert into email (id, Role_id, hairUser_phone, 
+      Closeduser_phone, Mail, sendtime, 
       receivetime)
-    values (#{id,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}, #{hairuserId,jdbcType=INTEGER}, 
-      #{closeduserId,jdbcType=INTEGER}, #{mail,jdbcType=VARCHAR}, #{sendtime,jdbcType=TIMESTAMP}, 
+    values (#{id,jdbcType=VARCHAR}, #{roleId,jdbcType=INTEGER}, #{hairuserPhone,jdbcType=VARCHAR}, 
+      #{closeduserPhone,jdbcType=VARCHAR}, #{mail,jdbcType=VARCHAR}, #{sendtime,jdbcType=TIMESTAMP}, 
       #{receivetime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.jhbim.bimvr.dao.entity.pojo.Email" >
@@ -40,11 +27,11 @@
       <if test="roleId != null" >
         Role_id,
       </if>
-      <if test="hairuserId != null" >
-        hairUser_id,
+      <if test="hairuserPhone != null" >
+        hairUser_phone,
       </if>
-      <if test="closeduserId != null" >
-        Closeduser_id,
+      <if test="closeduserPhone != null" >
+        Closeduser_phone,
       </if>
       <if test="mail != null" >
         Mail,
@@ -58,16 +45,16 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
-        #{id,jdbcType=INTEGER},
+        #{id,jdbcType=VARCHAR},
       </if>
       <if test="roleId != null" >
         #{roleId,jdbcType=INTEGER},
       </if>
-      <if test="hairuserId != null" >
-        #{hairuserId,jdbcType=INTEGER},
+      <if test="hairuserPhone != null" >
+        #{hairuserPhone,jdbcType=VARCHAR},
       </if>
-      <if test="closeduserId != null" >
-        #{closeduserId,jdbcType=INTEGER},
+      <if test="closeduserPhone != null" >
+        #{closeduserPhone,jdbcType=VARCHAR},
       </if>
       <if test="mail != null" >
         #{mail,jdbcType=VARCHAR},
@@ -80,38 +67,4 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.jhbim.bimvr.dao.entity.pojo.Email" >
-    update email
-    <set >
-      <if test="roleId != null" >
-        Role_id = #{roleId,jdbcType=INTEGER},
-      </if>
-      <if test="hairuserId != null" >
-        hairUser_id = #{hairuserId,jdbcType=INTEGER},
-      </if>
-      <if test="closeduserId != null" >
-        Closeduser_id = #{closeduserId,jdbcType=INTEGER},
-      </if>
-      <if test="mail != null" >
-        Mail = #{mail,jdbcType=VARCHAR},
-      </if>
-      <if test="sendtime != null" >
-        sendtime = #{sendtime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="receivetime != null" >
-        receivetime = #{receivetime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.jhbim.bimvr.dao.entity.pojo.Email" >
-    update email
-    set Role_id = #{roleId,jdbcType=INTEGER},
-      hairUser_id = #{hairuserId,jdbcType=INTEGER},
-      Closeduser_id = #{closeduserId,jdbcType=INTEGER},
-      Mail = #{mail,jdbcType=VARCHAR},
-      sendtime = #{sendtime,jdbcType=TIMESTAMP},
-      receivetime = #{receivetime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
 </mapper>

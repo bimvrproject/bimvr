@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.jhbim.bimvr.dao.mapper.GroupMessageMapper" >
   <resultMap id="BaseResultMap" type="com.jhbim.bimvr.dao.entity.pojo.GroupMessage" >
-    <id column="id" property="id" jdbcType="INTEGER" />
+    <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="Group_id" property="groupId" jdbcType="INTEGER" />
     <result column="User_Id" property="userId" jdbcType="INTEGER" />
     <result column="Role_id" property="roleId" jdbcType="INTEGER" />
@@ -12,21 +12,21 @@
   <sql id="Base_Column_List" >
     id, Group_id, User_Id, Role_id, content, calltime
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from group_message
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from group_message
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.jhbim.bimvr.dao.entity.pojo.GroupMessage" >
     insert into group_message (id, Group_id, User_Id, 
       Role_id, content, calltime
       )
-    values (#{id,jdbcType=INTEGER}, #{groupId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=VARCHAR}, #{groupId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
       #{roleId,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{calltime,jdbcType=TIMESTAMP}
       )
   </insert>
@@ -54,7 +54,7 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
-        #{id,jdbcType=INTEGER},
+        #{id,jdbcType=VARCHAR},
       </if>
       <if test="groupId != null" >
         #{groupId,jdbcType=INTEGER},
@@ -92,7 +92,7 @@
         calltime = #{calltime,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.jhbim.bimvr.dao.entity.pojo.GroupMessage" >
     update group_message
@@ -101,6 +101,6 @@
       Role_id = #{roleId,jdbcType=INTEGER},
       content = #{content,jdbcType=VARCHAR},
       calltime = #{calltime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

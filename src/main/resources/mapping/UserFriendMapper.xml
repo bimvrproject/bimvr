@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jhbim.bimvr.dao.mapper.UserFriendMapper" >
+  <resultMap id="BaseResultMap" type="com.jhbim.bimvr.dao.entity.pojo.UserFriend" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="userphone" property="userphone" jdbcType="VARCHAR" />
+    <result column="friendphone" property="friendphone" jdbcType="VARCHAR" />
+    <result column="islike" property="islike" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, userphone, friendphone, islike, type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_friend
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user_friend
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jhbim.bimvr.dao.entity.pojo.UserFriend" >
+    insert into user_friend (id, userphone, friendphone, 
+      islike, type)
+    values (#{id,jdbcType=INTEGER}, #{userphone,jdbcType=VARCHAR}, #{friendphone,jdbcType=VARCHAR}, 
+      #{islike,jdbcType=INTEGER}, #{type,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jhbim.bimvr.dao.entity.pojo.UserFriend" >
+    insert into user_friend
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userphone != null" >
+        userphone,
+      </if>
+      <if test="friendphone != null" >
+        friendphone,
+      </if>
+      <if test="islike != null" >
+        islike,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userphone != null" >
+        #{userphone,jdbcType=VARCHAR},
+      </if>
+      <if test="friendphone != null" >
+        #{friendphone,jdbcType=VARCHAR},
+      </if>
+      <if test="islike != null" >
+        #{islike,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jhbim.bimvr.dao.entity.pojo.UserFriend" >
+    update user_friend
+    <set >
+      <if test="userphone != null" >
+        userphone = #{userphone,jdbcType=VARCHAR},
+      </if>
+      <if test="friendphone != null" >
+        friendphone = #{friendphone,jdbcType=VARCHAR},
+      </if>
+      <if test="islike != null" >
+        islike = #{islike,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jhbim.bimvr.dao.entity.pojo.UserFriend" >
+    update user_friend
+    set userphone = #{userphone,jdbcType=VARCHAR},
+      friendphone = #{friendphone,jdbcType=VARCHAR},
+      islike = #{islike,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

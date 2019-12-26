@@ -6,6 +6,8 @@ import java.util.Date;
 public class GroupCluster implements Serializable {
     private Integer id;
 
+    private String groupname;
+
     private Integer roleId;
 
     private Integer usergroupId;
@@ -24,6 +26,14 @@ public class GroupCluster implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getGroupname() {
+        return groupname;
+    }
+
+    public void setGroupname(String groupname) {
+        this.groupname = groupname == null ? null : groupname.trim();
     }
 
     public Integer getRoleId() {
@@ -73,6 +83,7 @@ public class GroupCluster implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
+        sb.append(", groupname=").append(groupname);
         sb.append(", roleId=").append(roleId);
         sb.append(", usergroupId=").append(usergroupId);
         sb.append(", userId=").append(userId);
