@@ -1,13 +1,11 @@
 package com.jhbim.bimvr.controller.pc.communicate;
 
 import com.jhbim.bimvr.dao.entity.pojo.User;
-import com.jhbim.bimvr.dao.entity.pojo.UserFriend;
 import com.jhbim.bimvr.dao.entity.vo.Result;
 import com.jhbim.bimvr.dao.mapper.UserFriendMapper;
 import com.jhbim.bimvr.dao.mapper.UserMapper;
 import com.jhbim.bimvr.system.enums.ResultStatusCode;
 import com.jhbim.bimvr.utils.ShiroUtil;
-import org.hibernate.validator.constraints.URL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +21,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/${version}/friend")
-public class friend {
+public class Friend {
 
 
     @Autowired
