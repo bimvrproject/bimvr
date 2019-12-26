@@ -38,6 +38,9 @@ public class Friend {
     public Result friendList(){
         User user = ShiroUtil.getUser();
         ArrayList<String> list = userFriendMapper.friendList(user.getPhone(),1);
+        if (list.isEmpty()){
+            return new Result(ResultStatusCode.OK);
+        }
         List<User> userList =  userMapper.userList(list);
         return new Result(ResultStatusCode.SUCCESS,userList);
     }
