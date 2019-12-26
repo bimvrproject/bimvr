@@ -18,5 +18,5 @@ public interface UserFriendMapper {
 
     int updateByPrimaryKey(UserFriend record);
 
-    ArrayList<String> friendList(String userphone, Integer islike);
+    List<String> friendList(String userphone, Integer islike);
 }

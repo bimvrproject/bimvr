@@ -234,10 +234,11 @@
     </where>
   </select>
 
-  <select id="userList" resultType="com.jhbim.bimvr.dao.entity.pojo.User">
+  <select id="userList" resultMap="BaseResultMap">
     select * from user where phone in
-    <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
-      #{item}
+    <foreach item="phone" index="index" collection="list" open="(" separator="," close=")">
+      #{phone,jdbcType=VARCHAR}
     </foreach>
   </select>
+
 </mapper>

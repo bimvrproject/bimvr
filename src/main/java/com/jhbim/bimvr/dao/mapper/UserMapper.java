@@ -34,5 +34,7 @@ public interface UserMapper {
     List<User> findByuserphoneorusername(@Param("phone") String phone,@Param("userName") String userName);
 
     //用户列表
-    List<User> userList(ArrayList<String> list);
+    List<User> userList(List<String> list);
+
+
 }
