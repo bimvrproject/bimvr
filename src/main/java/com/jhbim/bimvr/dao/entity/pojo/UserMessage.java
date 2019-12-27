@@ -16,6 +16,10 @@ public class UserMessage implements Serializable {
 
     private Date endtime;
 
+    private Integer type;
+
+    private Integer stauts;
+
     private static final long serialVersionUID = 1L;
 
     public String getId() {
@@ -66,6 +70,22 @@ public class UserMessage implements Serializable {
         this.endtime = endtime;
     }
 
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public Integer getStauts() {
+        return stauts;
+    }
+
+    public void setStauts(Integer stauts) {
+        this.stauts = stauts;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -78,6 +98,8 @@ public class UserMessage implements Serializable {
         sb.append(", information=").append(information);
         sb.append(", createtine=").append(createtine);
         sb.append(", endtime=").append(endtime);
+        sb.append(", type=").append(type);
+        sb.append(", stauts=").append(stauts);
         sb.append("]");
         return sb.toString();
     }

@@ -16,6 +16,10 @@ public class GroupMessage implements Serializable {
 
     private Date calltime;
 
+    private Integer stauts;
+
+    private Integer type;
+
     private static final long serialVersionUID = 1L;
 
     public String getId() {
@@ -66,6 +70,22 @@ public class GroupMessage implements Serializable {
         this.calltime = calltime;
     }
 
+    public Integer getStauts() {
+        return stauts;
+    }
+
+    public void setStauts(Integer stauts) {
+        this.stauts = stauts;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -78,6 +98,8 @@ public class GroupMessage implements Serializable {
         sb.append(", roleId=").append(roleId);
         sb.append(", content=").append(content);
         sb.append(", calltime=").append(calltime);
+        sb.append(", stauts=").append(stauts);
+        sb.append(", type=").append(type);
         sb.append("]");
         return sb.toString();
     }

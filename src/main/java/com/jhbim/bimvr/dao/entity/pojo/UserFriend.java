@@ -3,7 +3,7 @@ package com.jhbim.bimvr.dao.entity.pojo;
 import java.io.Serializable;
 
 public class UserFriend implements Serializable {
-    private Integer id;
+    private String id;
 
     private String userphone;
 
@@ -13,14 +13,16 @@ public class UserFriend implements Serializable {
 
     private Integer type;
 
+    private String message;
+
     private static final long serialVersionUID = 1L;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
     }
 
     public String getUserphone() {
@@ -55,6 +57,14 @@ public class UserFriend implements Serializable {
         this.type = type;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message == null ? null : message.trim();
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -66,6 +76,7 @@ public class UserFriend implements Serializable {
         sb.append(", friendphone=").append(friendphone);
         sb.append(", islike=").append(islike);
         sb.append(", type=").append(type);
+        sb.append(", message=").append(message);
         sb.append("]");
         return sb.toString();
     }

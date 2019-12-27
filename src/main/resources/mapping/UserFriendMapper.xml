@@ -2,30 +2,33 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.jhbim.bimvr.dao.mapper.UserFriendMapper" >
   <resultMap id="BaseResultMap" type="com.jhbim.bimvr.dao.entity.pojo.UserFriend" >
-    <id column="id" property="id" jdbcType="INTEGER" />
+    <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="userphone" property="userphone" jdbcType="VARCHAR" />
     <result column="friendphone" property="friendphone" jdbcType="VARCHAR" />
     <result column="islike" property="islike" jdbcType="INTEGER" />
     <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="message" property="message" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, userphone, friendphone, islike, type
+    id, userphone, friendphone, islike, type, message
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from user_friend
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from user_friend
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.jhbim.bimvr.dao.entity.pojo.UserFriend" >
     insert into user_friend (id, userphone, friendphone, 
-      islike, type)
-    values (#{id,jdbcType=INTEGER}, #{userphone,jdbcType=VARCHAR}, #{friendphone,jdbcType=VARCHAR}, 
-      #{islike,jdbcType=INTEGER}, #{type,jdbcType=INTEGER})
+      islike, type, message
+      )
+    values (#{id,jdbcType=VARCHAR}, #{userphone,jdbcType=VARCHAR}, #{friendphone,jdbcType=VARCHAR}, 
+      #{islike,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{message,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.jhbim.bimvr.dao.entity.pojo.UserFriend" >
     insert into user_friend
@@ -45,10 +48,13 @@
       <if test="type != null" >
         type,
       </if>
+      <if test="message != null" >
+        message,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
-        #{id,jdbcType=INTEGER},
+        #{id,jdbcType=VARCHAR},
       </if>
       <if test="userphone != null" >
         #{userphone,jdbcType=VARCHAR},
@@ -61,6 +67,9 @@
       </if>
       <if test="type != null" >
         #{type,jdbcType=INTEGER},
+      </if>
+      <if test="message != null" >
+        #{message,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -79,19 +88,37 @@
       <if test="type != null" >
         type = #{type,jdbcType=INTEGER},
       </if>
+      <if test="message != null" >
+        message = #{message,jdbcType=VARCHAR},
+      </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.jhbim.bimvr.dao.entity.pojo.UserFriend" >
     update user_friend
     set userphone = #{userphone,jdbcType=VARCHAR},
       friendphone = #{friendphone,jdbcType=VARCHAR},
       islike = #{islike,jdbcType=INTEGER},
-      type = #{type,jdbcType=INTEGER}
-    where id = #{id,jdbcType=INTEGER}
+      type = #{type,jdbcType=INTEGER},
+      message = #{message,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
   </update>
 
   <select id="friendList" resultType="java.lang.String">
     select friendphone from user_friend where userphone = #{userphone,jdbcType=VARCHAR} and islike = #{islike,jdbcType=INTEGER}
   </select>
+
+  <!--根据是否是共同好友和手机号、类型查询-->
+  <select id="findByIslikeanduserphoneandtype" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from user_friend
+    where islike = #{islike,jdbcType=INTEGER} and userphone = #{userphone,jdbcType=VARCHAR} and type = #{type,jdbcType=INTEGER}
+  </select>
+  <!--修改islike为1 成为共同好友-->
+  <update id="updateByuserphoneandfriendphoneandislike" parameterType="com.jhbim.bimvr.dao.entity.pojo.UserFriend">
+     update user_friend
+      set islike = #{islike,jdbcType=INTEGER}
+       where  userphone = #{userphone,jdbcType=VARCHAR} and friendphone = #{friendphone,jdbcType=VARCHAR}
+  </update>
 </mapper>

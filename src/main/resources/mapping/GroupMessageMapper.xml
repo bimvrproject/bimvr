@@ -8,9 +8,11 @@
     <result column="Role_id" property="roleId" jdbcType="INTEGER" />
     <result column="content" property="content" jdbcType="VARCHAR" />
     <result column="calltime" property="calltime" jdbcType="TIMESTAMP" />
+    <result column="stauts" property="stauts" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, Group_id, User_Id, Role_id, content, calltime
+    id, Group_id, User_Id, Role_id, content, calltime, stauts, type
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -24,11 +26,11 @@
   </delete>
   <insert id="insert" parameterType="com.jhbim.bimvr.dao.entity.pojo.GroupMessage" >
     insert into group_message (id, Group_id, User_Id, 
-      Role_id, content, calltime
-      )
+      Role_id, content, calltime, 
+      stauts, type)
     values (#{id,jdbcType=VARCHAR}, #{groupId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
-      #{roleId,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{calltime,jdbcType=TIMESTAMP}
-      )
+      #{roleId,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{calltime,jdbcType=TIMESTAMP}, 
+      #{stauts,jdbcType=INTEGER}, #{type,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.jhbim.bimvr.dao.entity.pojo.GroupMessage" >
     insert into group_message
@@ -51,6 +53,12 @@
       <if test="calltime != null" >
         calltime,
       </if>
+      <if test="stauts != null" >
+        stauts,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -70,6 +78,12 @@
       </if>
       <if test="calltime != null" >
         #{calltime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stauts != null" >
+        #{stauts,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -91,6 +105,12 @@
       <if test="calltime != null" >
         calltime = #{calltime,jdbcType=TIMESTAMP},
       </if>
+      <if test="stauts != null" >
+        stauts = #{stauts,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -100,7 +120,9 @@
       User_Id = #{userId,jdbcType=INTEGER},
       Role_id = #{roleId,jdbcType=INTEGER},
       content = #{content,jdbcType=VARCHAR},
-      calltime = #{calltime,jdbcType=TIMESTAMP}
+      calltime = #{calltime,jdbcType=TIMESTAMP},
+      stauts = #{stauts,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>
