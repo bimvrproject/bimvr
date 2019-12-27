@@ -1,6 +1,7 @@
 package com.jhbim.bimvr.dao.mapper;
 
 import com.jhbim.bimvr.dao.entity.pojo.UserFriend;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,5 +19,5 @@ public interface UserFriendMapper {
 
     int updateByPrimaryKey(UserFriend record);
 
-    List<String> friendList(String userphone, Integer islike);
+    List<String> friendList(@Param("userphone") String userphone, @Param("islike") Integer islike);
 }
