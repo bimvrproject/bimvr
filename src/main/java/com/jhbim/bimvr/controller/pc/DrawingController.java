@@ -97,4 +97,15 @@ public class DrawingController {
         drawingMapper.drawingbatchUpdate(ids);
         return new Result(ResultStatusCode.OK,"图纸拖动成功");
     }
+
+    /**
+     * 根据id删除图纸
+     * @param id 图纸id
+     * @return
+     */
+    @RequestMapping("/deleteDrawingByid")
+    public Result deleteDrawing(Integer id){
+        drawingMapper.deleteByPrimaryKey(id);
+        return new Result(ResultStatusCode.OK,"图纸删除成功...");
+    }
 }

@@ -116,4 +116,15 @@ public class ExcelToHtmlController {
         meterialMapper.batchUpdate(ids);
         return new Result(ResultStatusCode.OK,"Excel拖动成功");
     }
+
+    /**
+     * 根据id删除清单
+     * @param id 清单id
+     * @return
+     */
+    @RequestMapping("/deleteExcelByid")
+    public Result deleteExcel(Integer id){
+        meterialMapper.deleteByPrimaryKey(id);
+        return new Result(ResultStatusCode.OK,"清单删除成功...");
+    }
 }
