@@ -47,8 +47,12 @@ public class FriendController {
         if (list.isEmpty()){
             return new Result(ResultStatusCode.OK);
         }
+        Integer length = list.size();
         List<User> userList = userMapper.userList(list);
-        return new Result(ResultStatusCode.SUCCESS,userList);
+        Map<String,Object> map=new HashMap<>();
+        map.put("data",userList);
+        map.put("total",length);
+        return new Result(ResultStatusCode.SUCCESS,map);
     }
 
     /**
