@@ -240,5 +240,24 @@
       #{phone,jdbcType=VARCHAR}
     </foreach>
   </select>
-
+  <!--随机查询在线人员-->
+  <select id="randomgetAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user  where state = 1 ORDER BY RAND()
+  </select>
+  <!--排除共同好友在随机展示-->
+  <select id="randomgetAllisnotself" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where  phone not in(SELECT phone FROM `user_friend` where phone = #{phone,jdbcType=VARCHAR}) and state = 1
+    ORDER BY RAND()
+  </select>
+<!--根据手机号查询-->
+  <select id="getlistAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user  where  phone = #{phone,jdbcType=VARCHAR}
+  </select>
 </mapper>

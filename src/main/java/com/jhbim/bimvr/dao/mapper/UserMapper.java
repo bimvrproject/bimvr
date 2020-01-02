@@ -36,5 +36,12 @@ public interface UserMapper {
     //用户列表
     List<User> userList(List<String> list);
 
+    //随机查询在线人员
+    List<User> randomgetAll();
+    //排除共同好友在随机展示
+    List<User> randomgetAllisnotself(String phone);
+    //根据手机号查询
+    List<User> getlistAll(String phone);
+
 
 }
