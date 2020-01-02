@@ -14,13 +14,21 @@ public class GroupCluster implements Serializable {
 
     private Integer usergroupId;
 
-    private Integer userId;
+    private String userId;
 
     private Integer level;
 
     private Date createtime;
 
     private Integer type;
+
+    private String picture;
+
+    private String brief;
+
+    private String remark;
+
+    private Integer isrecommend;
 
     private static final long serialVersionUID = 1L;
 
@@ -64,12 +72,12 @@ public class GroupCluster implements Serializable {
         this.usergroupId = usergroupId;
     }
 
-    public Integer getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUserId(String userId) {
+        this.userId = userId == null ? null : userId.trim();
     }
 
     public Integer getLevel() {
@@ -96,6 +104,38 @@ public class GroupCluster implements Serializable {
         this.type = type;
     }
 
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture == null ? null : picture.trim();
+    }
+
+    public String getBrief() {
+        return brief;
+    }
+
+    public void setBrief(String brief) {
+        this.brief = brief == null ? null : brief.trim();
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark == null ? null : remark.trim();
+    }
+
+    public Integer getIsrecommend() {
+        return isrecommend;
+    }
+
+    public void setIsrecommend(Integer isrecommend) {
+        this.isrecommend = isrecommend;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -111,6 +151,10 @@ public class GroupCluster implements Serializable {
         sb.append(", level=").append(level);
         sb.append(", createtime=").append(createtime);
         sb.append(", type=").append(type);
+        sb.append(", picture=").append(picture);
+        sb.append(", brief=").append(brief);
+        sb.append(", remark=").append(remark);
+        sb.append(", isrecommend=").append(isrecommend);
         sb.append("]");
         return sb.toString();
     }
