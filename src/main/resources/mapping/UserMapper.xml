@@ -241,4 +241,12 @@
     </foreach>
   </select>
 
+  <select id="userSort" resultMap="BaseResultMap">
+    select * from user where phone in
+    <foreach item="phone" index="index" collection="list" open="(" separator="," close=")">
+      #{phone,jdbcType=VARCHAR}
+    </foreach>
+    order by convert(user_name using gbk) asc
+  </select>
+
 </mapper>

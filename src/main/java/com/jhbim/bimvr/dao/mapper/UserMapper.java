@@ -36,5 +36,6 @@ public interface UserMapper {
     //用户列表
     List<User> userList(List<String> list);
 
-
+    //用户排序
+    List<User> userSort(List<String> list);
 }

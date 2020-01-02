@@ -6,11 +6,13 @@ import com.jhbim.bimvr.dao.entity.vo.Result;
 import com.jhbim.bimvr.dao.mapper.UserFriendMapper;
 import com.jhbim.bimvr.dao.mapper.UserMapper;
 import com.jhbim.bimvr.system.enums.ResultStatusCode;
+import com.jhbim.bimvr.system.shiro.UserRegisterRealm;
 import com.jhbim.bimvr.utils.IdWorker;
 import com.jhbim.bimvr.utils.ShiroUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -53,6 +55,38 @@ public class FriendController {
         map.put("data",userList);
         map.put("total",length);
         return new Result(ResultStatusCode.SUCCESS,map);
+    }
+
+    /**
+     * 好友管理首字母排序
+     */
+    @GetMapping("/friendSort")
+    public Result friendSort(){
+        User user = ShiroUtil.getUser();
+        List<String> list = userFriendMapper.friendList(user.getPhone(),1);
+        if (list.isEmpty()){
+            return new Result(ResultStatusCode.OK);
+        }
+        Integer length = list.size();
+        List<User> userList = userMapper.userSort(list);
+        Map<String,Object> map=new HashMap<>();
+        map.put("data",userList);
+        map.put("total",length);
+        return new Result(ResultStatusCode.SUCCESS,map);
+    }
+
+    /**
+     * 删除好友
+     */
+    @GetMapping("/deleteFirend")
+    public Result deleteFirend(@RequestParam String phone){
+        User user = ShiroUtil.getUser();
+        int mine = userFriendMapper.deleteFriendphone(user.getPhone(), phone);
+        int friend = userFriendMapper.deleteFriendphone(phone,user.getPhone());
+        if (mine==1 || friend ==1 ){
+            return new Result(ResultStatusCode.SUCCESS,"删除成功");
+        }
+        return new Result(ResultStatusCode.FAIL,"删除失败");
     }
 
     /**

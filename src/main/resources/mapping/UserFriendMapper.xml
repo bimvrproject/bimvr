@@ -22,6 +22,10 @@
     delete from user_friend
     where id = #{id,jdbcType=VARCHAR}
   </delete>
+  <delete id="deleteFriendphone" parameterType="java.lang.String" >
+    delete from user_friend
+    where userphone = #{userphone,jdbcType=VARCHAR} and friendphone = #{friendphone,jdbcType=VARCHAR}
+  </delete>
   <insert id="insert" parameterType="com.jhbim.bimvr.dao.entity.pojo.UserFriend" >
     insert into user_friend (id, userphone, friendphone, 
       islike, type, message

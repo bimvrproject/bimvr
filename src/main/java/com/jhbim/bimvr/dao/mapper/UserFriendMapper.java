@@ -23,4 +23,9 @@ public interface UserFriendMapper {
     List<UserFriend> findByIslikeanduserphoneandtype(@Param("islike") Integer islike,@Param("userphone") String userphone,@Param("type") Integer type);
     //修改islike为1 成为共同好友
     int updateByuserphoneandfriendphoneandislike(@Param("userphone") String userphone,@Param("friendphone") String friendphone,@Param("islike") Integer islike);
+
+    //删除好友
+    int deleteFriendphone(@Param("userphone")String userphone,@Param("friendphone") String friendphone);
+
+
 }
