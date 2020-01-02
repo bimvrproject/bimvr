@@ -125,4 +125,24 @@
       set islike = #{islike,jdbcType=INTEGER}
        where  userphone = #{userphone,jdbcType=VARCHAR} and friendphone = #{friendphone,jdbcType=VARCHAR}
   </update>
+  <!--根据当前登录人的手机号查询-->
+  <select id="getuserphone" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user_friend
+    where userphone = #{userphone,jdbcType=VARCHAR}
+  </select>
+  <!-- 查询共同好友排除自己-->
+  <select id="getisnotuserphone" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+     FROM `user_friend` where   userphone = #{userphone,jdbcType=VARCHAR}
+      and  friendphone not in (SELECT friendphone FROM `user_friend` where friendphone = #{friendphone,jdbcType=VARCHAR} );
+  </select>
+  <!--根据islike 查询两者之间是不是好友  1同意 2拒绝 0搁置-->
+  <select id="getusephoneandfriendphone"  resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM `user_friend` where   userphone = #{userphone,jdbcType=VARCHAR} and friendphone = #{friendphone,jdbcType=VARCHAR}
+  </select>
 </mapper>

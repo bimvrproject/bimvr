@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author shuihu
@@ -163,5 +161,70 @@ public class FriendController {
         userFriendMapper.updateByuserphoneandfriendphoneandislike(userphone,friendphone,2);
         userFriendMapper.updateByuserphoneandfriendphoneandislike(friendphone,userphone,2);
         return new Result(ResultStatusCode.OK,"忽略成功...");
+    }
+
+    /**
+     * 查询好友右侧默认显示
+     *  1.根据有共同好友查询
+     *  2.随机显示
+     * @return
+     */
+    @RequestMapping("/Interests")
+    public Result Interests(){
+        Map<String,Object> map = new HashMap<>();
+        User user = ShiroUtil.getUser();
+        //查询本人是否有好友
+        List<UserFriend> userFriend = userFriendMapper.getuserphone(user.getPhone());
+        if(userFriend.size()==0){  //没有
+            //随机查询User表
+            List<User> userList = userMapper.randomgetAll();
+            map.put("data",userList);
+        }else{  //有
+            //存储所有的数据
+            List getAll = new ArrayList();
+            //接收共同好友的数据
+            List list = new ArrayList<>();
+            //查询本人的好友
+            List<UserFriend> userFriendList = userFriendMapper.getuserphone(user.getPhone());
+            for (UserFriend uf: userFriendList) {
+                //查询共同好友
+                List<UserFriend> userFriends = userFriendMapper.getisnotuserphone(uf.getFriendphone(),user.getPhone());
+                for (UserFriend ufs:userFriends) {
+                    list.add(ufs.getFriendphone());
+                }
+            }
+            //保存去除重复的好友数据
+            List removallist = new ArrayList();
+            //去重
+            for (int i=0;i<list.size();i++){
+                if(!removallist.contains(list.get(i))){
+                    removallist.add(list.get(i));
+                    getAll.add(removallist.get(i));
+                    //排除共同好友在随机
+                    List<User> userList = userMapper.randomgetAllisnotself((String) removallist.get(i));
+                    for (User u : userList) {
+                        getAll.add(u.getPhone());
+                    }
+                }
+            }
+            List<User> all = new ArrayList<>();
+            for(Object o : getAll){
+                User user1=userMapper.selectByPrimaryKey(o.toString());
+                all.add(user1);
+            }
+            map.put("data",all);
+        }
+        return new Result(ResultStatusCode.OK,map);
+    }
+
+    /**
+     * 根据islike 查询两者之间是不是好友  1同意 2拒绝 0搁置
+     * @param userphone 本人手机号
+     * @param friendphone 好友手机号
+     * @return
+     */
+    @RequestMapping("/getusephoneandfriendphone")
+    public Result getusephoneandfriendphone(String userphone,String friendphone){
+        return new Result(ResultStatusCode.OK,userFriendMapper.getusephoneandfriendphone(userphone,friendphone));
     }
 }
