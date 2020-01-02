@@ -6,6 +6,8 @@ import java.util.Date;
 public class GroupCluster implements Serializable {
     private Integer id;
 
+    private String groupno;
+
     private String groupname;
 
     private Integer roleId;
@@ -18,6 +20,8 @@ public class GroupCluster implements Serializable {
 
     private Date createtime;
 
+    private Integer type;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -26,6 +30,14 @@ public class GroupCluster implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getGroupno() {
+        return groupno;
+    }
+
+    public void setGroupno(String groupno) {
+        this.groupno = groupno == null ? null : groupno.trim();
     }
 
     public String getGroupname() {
@@ -76,6 +88,14 @@ public class GroupCluster implements Serializable {
         this.createtime = createtime;
     }
 
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -83,12 +103,14 @@ public class GroupCluster implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
+        sb.append(", groupno=").append(groupno);
         sb.append(", groupname=").append(groupname);
         sb.append(", roleId=").append(roleId);
         sb.append(", usergroupId=").append(usergroupId);
         sb.append(", userId=").append(userId);
         sb.append(", level=").append(level);
         sb.append(", createtime=").append(createtime);
+        sb.append(", type=").append(type);
         sb.append("]");
         return sb.toString();
     }

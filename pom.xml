@@ -232,6 +232,14 @@
     <build>
         <finalName>${project.artifactId}</finalName>
         <plugins>
+            <!--防止打jar之后找不到主类-->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.jhbim.bimvr.BimvrApplication</mainClass>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>

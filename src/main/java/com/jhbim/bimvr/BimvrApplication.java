@@ -38,6 +38,10 @@ public class BimvrApplication extends SpringBootServletInitializer {
         SpringApplication.run(BimvrApplication.class, args);
     }
 
+    @Override//为了打包springboot项目
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+        return builder.sources(this.getClass());
+    }
     @Bean
     public IdWorker idWorkker(){
         return new IdWorker(1, 1);
