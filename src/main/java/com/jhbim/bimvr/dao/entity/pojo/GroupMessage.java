@@ -6,7 +6,7 @@ import java.util.Date;
 public class GroupMessage implements Serializable {
     private String id;
 
-    private Integer groupId;
+    private String groupId;
 
     private Integer userId;
 
@@ -30,12 +30,12 @@ public class GroupMessage implements Serializable {
         this.id = id == null ? null : id.trim();
     }
 
-    public Integer getGroupId() {
+    public String getGroupId() {
         return groupId;
     }
 
-    public void setGroupId(Integer groupId) {
-        this.groupId = groupId;
+    public void setGroupId(String groupId) {
+        this.groupId = groupId == null ? null : groupId.trim();
     }
 
     public Integer getUserId() {
