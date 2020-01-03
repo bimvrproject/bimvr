@@ -251,7 +251,7 @@
     select
     <include refid="Base_Column_List" />
     from user
-    where phone not in(SELECT phone FROM user where phone = #{phone,jdbcType=VARCHAR}) and state = 1
+    where phone not in(SELECT phone FROM user where phone = #{phone,jdbcType=VARCHAR}) and state = 1 ORDER BY RAND()
   </select>
 <!--根据手机号查询-->
   <select id="getlistAll" resultMap="BaseResultMap">
