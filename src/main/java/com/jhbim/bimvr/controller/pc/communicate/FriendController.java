@@ -81,7 +81,7 @@ public class FriendController {
     }
 
     /**
-     * 根据是否是共同好友和手机号、类型查询
+     * 根据是否是共同好友和手机号、类型查询  登录上去显示增加你的好友信息 请求者与被请求者
      * @param userphone 手机号
      * @return
      */
@@ -145,40 +145,43 @@ public class FriendController {
             //随机查询User表
             List<User> userList = userMapper.randomgetAll();
             map.put("data",userList);
+//            System.out.println("空");
         }else{  //有
-            //存储所有的数据
-            List getAll = new ArrayList();
-            //接收共同好友的数据
-            List list = new ArrayList<>();
+//            System.out.println("非空");
             //查询本人的好友
+            List<User> getAlllist = new ArrayList();
+//            System.out.println("*********全部好友**********");
+            //全部的用户
+            List all=new ArrayList();
+            List<User> userList = userMapper.randomgetAllisnotself(user.getPhone());
+            //所有用户
+            for (int i = 0;i<userList.size();i++){
+                all.add(userList.get(i).getPhone());
+//                System.out.println(userList.get(i).getPhone());
+            }
+//            System.out.println("********共同好友***********");
+            //好友
+            List friendlist=new ArrayList();
             List<UserFriend> userFriendList = userFriendMapper.getuserphone(user.getPhone());
             for (UserFriend uf: userFriendList) {
-                //查询共同好友
-                List<UserFriend> userFriends = userFriendMapper.getisnotuserphone(uf.getFriendphone(),user.getPhone());
-                for (UserFriend ufs:userFriends) {
-                    list.add(ufs.getFriendphone());
-                }
+                friendlist.add(uf.getFriendphone());
+//                System.out.println(uf.getFriendphone());
             }
-            //保存去除重复的好友数据
-            List removallist = new ArrayList();
-            //去重
-            for (int i=0;i<list.size();i++){
-                if(!removallist.contains(list.get(i))){
-                    removallist.add(list.get(i));
-                    getAll.add(removallist.get(i));
-                    //排除共同好友在随机
-                    List<User> userList = userMapper.randomgetAllisnotself((String) removallist.get(i));
-                    for (User u : userList) {
-                        getAll.add(u.getPhone());
-                    }
-                }
+//            System.out.println("-----不同好友------");
+            //差集
+            all.removeAll(friendlist);
+            List num=new ArrayList();
+            Iterator<String> it=all.iterator();
+            while (it.hasNext()) {
+                num.add(it.next());
             }
-            List<User> all = new ArrayList<>();
-            for(Object o : getAll){
-                User user1=userMapper.selectByPrimaryKey(o.toString());
-                all.add(user1);
+            for (Object o:num){
+//                System.out.println(o);
+                User user1= userMapper.selectByPrimaryKey(o.toString());
+                getAlllist.add(user1);
             }
-            map.put("data",all);
+
+            map.put("data",getAlllist);
         }
         return new Result(ResultStatusCode.OK,map);
     }
