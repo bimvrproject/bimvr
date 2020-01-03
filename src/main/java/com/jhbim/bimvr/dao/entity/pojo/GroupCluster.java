@@ -10,13 +10,7 @@ public class GroupCluster implements Serializable {
 
     private String groupname;
 
-    private Integer roleId;
-
     private Integer usergroupId;
-
-    private String userId;
-
-    private Integer level;
 
     private Date createtime;
 
@@ -56,36 +50,12 @@ public class GroupCluster implements Serializable {
         this.groupname = groupname == null ? null : groupname.trim();
     }
 
-    public Integer getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
-    }
-
     public Integer getUsergroupId() {
         return usergroupId;
     }
 
     public void setUsergroupId(Integer usergroupId) {
         this.usergroupId = usergroupId;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId == null ? null : userId.trim();
-    }
-
-    public Integer getLevel() {
-        return level;
-    }
-
-    public void setLevel(Integer level) {
-        this.level = level;
     }
 
     public Date getCreatetime() {
@@ -145,10 +115,7 @@ public class GroupCluster implements Serializable {
         sb.append(", id=").append(id);
         sb.append(", groupno=").append(groupno);
         sb.append(", groupname=").append(groupname);
-        sb.append(", roleId=").append(roleId);
         sb.append(", usergroupId=").append(usergroupId);
-        sb.append(", userId=").append(userId);
-        sb.append(", level=").append(level);
         sb.append(", createtime=").append(createtime);
         sb.append(", type=").append(type);
         sb.append(", picture=").append(picture);

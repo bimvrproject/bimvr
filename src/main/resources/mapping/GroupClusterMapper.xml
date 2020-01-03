@@ -5,10 +5,7 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="groupno" property="groupno" jdbcType="VARCHAR" />
     <result column="groupname" property="groupname" jdbcType="VARCHAR" />
-    <result column="Role_id" property="roleId" jdbcType="INTEGER" />
     <result column="Usergroup_id" property="usergroupId" jdbcType="INTEGER" />
-    <result column="User_id" property="userId" jdbcType="VARCHAR" />
-    <result column="level" property="level" jdbcType="INTEGER" />
     <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
     <result column="type" property="type" jdbcType="INTEGER" />
     <result column="picture" property="picture" jdbcType="VARCHAR" />
@@ -17,8 +14,7 @@
     <result column="isrecommend" property="isrecommend" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, groupno, groupname, Role_id, Usergroup_id, User_id, level, createtime, type, 
-    picture, brief, remark, isrecommend
+    id, groupno, groupname, Usergroup_id, createtime, type, picture, brief, remark, isrecommend
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -32,13 +28,11 @@
   </delete>
   <insert id="insert" parameterType="com.jhbim.bimvr.dao.entity.pojo.GroupCluster" >
     insert into group_cluster (id, groupno, groupname, 
-      Role_id, Usergroup_id, User_id, 
-      level, createtime, type, 
+      Usergroup_id, createtime, type, 
       picture, brief, remark, 
       isrecommend)
     values (#{id,jdbcType=INTEGER}, #{groupno,jdbcType=VARCHAR}, #{groupname,jdbcType=VARCHAR}, 
-      #{roleId,jdbcType=INTEGER}, #{usergroupId,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, 
-      #{level,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, #{type,jdbcType=INTEGER}, 
+      #{usergroupId,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, #{type,jdbcType=INTEGER}, 
       #{picture,jdbcType=VARCHAR}, #{brief,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
       #{isrecommend,jdbcType=INTEGER})
   </insert>
@@ -54,17 +48,8 @@
       <if test="groupname != null" >
         groupname,
       </if>
-      <if test="roleId != null" >
-        Role_id,
-      </if>
       <if test="usergroupId != null" >
         Usergroup_id,
-      </if>
-      <if test="userId != null" >
-        User_id,
-      </if>
-      <if test="level != null" >
-        level,
       </if>
       <if test="createtime != null" >
         createtime,
@@ -95,17 +80,8 @@
       <if test="groupname != null" >
         #{groupname,jdbcType=VARCHAR},
       </if>
-      <if test="roleId != null" >
-        #{roleId,jdbcType=INTEGER},
-      </if>
       <if test="usergroupId != null" >
         #{usergroupId,jdbcType=INTEGER},
-      </if>
-      <if test="userId != null" >
-        #{userId,jdbcType=VARCHAR},
-      </if>
-      <if test="level != null" >
-        #{level,jdbcType=INTEGER},
       </if>
       <if test="createtime != null" >
         #{createtime,jdbcType=TIMESTAMP},
@@ -136,17 +112,8 @@
       <if test="groupname != null" >
         groupname = #{groupname,jdbcType=VARCHAR},
       </if>
-      <if test="roleId != null" >
-        Role_id = #{roleId,jdbcType=INTEGER},
-      </if>
       <if test="usergroupId != null" >
         Usergroup_id = #{usergroupId,jdbcType=INTEGER},
-      </if>
-      <if test="userId != null" >
-        User_id = #{userId,jdbcType=VARCHAR},
-      </if>
-      <if test="level != null" >
-        level = #{level,jdbcType=INTEGER},
       </if>
       <if test="createtime != null" >
         createtime = #{createtime,jdbcType=TIMESTAMP},
@@ -173,10 +140,7 @@
     update group_cluster
     set groupno = #{groupno,jdbcType=VARCHAR},
       groupname = #{groupname,jdbcType=VARCHAR},
-      Role_id = #{roleId,jdbcType=INTEGER},
       Usergroup_id = #{usergroupId,jdbcType=INTEGER},
-      User_id = #{userId,jdbcType=VARCHAR},
-      level = #{level,jdbcType=INTEGER},
       createtime = #{createtime,jdbcType=TIMESTAMP},
       type = #{type,jdbcType=INTEGER},
       picture = #{picture,jdbcType=VARCHAR},
