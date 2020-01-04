@@ -26,8 +26,6 @@ import java.util.*;
 @RestController
 @RequestMapping("/${version}/friend")
 public class FriendController {
-
-
     @Autowired
     private UserFriendMapper userFriendMapper;
 
@@ -148,6 +146,20 @@ public class FriendController {
     }
 
     /**
+     * 好友请求全部同意
+     * @return
+     */
+    @RequestMapping("/AgreedtoAll")
+    public Result AgreedtoAll(String[] userphone,String[] friendphone){
+        if(userphone.length==0 || friendphone.length==0){
+            return new Result(ResultStatusCode.BAD_REQUEST);
+        }
+        userFriendMapper.updateIslikeAll(userphone,friendphone,1);
+        userFriendMapper.updateIslikeAll(friendphone,userphone,1);
+        return new Result(ResultStatusCode.OK,"好友全部同意...");
+    }
+
+    /**
      * 好友拒绝(忽略好友)
      * @param userphone
      * @param friendphone
@@ -163,6 +175,21 @@ public class FriendController {
         return new Result(ResultStatusCode.OK,"忽略成功...");
     }
 
+    /**
+     * 好友全部忽略
+     * @param userphone
+     * @param friendphone
+     * @return
+     */
+    @RequestMapping("/RefusedtoAll")
+    public Result RefusedtoAll(String[] userphone,String[] friendphone){
+        if(userphone.length==0 || friendphone.length==0){
+            return new Result(ResultStatusCode.BAD_REQUEST);
+        }
+        userFriendMapper.updateIslikeAll(userphone,friendphone,2);
+        userFriendMapper.updateIslikeAll(friendphone,userphone,2);
+        return new Result(ResultStatusCode.OK,"好友全部忽略...");
+    }
     /**
      * 查询好友右侧默认显示
      *  1.根据有共同好友查询
@@ -228,6 +255,13 @@ public class FriendController {
      */
     @RequestMapping("/getusephoneandfriendphone")
     public Result getusephoneandfriendphone(String userphone,String friendphone){
-        return new Result(ResultStatusCode.OK,userFriendMapper.getusephoneandfriendphone(userphone,friendphone));
+        Map<String,Object> map = new HashMap<>();
+        UserFriend userFriend = userFriendMapper.getusephoneandfriendphone(userphone,friendphone);
+        if(userFriend == null){
+            map.put("islike",0);
+            return new Result(ResultStatusCode.OK,map);
+        }
+        map.put("islike",userFriend.getIslike());
+        return new Result(ResultStatusCode.OK,map);
     }
 }

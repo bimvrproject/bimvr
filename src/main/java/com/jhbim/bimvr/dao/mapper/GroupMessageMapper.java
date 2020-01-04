@@ -2,6 +2,8 @@ package com.jhbim.bimvr.dao.mapper;
 
 import com.jhbim.bimvr.dao.entity.pojo.GroupMessage;
 
+import java.util.List;
+
 public interface GroupMessageMapper {
     int deleteByPrimaryKey(String id);
 
@@ -14,4 +16,7 @@ public interface GroupMessageMapper {
     int updateByPrimaryKeySelective(GroupMessage record);
 
     int updateByPrimaryKey(GroupMessage record);
+
+    //推荐群根据热度显示
+    List<GroupMessage> getAllheat();
 }

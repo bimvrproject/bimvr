@@ -125,4 +125,11 @@
       grtime = #{grtime,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  <!--查看本人是否在所对应的群组里-->
+  <select id="fingByGroupIdandIslike" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from group_record
+    where groupid = #{groupid,jdbcType=VARCHAR} and  userphone = #{userphone,jdbcType=VARCHAR}
+  </select>
 </mapper>

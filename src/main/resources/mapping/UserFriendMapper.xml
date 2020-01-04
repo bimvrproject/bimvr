@@ -145,4 +145,17 @@
     <include refid="Base_Column_List" />
     FROM `user_friend` where   userphone = #{userphone,jdbcType=VARCHAR} and friendphone = #{friendphone,jdbcType=VARCHAR}
   </select>
+  <!--全部忽略或全部同意-->
+  <update id="updateIslikeAll">
+      update user_friend
+            set islike = #{islike,jdbcType=INTEGER}
+             where  userphone in
+                  <foreach collection="userphone" item="item" index="index" open="(" separator="," close=")">
+                    #{item}
+                  </foreach>
+              and friendphone in
+                  <foreach collection="friendphone" item="item" index="index" open="(" separator="," close=")">
+                    #{item}
+                  </foreach>
+  </update>
 </mapper>

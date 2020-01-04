@@ -23,6 +23,8 @@ public interface UserFriendMapper {
     List<UserFriend> findByIslikeanduserphoneandtype(@Param("islike") Integer islike,@Param("userphone") String userphone,@Param("type") Integer type);
     //修改islike为1 成为共同好友
     int updateByuserphoneandfriendphoneandislike(@Param("userphone") String userphone,@Param("friendphone") String friendphone,@Param("islike") Integer islike);
+    //全部忽略或全部同意
+    int updateIslikeAll(@Param("userphone") String [] userphone,@Param("friendphone") String[] friendphone,@Param("islike") Integer islike);
     //根据当前登录人的手机号查询
     List<UserFriend> getuserphone(String phone);
     //查询共同好友排除自己

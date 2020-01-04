@@ -72,4 +72,19 @@ public class GroupController {
         }
         return new Result(ResultStatusCode.FAIL,"创建群失败");
     }
+
+    /**
+     * 根据群号和群昵称查询
+     * @param groupnoandname
+     * @return
+     */
+    @RequestMapping("/findBygroupnoandgroupname")
+    public Result findBygroupnoandgroupname(String groupnoandname){
+        if(groupnoandname.isEmpty()){
+            return new Result(ResultStatusCode.BAD_REQUEST);
+        }
+        return new Result(ResultStatusCode.OK,groupClusterMapper.findBygroupnoandgroupname(groupnoandname,groupnoandname));
+    }
+
+
 }

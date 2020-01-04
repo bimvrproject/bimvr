@@ -3,7 +3,7 @@
 <mapper namespace="com.jhbim.bimvr.dao.mapper.GroupMessageMapper" >
   <resultMap id="BaseResultMap" type="com.jhbim.bimvr.dao.entity.pojo.GroupMessage" >
     <id column="id" property="id" jdbcType="VARCHAR" />
-    <result column="Group_id" property="groupId" jdbcType="INTEGER" />
+    <result column="Group_id" property="groupId" jdbcType="VARCHAR" />
     <result column="User_Id" property="userId" jdbcType="INTEGER" />
     <result column="Role_id" property="roleId" jdbcType="INTEGER" />
     <result column="content" property="content" jdbcType="VARCHAR" />
@@ -28,7 +28,7 @@
     insert into group_message (id, Group_id, User_Id, 
       Role_id, content, calltime, 
       stauts, type)
-    values (#{id,jdbcType=VARCHAR}, #{groupId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=VARCHAR}, #{groupId,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, 
       #{roleId,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{calltime,jdbcType=TIMESTAMP}, 
       #{stauts,jdbcType=INTEGER}, #{type,jdbcType=INTEGER})
   </insert>
@@ -65,7 +65,7 @@
         #{id,jdbcType=VARCHAR},
       </if>
       <if test="groupId != null" >
-        #{groupId,jdbcType=INTEGER},
+        #{groupId,jdbcType=VARCHAR},
       </if>
       <if test="userId != null" >
         #{userId,jdbcType=INTEGER},
@@ -91,7 +91,7 @@
     update group_message
     <set >
       <if test="groupId != null" >
-        Group_id = #{groupId,jdbcType=INTEGER},
+        Group_id = #{groupId,jdbcType=VARCHAR},
       </if>
       <if test="userId != null" >
         User_Id = #{userId,jdbcType=INTEGER},
@@ -116,7 +116,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.jhbim.bimvr.dao.entity.pojo.GroupMessage" >
     update group_message
-    set Group_id = #{groupId,jdbcType=INTEGER},
+    set Group_id = #{groupId,jdbcType=VARCHAR},
       User_Id = #{userId,jdbcType=INTEGER},
       Role_id = #{roleId,jdbcType=INTEGER},
       content = #{content,jdbcType=VARCHAR},
@@ -125,4 +125,8 @@
       type = #{type,jdbcType=INTEGER}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+    <!--推荐群根据热度显示-->
+    <select id="getAllheat" resultMap="BaseResultMap">
+        SELECT COUNT(Group_id),Group_id FROM `group_message` GROUP BY Group_id ORDER BY COUNT(Group_id) desc
+    </select>
 </mapper>
