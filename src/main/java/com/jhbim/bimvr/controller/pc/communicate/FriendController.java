@@ -138,6 +138,7 @@ public class FriendController {
             addfriend.setPicture(user.getPricture());
             addfriend.setMessage(u.getMessage());
             addfriend.setIcon(role.getImage());
+            addfriend.setPhone(user.getPhone());
             addfriendlist.add(addfriend);
             System.out.println(addfriend.getName());
         }

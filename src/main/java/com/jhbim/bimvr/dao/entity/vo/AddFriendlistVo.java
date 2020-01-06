@@ -1,22 +1,23 @@
 package com.jhbim.bimvr.dao.entity.vo;
 
-public class Addfriendlist {
+public class AddFriendlistVo {
+    //照片
     private String picture;
-
+    //昵称
     private String name;
-
+    //会员icon
     private String icon;
-
+    //消息
     private String message;
 
-    private String userphone;
+    private String phone;
 
-    public String getUserphone() {
-        return userphone;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setUserphone(String userphone) {
-        this.userphone = userphone;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getPicture() {

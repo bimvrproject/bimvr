@@ -1,7 +1,5 @@
 package com.jhbim.bimvr.dao.entity.pojo;
 
-import com.jhbim.bimvr.dao.entity.vo.Addfriendlist;
-
 import java.io.Serializable;
 
 public class Role implements Serializable {
