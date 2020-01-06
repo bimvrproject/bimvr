@@ -3,13 +3,12 @@ package com.jhbim.bimvr.controller.pc.communicate;
 import com.jhbim.bimvr.dao.entity.pojo.Role;
 import com.jhbim.bimvr.dao.entity.pojo.User;
 import com.jhbim.bimvr.dao.entity.pojo.UserFriend;
-import com.jhbim.bimvr.dao.entity.vo.Addfriendlist;
+import com.jhbim.bimvr.dao.entity.vo.AddfriendlistVo;
 import com.jhbim.bimvr.dao.entity.vo.Result;
 import com.jhbim.bimvr.dao.mapper.RoleMapper;
 import com.jhbim.bimvr.dao.mapper.UserFriendMapper;
 import com.jhbim.bimvr.dao.mapper.UserMapper;
 import com.jhbim.bimvr.system.enums.ResultStatusCode;
-import com.jhbim.bimvr.system.shiro.UserRegisterRealm;
 import com.jhbim.bimvr.utils.IdWorker;
 import com.jhbim.bimvr.utils.ShiroUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -128,14 +127,21 @@ public class FriendController {
             return new Result(ResultStatusCode.BAD_REQUEST);
         }
         Map<String,Object> map = new HashMap<>();
-        List<String> list = new ArrayList<>();
         List<UserFriend> userFriendList = userFriendMapper.findByIslikeanduserphoneandtype(0,userphone,1);
-        for (UserFriend userFriend :userFriendList) {
-            list.add(userFriend.getFriendphone());
+        List<AddfriendlistVo> addfriendlist = new ArrayList<>();
+        for (UserFriend u : userFriendList) {
+            AddfriendlistVo addfriend = new AddfriendlistVo();
+            User user = userMapper.selectByPrimaryKey(u.getFriendphone());
+            Role role = roleMapper.selectByPrimaryKey(user.getRoleId());
+            addfriend.setName(user.getUserName());
+            addfriend.setPicture(user.getPricture());
+            addfriend.setMessage(u.getMessage());
+            addfriend.setIcon(role.getImage());
+            addfriendlist.add(addfriend);
+            System.out.println(addfriend.getName());
         }
-        List<User> userList = userMapper.userList(list);
         map.put("count",userFriendList.size());
-        map.put("data",userList);
+        map.put("data",addfriendlist);
         return new Result(ResultStatusCode.OK,map);
     }
 
