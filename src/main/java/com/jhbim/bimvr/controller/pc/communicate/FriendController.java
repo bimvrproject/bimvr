@@ -128,22 +128,14 @@ public class FriendController {
             return new Result(ResultStatusCode.BAD_REQUEST);
         }
         Map<String,Object> map = new HashMap<>();
+        List<String> list = new ArrayList<>();
         List<UserFriend> userFriendList = userFriendMapper.findByIslikeanduserphoneandtype(0,userphone,1);
-        List<Addfriendlist> addfriendlist = new ArrayList<>();
-        Addfriendlist addfriend = new Addfriendlist();
-        for (UserFriend u : userFriendList) {
-            User user = userMapper.selectByPrimaryKey(u.getFriendphone());
-            Role role = roleMapper.selectByPrimaryKey(user.getRoleId());
-                addfriend.setName(user.getUserName());
-                addfriend.setPicture(user.getPricture());
-                addfriend.setMessage(u.getMessage());
-                addfriend.setIcon(role.getImage());
-            addfriendlist.add(addfriend);
-
+        for (UserFriend userFriend :userFriendList) {
+            list.add(userFriend.getFriendphone());
         }
-        System.out.println(addfriendlist.size());
+        List<User> userList = userMapper.userList(list);
         map.put("count",userFriendList.size());
-        map.put("data",addfriendlist);
+        map.put("data",userList);
         return new Result(ResultStatusCode.OK,map);
     }
 

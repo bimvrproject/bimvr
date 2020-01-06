@@ -1,8 +1,10 @@
 package com.jhbim.bimvr.controller.pc.communicate;
 
+import com.jhbim.bimvr.dao.entity.pojo.GroupCluster;
 import com.jhbim.bimvr.dao.entity.pojo.GroupRecord;
 import com.jhbim.bimvr.dao.entity.pojo.User;
 import com.jhbim.bimvr.dao.entity.vo.Result;
+import com.jhbim.bimvr.dao.mapper.GroupClusterMapper;
 import com.jhbim.bimvr.dao.mapper.GroupRecordMapper;
 import com.jhbim.bimvr.system.enums.ResultStatusCode;
 import com.jhbim.bimvr.utils.ShiroUtil;
@@ -10,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -18,7 +22,8 @@ import java.util.Map;
 public class GroupRecordController {
     @Resource
     GroupRecordMapper groupRecordMapper;
-
+    @Resource
+    GroupClusterMapper groupClusterMapper;
     /**
      * 查看本人是否在所对应的群组里
      * @param groupid 群号
@@ -53,7 +58,16 @@ public class GroupRecordController {
      */
     @RequestMapping("/finbyusergroup")
     public Result finbyusergroup(){
+        Map<String,Object> map =new HashMap<>();
         User user = ShiroUtil.getUser();
-        return new Result(ResultStatusCode.OK,groupRecordMapper.findByusergroup(user.getPhone(),"1"));
+        List<String> list = new ArrayList<>();
+        List<GroupRecord> groupRecordList = groupRecordMapper.findByusergroup(user.getPhone(),"1");
+        for (GroupRecord u : groupRecordList) {
+            list.add(u.getGroupid());
+        }
+        List<GroupCluster> groupClusters = groupClusterMapper.groupcluster(list);
+        map.put("data",groupClusters);
+        map.put("count",groupClusters.size());
+        return new Result(ResultStatusCode.OK,groupClusters);
     }
 }
