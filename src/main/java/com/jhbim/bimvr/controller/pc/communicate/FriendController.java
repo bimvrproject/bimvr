@@ -130,7 +130,7 @@ public class FriendController {
         List<UserFriend> userFriendList = userFriendMapper.findByIslikeanduserphoneandtype(0,userphone,1);
         List<AddFriendlistVo> addfriendlist = new ArrayList<>();
         for (UserFriend u : userFriendList) {
-            //vo类
+            //AddFriendlistVo类
             AddFriendlistVo addfriend = new AddFriendlistVo();
             User user = userMapper.selectByPrimaryKey(u.getFriendphone());
             Role role = roleMapper.selectByPrimaryKey(user.getRoleId());
