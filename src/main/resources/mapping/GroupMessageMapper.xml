@@ -129,4 +129,10 @@
     <select id="getAllheat" resultMap="BaseResultMap">
         SELECT COUNT(Group_id),Group_id FROM `group_message` GROUP BY Group_id ORDER BY COUNT(Group_id) desc
     </select>
+  <!--查询未读消息条数0未读 1 已读-->
+  <select id="getusercount" resultMap="BaseResultMap">
+      SELECT
+      <include refid="Base_Column_List" />
+       FROM `group_message` where Group_id = #{groupId,jdbcType=VARCHAR} and User_Id = #{userId,jdbcType=INTEGER}
+  </select>
 </mapper>
