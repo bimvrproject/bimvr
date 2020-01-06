@@ -3,7 +3,7 @@ package com.jhbim.bimvr.controller.pc.communicate;
 import com.jhbim.bimvr.dao.entity.pojo.Role;
 import com.jhbim.bimvr.dao.entity.pojo.User;
 import com.jhbim.bimvr.dao.entity.pojo.UserFriend;
-import com.jhbim.bimvr.dao.entity.vo.AddfriendlistVo;
+import com.jhbim.bimvr.dao.entity.vo.AddFriendlistVo;
 import com.jhbim.bimvr.dao.entity.vo.Result;
 import com.jhbim.bimvr.dao.mapper.RoleMapper;
 import com.jhbim.bimvr.dao.mapper.UserFriendMapper;
@@ -128,9 +128,9 @@ public class FriendController {
         }
         Map<String,Object> map = new HashMap<>();
         List<UserFriend> userFriendList = userFriendMapper.findByIslikeanduserphoneandtype(0,userphone,1);
-        List<AddfriendlistVo> addfriendlist = new ArrayList<>();
+        List<AddFriendlistVo> addfriendlist = new ArrayList<>();
         for (UserFriend u : userFriendList) {
-            AddfriendlistVo addfriend = new AddfriendlistVo();
+            AddFriendlistVo addfriend = new AddFriendlistVo();
             User user = userMapper.selectByPrimaryKey(u.getFriendphone());
             Role role = roleMapper.selectByPrimaryKey(user.getRoleId());
             addfriend.setName(user.getUserName());
