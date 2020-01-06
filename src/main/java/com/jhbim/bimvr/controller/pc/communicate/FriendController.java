@@ -140,7 +140,6 @@ public class FriendController {
             addfriend.setIcon(role.getImage());
             addfriend.setPhone(user.getPhone());
             addfriendlist.add(addfriend);
-            System.out.println(addfriend.getName());
         }
         map.put("count",userFriendList.size());
         map.put("data",addfriendlist);
