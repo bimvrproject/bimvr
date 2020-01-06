@@ -132,4 +132,11 @@
     from group_record
     where groupid = #{groupid,jdbcType=VARCHAR} and  userphone = #{userphone,jdbcType=VARCHAR}
   </select>
+  <!--我加入的群-->
+  <select id="findByusergroup"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from group_record
+    where   userphone = #{userphone,jdbcType=VARCHAR} and islike = #{islike,jdbcType=INTEGER}
+  </select>
 </mapper>

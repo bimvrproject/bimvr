@@ -86,5 +86,35 @@ public class GroupController {
         return new Result(ResultStatusCode.OK,groupClusterMapper.findBygroupnoandgroupname(groupnoandname,groupnoandname));
     }
 
+    /**
+     * 请求进群记录
+     * @param groupid 群号
+     * @param message 内容
+     * @return
+     */
+    @RequestMapping("/Ingroupof")
+    public Result Ingroupof(String groupid,String message){
+        if(groupid.isEmpty() || message.isEmpty()){
+            return new Result(ResultStatusCode.BAD_REQUEST);
+        }
+        User user = ShiroUtil.getUser();
+        GroupRecord groupRecord = new GroupRecord();
+        groupRecord.setId(idWorker.nextId()+"");
+        groupRecord.setGroupid(groupid);
+        groupRecord.setRoleId(user.getRoleId());
+        groupRecord.setUserphone(user.getPhone());
+        groupRecord.setLevel(3);
+        groupRecord.setIslike(0);
+        groupRecord.setMessage(message);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        groupRecord.setGrtime(sdf.format(new Date()));
+        int i= groupRecordMapper.insertSelective(groupRecord);
+        if(i==1){
+            return new Result(ResultStatusCode.OK,"请求发送成功");
+        }
+        return new Result(ResultStatusCode.FAIL,"请求发送失败");
+    }
+
+
 
 }

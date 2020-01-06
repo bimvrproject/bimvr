@@ -42,7 +42,7 @@ public class GroupMessageController {
     }
 
     /**
-     * 增加群记录
+     * 增加群聊天记录
      * @param groupId  群号
      * @param content   内容
      * @return

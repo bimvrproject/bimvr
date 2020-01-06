@@ -36,4 +36,24 @@ public class GroupRecordController {
         map.put("islike",groupRecord.getIslike());
         return new Result(ResultStatusCode.OK,map);
     }
+
+    /**
+     * 群主、管理员查看请求进群记录
+     * @return
+     */
+    public Result notice(){
+        User user = ShiroUtil.getUser();
+        //判断登录人在群里面的权限  如果是权限
+        return  new Result(ResultStatusCode.OK);
+    }
+
+    /**
+     * 我加入的群
+     * @return
+     */
+    @RequestMapping("/finbyusergroup")
+    public Result finbyusergroup(){
+        User user = ShiroUtil.getUser();
+        return new Result(ResultStatusCode.OK,groupRecordMapper.findByusergroup(user.getPhone(),"1"));
+    }
 }

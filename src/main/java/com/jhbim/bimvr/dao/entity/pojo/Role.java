@@ -1,5 +1,7 @@
 package com.jhbim.bimvr.dao.entity.pojo;
 
+import com.jhbim.bimvr.dao.entity.vo.Addfriendlist;
+
 import java.io.Serializable;
 
 public class Role implements Serializable {
@@ -42,7 +44,7 @@ public class Role implements Serializable {
     }
 
     public void setImage(String image) {
-        this.image = image == null ? null : image.trim();
+        this.image = image;
     }
 
     @Override

@@ -24,7 +24,7 @@ public class UserMessageController {
 
 
     /**
-     * 存储聊天记录
+     * 存储好友聊天记录
      * @param friendphone  朋友手机号
      * @param information   聊天内容
      * @return
