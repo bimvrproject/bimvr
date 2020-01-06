@@ -1,10 +1,8 @@
 package com.jhbim.bimvr.controller.pc.communicate;
 
 import com.jhbim.bimvr.dao.entity.pojo.GroupCluster;
-import com.jhbim.bimvr.dao.entity.pojo.GroupMessage;
 import com.jhbim.bimvr.dao.entity.pojo.GroupRecord;
 import com.jhbim.bimvr.dao.entity.pojo.User;
-import com.jhbim.bimvr.dao.entity.vo.GroupMessageVo;
 import com.jhbim.bimvr.dao.entity.vo.Result;
 import com.jhbim.bimvr.dao.mapper.GroupClusterMapper;
 import com.jhbim.bimvr.dao.mapper.GroupMessageMapper;
@@ -77,24 +75,8 @@ public class GroupRecordController {
         }
         //从list集合得到群组号查询
         List<GroupCluster> groupClusters = groupClusterMapper.groupcluster(list);
-        for (GroupCluster g : groupClusters) {
-            System.out.println(g.getGroupno()+"---");
-            GroupMessageVo groupMessageVo = new GroupMessageVo();
-            List<GroupMessage> groupMessageList = groupMessageMapper.getusercount(user.getUserId(),g.getGroupno());
-            for (GroupMessage groupMessage: groupMessageList) {
-                System.out.println(groupMessage.getContent());
-            }
-//            groupMessageVo.setClusterList(groupClusters);
-//            groupMessageVo.setCount(groupMessageList.size());
-
-            map.put("data",groupMessageVo);
-        }
-
-
-//        groupMessageVo.setClusterList(groupClusters);
-//        groupMessageVo.setCount(1);
-
-//        map.put("count",groupClusters.size());
-        return new Result(ResultStatusCode.OK,map);
+        map.put("data",groupClusters);
+        map.put("count",groupClusters.size());
+        return new Result(ResultStatusCode.OK,groupClusters);
     }
 }
