@@ -22,4 +22,6 @@ public interface GroupClusterMapper {
     GroupCluster findByGroupNo(String groupno);
     //根据群号和群昵称查询
     List<GroupCluster> findBygroupnoandgroupname(@Param("groupno") String groupno, @Param("groupname") String groupname);
+    //根据群组查询
+    List<GroupCluster> groupcluster(List<String> groupid);
 }
