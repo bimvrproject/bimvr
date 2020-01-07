@@ -125,4 +125,15 @@
       stauts = #{stauts,jdbcType=INTEGER}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  <update id="updateMessage">
+    update user_message
+    set stauts = #{stauts,jdbcType=INTEGER}
+      where Hairuser_phone = #{hairuserPhone,jdbcType=VARCHAR} and
+      Closeduser_phone = #{closeduserPhone,jdbcType=VARCHAR}
+  </update>
+
+  <select id="messaheList"  resultMap="BaseResultMap">
+    select * from user_message where Hairuser_phone = #{hairuserPhone,jdbcType=VARCHAR} and
+      Closeduser_phone = #{closeduserPhone,jdbcType=VARCHAR}
+  </select>
 </mapper>

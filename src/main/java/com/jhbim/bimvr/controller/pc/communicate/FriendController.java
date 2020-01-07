@@ -5,6 +5,7 @@ import com.jhbim.bimvr.dao.entity.pojo.User;
 import com.jhbim.bimvr.dao.entity.pojo.UserFriend;
 import com.jhbim.bimvr.dao.entity.vo.AddFriendlistVo;
 import com.jhbim.bimvr.dao.entity.vo.Result;
+import com.jhbim.bimvr.dao.entity.vo.UserMessageVo;
 import com.jhbim.bimvr.dao.mapper.RoleMapper;
 import com.jhbim.bimvr.dao.mapper.UserFriendMapper;
 import com.jhbim.bimvr.dao.mapper.UserMapper;
@@ -49,12 +50,16 @@ public class FriendController {
         if (list.isEmpty()){
             return new Result(ResultStatusCode.OK);
         }
-        Integer length = list.size();
-        List<User> userList = userMapper.userList(list);
-        Map<String,Object> map=new HashMap<>();
-        map.put("data",userList);
-        map.put("total",length);
-        return new Result(ResultStatusCode.SUCCESS,map);
+        List<UserMessageVo> userMessageVos=new ArrayList<>();
+        list.stream().forEach(mess->{
+            UserMessageVo userMessageVo = userMapper.userListMessage(mess);
+            if (userMessageVo.getUnread() == 0){
+                userMessageVo = userMapper.userLists(mess);
+                userMessageVo.setUnread(0);
+            }
+            userMessageVos.add(userMessageVo);
+        });
+        return new Result(ResultStatusCode.SUCCESS,userMessageVos);
     }
 
     /**
