@@ -7,11 +7,14 @@ import com.jhbim.bimvr.dao.mapper.UserMessageMapper;
 import com.jhbim.bimvr.system.enums.ResultStatusCode;
 import com.jhbim.bimvr.utils.IdWorker;
 import com.jhbim.bimvr.utils.ShiroUtil;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping("/${version}/usermessage")
@@ -48,4 +51,23 @@ public class UserMessageController {
         }
         return new Result(ResultStatusCode.FAIL);
     }
+
+    /**
+     * 获取未读消息
+     * @param phone
+     * @return
+     */
+    @GetMapping("/getMessages")
+    public Result getMessages(@RequestParam String phone){
+        User user = ShiroUtil.getUser();
+        List<UserMessage> userMessages = userMessageMapper.messaheList(phone, user.getPhone());
+        if (userMessages.size()>0){
+            int i = userMessageMapper.updateMessage(1,phone, user.getPhone());
+            if (i<0){
+                return new Result(ResultStatusCode.FAIL,"状态修改失败");
+            }
+        }
+        return new Result(ResultStatusCode.SUCCESS,userMessages);
+    }
+
 }

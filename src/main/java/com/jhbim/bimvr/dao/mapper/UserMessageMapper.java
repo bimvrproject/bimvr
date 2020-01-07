@@ -1,6 +1,9 @@
 package com.jhbim.bimvr.dao.mapper;
 
 import com.jhbim.bimvr.dao.entity.pojo.UserMessage;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface UserMessageMapper {
     int deleteByPrimaryKey(String id);
@@ -14,4 +17,8 @@ public interface UserMessageMapper {
     int updateByPrimaryKeySelective(UserMessage record);
 
     int updateByPrimaryKey(UserMessage record);
+
+    List<UserMessage> messaheList(@Param("hairuserPhone") String hairuserPhone, @Param("closeduserPhone")String closeduserPhone );
+
+    int updateMessage(@Param("stauts")Integer stauts,@Param("hairuserPhone") String hairuserPhone, @Param("closeduserPhone")String closeduserPhone);
 }
