@@ -122,7 +122,6 @@ public class FriendController {
         uf.setType(1);
         uf.setMessage(message);
         userFriendMapper.insertSelective(uf);
-
         return new Result(ResultStatusCode.OK,"好友请求发送成功...");
     }
 
