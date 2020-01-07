@@ -16,6 +16,13 @@
     <result column="companyname" property="companyname" jdbcType="VARCHAR" />
     <result column="state" property="state" jdbcType="INTEGER" />
   </resultMap>
+  <resultMap id="ResultList" type="com.jhbim.bimvr.dao.entity.vo.UserMessageVo">
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="login_flag" property="loginFlag" jdbcType="INTEGER" />
+    <result column="pricture" property="pricture" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+  </resultMap>
   <sql id="Base_Column_List" >
     user_id, role_id, user_name, password, phone, create_time, updata_time, login_flag, 
     pricture, posotion, remarks, companyname, state
@@ -266,6 +273,12 @@
       #{phone,jdbcType=VARCHAR}
     </foreach>
     order by convert(user_name using gbk) asc
+  </select>
+
+  <select id="userListMessage"  parameterType="java.lang.String" resultMap="ResultList">
+   select user.phone,user.user_name ,user.pricture,user.login_flag,user.state,count(user_message.stauts) as unread
+    from user  left join user_message on user.phone = user_message.Hairuser_phone
+    and user.phone = #{phone,jdbcType=VARCHAR}
   </select>
 
 </mapper>
