@@ -55,6 +55,7 @@ public class FriendController {
             UserMessageVo userMessageVo = userMapper.userListMessage(mess);
             if (userMessageVo.getUnread() == 0){
                 userMessageVo = userMapper.userLists(mess);
+                userMessageVo.setUnread(0);
             }
             userMessageVos.add(userMessageVo);
         });
