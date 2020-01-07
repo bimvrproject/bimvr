@@ -31,9 +31,10 @@ public interface UserFriendMapper {
     List<UserFriend> getisnotuserphone(@Param("userphone") String userphone,@Param("friendphone") String friendphone);
     //根据islike 查询两者之间是不是好友  1同意 2拒绝 0搁置
     UserFriend getusephoneandfriendphone(@Param("userphone") String userphone,@Param("friendphone") String friendphone);
-
     //删除好友
     int deleteFriendphone(@Param("userphone")String userphone,@Param("friendphone") String friendphone);
+    //阻止重复增加好友
+    UserFriend getisnotexist(@Param("userphone") String userphone,@Param("friendphone") String friendphone,@Param("type") Integer type);
 
 
 }

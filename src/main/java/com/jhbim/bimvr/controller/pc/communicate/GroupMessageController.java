@@ -3,9 +3,11 @@ package com.jhbim.bimvr.controller.pc.communicate;
 import com.jhbim.bimvr.dao.entity.pojo.GroupCluster;
 import com.jhbim.bimvr.dao.entity.pojo.GroupMessage;
 import com.jhbim.bimvr.dao.entity.pojo.User;
+import com.jhbim.bimvr.dao.entity.vo.GroupMessageVo;
 import com.jhbim.bimvr.dao.entity.vo.Result;
 import com.jhbim.bimvr.dao.mapper.GroupClusterMapper;
 import com.jhbim.bimvr.dao.mapper.GroupMessageMapper;
+import com.jhbim.bimvr.dao.mapper.UserMapper;
 import com.jhbim.bimvr.system.enums.ResultStatusCode;
 import com.jhbim.bimvr.utils.IdWorker;
 import com.jhbim.bimvr.utils.ShiroUtil;
@@ -26,6 +28,8 @@ public class GroupMessageController {
     GroupClusterMapper groupClusterMapper;
     @Resource
     IdWorker idWorker;
+    @Resource
+    UserMapper userMapper;
     /**
      * 推荐群根据热度显示
      * @return
@@ -68,4 +72,29 @@ public class GroupMessageController {
         return new Result(ResultStatusCode.FAIL);
     }
 
+    /**
+     * 根据群id查询里面的内容
+     * @param groupno 群id
+     * @return
+     */
+    @RequestMapping("/readthecontent")
+    public Result readthecontent(String groupno){
+        User user = ShiroUtil.getUser();
+        if(groupno.isEmpty()){
+            return new Result(ResultStatusCode.BAD_REQUEST);
+        }
+        List<GroupMessageVo> groupMessageVoList = new ArrayList<>();
+        List<GroupMessage> groupMessageList = groupMessageMapper.readthecontent(groupno);
+        for (GroupMessage g : groupMessageList) {
+            List<User> userList = userMapper.findByuserid(g.getUserId());
+            for (User u : userList) {
+                GroupMessageVo groupMessageVo = new GroupMessageVo();
+                groupMessageVo.setUsername(u.getUserName());
+                groupMessageVo.setPicture(u.getPricture());
+                groupMessageVo.setMessage(g.getContent());
+                groupMessageVoList.add(groupMessageVo);
+            }
+        }
+        return new Result(ResultStatusCode.OK,groupMessageVoList);
+    }
 }

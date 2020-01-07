@@ -42,8 +42,8 @@ public interface UserMapper {
     List<User> randomgetAllisnotself(String phone);
     //根据手机号查询
     List<User> getlistAll(String phone);
-
-
     //用户排序
     List<User> userSort(List<String> list);
+    //根据用户id查询
+    List<User> findByuserid(Integer userid);
 }

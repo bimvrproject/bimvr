@@ -4,13 +4,14 @@ import com.jhbim.bimvr.dao.entity.pojo.GroupCluster;
 import com.jhbim.bimvr.dao.entity.pojo.GroupMessage;
 import com.jhbim.bimvr.dao.entity.pojo.GroupRecord;
 import com.jhbim.bimvr.dao.entity.pojo.User;
-import com.jhbim.bimvr.dao.entity.vo.GroupMessageVo;
+import com.jhbim.bimvr.dao.entity.vo.GroupVo;
 import com.jhbim.bimvr.dao.entity.vo.Result;
 import com.jhbim.bimvr.dao.mapper.GroupClusterMapper;
 import com.jhbim.bimvr.dao.mapper.GroupMessageMapper;
 import com.jhbim.bimvr.dao.mapper.GroupRecordMapper;
 import com.jhbim.bimvr.system.enums.ResultStatusCode;
 import com.jhbim.bimvr.utils.ShiroUtil;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -77,16 +78,16 @@ public class GroupRecordController {
         }
         //从list集合得到群组号查询
         List<GroupCluster> groupClusters = groupClusterMapper.groupcluster(list);
-        List<GroupMessageVo> messageVoList = new ArrayList<>();
+        List<GroupVo> messageVoList = new ArrayList<>();
         for (GroupCluster g : groupClusters) {
-            GroupMessageVo groupMessageVo = new GroupMessageVo();
-            List<GroupMessage> groupMessageList = groupMessageMapper.getusercount(user.getUserId(),g.getGroupno());
-            groupMessageVo.setGroupno(g.getGroupno());
-            groupMessageVo.setGroupname(g.getGroupname());
-            groupMessageVo.setPicture(g.getPicture());
-            groupMessageVo.setUsergroupId(g.getUsergroupId());
-            groupMessageVo.setCount(groupMessageList.size());
-            messageVoList.add(groupMessageVo);
+            GroupVo groupVo = new GroupVo();
+            List<GroupMessage> groupMessageList = groupMessageMapper.getusercount(g.getGroupno(),user.getUserId(),0);
+            groupVo.setGroupno(g.getGroupno());
+            groupVo.setGroupname(g.getGroupname());
+            groupVo.setPicture(g.getPicture());
+            groupVo.setUsergroupId(g.getUsergroupId());
+            groupVo.setCount(groupMessageList.size());
+            messageVoList.add(groupVo);
         }
         map.put("data",messageVoList);
         map.put("size",groupClusters.size());

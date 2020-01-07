@@ -21,5 +21,9 @@ public interface GroupMessageMapper {
     //推荐群根据热度显示
     List<GroupMessage> getAllheat();
     //查询未读消息条数0未读 1 已读
-    List<GroupMessage> getusercount(@Param("userId") Integer userId, @Param("groupId") String groupId);
+    List<GroupMessage> getusercount(@Param("groupId") String groupId,@Param("userId") Integer userId,@Param("stauts") Integer stauts);
+    //根据状态查询群id组里面的内容
+    List<GroupMessage> readthecontent(@Param("groupId") String groupId);
+    //根据用户id查询状态
+    List<GroupMessage> findbyuserid(@Param("userId") Integer userId,@Param("stauts") Integer stauts);
 }

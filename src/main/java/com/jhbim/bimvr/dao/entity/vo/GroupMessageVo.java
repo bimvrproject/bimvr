@@ -1,40 +1,13 @@
 package com.jhbim.bimvr.dao.entity.vo;
 
-
 public class GroupMessageVo {
-    private String groupno;
 
-    private String groupname;
-
-    private Integer usergroupId;
-
+    //头像
     private String picture;
-
-    private Integer count;
-
-    public String getGroupno() {
-        return groupno;
-    }
-
-    public void setGroupno(String groupno) {
-        this.groupno = groupno;
-    }
-
-    public String getGroupname() {
-        return groupname;
-    }
-
-    public void setGroupname(String groupname) {
-        this.groupname = groupname;
-    }
-
-    public Integer getUsergroupId() {
-        return usergroupId;
-    }
-
-    public void setUsergroupId(Integer usergroupId) {
-        this.usergroupId = usergroupId;
-    }
+    //昵称
+    private String username;
+    //内容
+    private String message;
 
     public String getPicture() {
         return picture;
@@ -44,11 +17,19 @@ public class GroupMessageVo {
         this.picture = picture;
     }
 
-    public Integer getCount() {
-        return count;
+    public String getUsername() {
+        return username;
     }
 
-    public void setCount(Integer count) {
-        this.count = count;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

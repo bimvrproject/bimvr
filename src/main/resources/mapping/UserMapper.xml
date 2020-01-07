@@ -267,5 +267,11 @@
     </foreach>
     order by convert(user_name using gbk) asc
   </select>
-
+  <!--根据用户id查询-->
+  <select id="findByuserid" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
 </mapper>

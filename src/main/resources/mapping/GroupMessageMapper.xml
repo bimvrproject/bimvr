@@ -133,6 +133,19 @@
   <select id="getusercount" resultMap="BaseResultMap">
       SELECT
       <include refid="Base_Column_List" />
-       FROM `group_message` where Group_id = #{groupId,jdbcType=VARCHAR} and User_Id = #{userId,jdbcType=INTEGER}
+       FROM `group_message` where User_Id not in (SELECT user_id from group_message where  User_Id = #{userId,jdbcType=INTEGER}) and Group_id = #{groupId,jdbcType=VARCHAR} and stauts = #{stauts,jdbcType=INTEGER}
+  </select>
+    <!--根据群id查询里面的内容-->
+    <select id="readthecontent" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM `group_message` where Group_id = #{groupId,jdbcType=VARCHAR} ORDER BY calltime
+    </select>
+  <!--根据用户id查询状态-->
+  <select id="findbyuserid" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from group_message
+    where   User_Id = #{userId,jdbcType=INTEGER} and  stauts = #{stauts,jdbcType=INTEGER}
   </select>
 </mapper>

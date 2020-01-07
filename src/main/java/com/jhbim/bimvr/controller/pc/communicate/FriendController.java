@@ -97,6 +97,11 @@ public class FriendController {
      */
     @RequestMapping("/AddUserFriend")
     public Result AddUserFriend(String userphone,String friendphone,String message){
+        //阻止重复增加好友
+        UserFriend isnotexist = userFriendMapper.getisnotexist(userphone,friendphone,1);
+        if(isnotexist!=null){
+            return new Result(ResultStatusCode.FAIL,"您已增加好友请勿频繁操作...");
+        }
         //请求者
         UserFriend userFriend=new UserFriend();
         userFriend.setId(idWorker.nextId()+"");
