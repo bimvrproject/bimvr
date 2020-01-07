@@ -49,4 +49,6 @@ public interface UserMapper {
     List<User> userSort(List<String> list);
     //用户列表
     UserMessageVo userListMessage(String friendPhone);
+    UserMessageVo userLists(String friendPhone);
+
 }

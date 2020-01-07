@@ -277,8 +277,13 @@
 
   <select id="userListMessage"  parameterType="java.lang.String" resultMap="ResultList">
    select user.phone,user.user_name ,user.pricture,user.login_flag,user.state,count(user_message.stauts) as unread
-    from user  left join user_message on user.phone = user_message.Hairuser_phone
+    from user  inner join user_message on user.phone = user_message.Hairuser_phone
     and user.phone = #{phone,jdbcType=VARCHAR}
+  </select>
+
+   <select id="userLists"  parameterType="java.lang.String" resultMap="ResultList">
+   select phone,user_name ,pricture,login_flag,state
+    from user where phone = #{phone,jdbcType=VARCHAR}
   </select>
 
 </mapper>

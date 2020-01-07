@@ -53,6 +53,9 @@ public class FriendController {
         List<UserMessageVo> userMessageVos=new ArrayList<>();
         list.stream().forEach(mess->{
             UserMessageVo userMessageVo = userMapper.userListMessage(mess);
+            if (userMessageVo.getUnread() == 0){
+                userMessageVo = userMapper.userLists(mess);
+            }
             userMessageVos.add(userMessageVo);
         });
         return new Result(ResultStatusCode.SUCCESS,userMessageVos);
