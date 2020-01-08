@@ -10,7 +10,7 @@ public class GroupVo {
 
     private String picture;
 
-    private Integer count;
+    private Integer count=0;
 
     public String getGroupno() {
         return groupno;

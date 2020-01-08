@@ -1,25 +1,18 @@
 package com.jhbim.bimvr.controller.pc.communicate;
 
-import com.jhbim.bimvr.dao.entity.pojo.GroupCluster;
-import com.jhbim.bimvr.dao.entity.pojo.GroupMessage;
-import com.jhbim.bimvr.dao.entity.pojo.GroupRecord;
-import com.jhbim.bimvr.dao.entity.pojo.User;
+import com.jhbim.bimvr.dao.entity.pojo.*;
 import com.jhbim.bimvr.dao.entity.vo.GroupVo;
 import com.jhbim.bimvr.dao.entity.vo.Result;
 import com.jhbim.bimvr.dao.mapper.GroupClusterMapper;
-import com.jhbim.bimvr.dao.mapper.GroupMessageMapper;
+import com.jhbim.bimvr.dao.mapper.GroupMessageTypeMapper;
 import com.jhbim.bimvr.dao.mapper.GroupRecordMapper;
 import com.jhbim.bimvr.system.enums.ResultStatusCode;
 import com.jhbim.bimvr.utils.ShiroUtil;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/${version}/grouprecord")
@@ -28,8 +21,8 @@ public class GroupRecordController {
     GroupRecordMapper groupRecordMapper;
     @Resource  //群组表
     GroupClusterMapper groupClusterMapper;
-    @Resource       //群聊天记录表
-    GroupMessageMapper groupMessageMapper;
+    @Resource //群聊天记录表
+    GroupMessageTypeMapper groupMessageTypeMapper;
     /**
      * 查看本人是否在所对应的群组里
      * @param groupid 群号
@@ -67,30 +60,35 @@ public class GroupRecordController {
         Map<String,Object> map =new HashMap<>();
         User user = ShiroUtil.getUser();
         List<String> list = new ArrayList<>();
-        //查询所在群记录表
+        //查询我所在群组 获取群组号（条件根据用户手机号和是否已在群组）
         List<GroupRecord> groupRecordList = groupRecordMapper.findByusergroup(user.getPhone(),"1");
-        if(groupRecordList.size()==0){
-            return new Result(ResultStatusCode.OK,map);
+        for (GroupRecord g : groupRecordList) {
+            list.add(g.getGroupid());
         }
-        //获取群记录里面的群组号装到 list集合里
-        for (GroupRecord u : groupRecordList) {
-            list.add(u.getGroupid());
-        }
-        //从list集合得到群组号查询
-        List<GroupCluster> groupClusters = groupClusterMapper.groupcluster(list);
-        List<GroupVo> messageVoList = new ArrayList<>();
-        for (GroupCluster g : groupClusters) {
+        //存储群组GroupVo类
+        List<GroupVo> groupVoList = new ArrayList<>();
+        //根据群号查询群组列表
+        List<GroupCluster> groupClusterList = groupClusterMapper.groupcluster(list);
+        for (GroupCluster groupCluster:groupClusterList) {
             GroupVo groupVo = new GroupVo();
-            List<GroupMessage> groupMessageList = groupMessageMapper.getusercount(g.getGroupno(),user.getUserId(),0);
-            groupVo.setGroupno(g.getGroupno());
-            groupVo.setGroupname(g.getGroupname());
-            groupVo.setPicture(g.getPicture());
-            groupVo.setUsergroupId(g.getUsergroupId());
-            groupVo.setCount(groupMessageList.size());
-            messageVoList.add(groupVo);
+            //查询用户在某个群组最后离开的时间(始终得到最后一条数据)
+            List<GroupMessageType> groupMessageTypeList = groupMessageTypeMapper.findbyuserphone(user.getPhone(),groupCluster.getGroupno());
+            for (GroupMessageType messageType :groupMessageTypeList) {
+                //查询我在某个群组里面的未读消息条数（条件根据群组号和用户手机号以及最后离开的时间）
+                System.out.println(user.getPhone()+"--"+messageType.getGroupno()+"--"+messageType.getFromTime()+"--"+messageType.getToUser());
+                List<GroupMessageType> messageTypeList = groupMessageTypeMapper.getusercount(user.getPhone(),messageType.getGroupno(),messageType.getFromTime());
+                groupVo.setCount(messageTypeList.size());
+            }
+
+            groupVo.setGroupno(groupCluster.getGroupno());
+            groupVo.setGroupname(groupCluster.getGroupname());
+            groupVo.setUsergroupId(groupCluster.getUsergroupId());
+            groupVo.setPicture(groupCluster.getPicture());
+            groupVoList.add(groupVo);
         }
-        map.put("data",messageVoList);
-        map.put("size",groupClusters.size());
+        map.put("data",groupVoList);
+        map.put("size",groupVoList.size());
         return new Result(ResultStatusCode.OK,map);
     }
+
 }

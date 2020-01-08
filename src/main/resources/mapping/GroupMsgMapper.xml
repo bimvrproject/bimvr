@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jhbim.bimvr.dao.mapper.GroupMsgMapper" >
+  <resultMap id="BaseResultMap" type="com.jhbim.bimvr.dao.entity.pojo.GroupMsg" >
+    <id column="msg_id" property="msgId" jdbcType="VARCHAR" />
+    <result column="groupno" property="groupno" jdbcType="VARCHAR" />
+    <result column="msg" property="msg" jdbcType="VARCHAR" />
+    <result column="to_time" property="toTime" jdbcType="TIMESTAMP" />
+    <result column="from_time" property="fromTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    msg_id, groupno, msg, to_time, from_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from group_msg
+    where msg_id = #{msgId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from group_msg
+    where msg_id = #{msgId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jhbim.bimvr.dao.entity.pojo.GroupMsg" >
+    insert into group_msg (msg_id, groupno, msg, 
+      to_time, from_time)
+    values (#{msgId,jdbcType=VARCHAR}, #{groupno,jdbcType=VARCHAR}, #{msg,jdbcType=VARCHAR}, 
+      #{toTime,jdbcType=TIMESTAMP}, #{fromTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jhbim.bimvr.dao.entity.pojo.GroupMsg" >
+    insert into group_msg
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="msgId != null" >
+        msg_id,
+      </if>
+      <if test="groupno != null" >
+        groupno,
+      </if>
+      <if test="msg != null" >
+        msg,
+      </if>
+      <if test="toTime != null" >
+        to_time,
+      </if>
+      <if test="fromTime != null" >
+        from_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="msgId != null" >
+        #{msgId,jdbcType=VARCHAR},
+      </if>
+      <if test="groupno != null" >
+        #{groupno,jdbcType=VARCHAR},
+      </if>
+      <if test="msg != null" >
+        #{msg,jdbcType=VARCHAR},
+      </if>
+      <if test="toTime != null" >
+        #{toTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fromTime != null" >
+        #{fromTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jhbim.bimvr.dao.entity.pojo.GroupMsg" >
+    update group_msg
+    <set >
+      <if test="groupno != null" >
+        groupno = #{groupno,jdbcType=VARCHAR},
+      </if>
+      <if test="msg != null" >
+        msg = #{msg,jdbcType=VARCHAR},
+      </if>
+      <if test="toTime != null" >
+        to_time = #{toTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fromTime != null" >
+        from_time = #{fromTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where msg_id = #{msgId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jhbim.bimvr.dao.entity.pojo.GroupMsg" >
+    update group_msg
+    set groupno = #{groupno,jdbcType=VARCHAR},
+      msg = #{msg,jdbcType=VARCHAR},
+      to_time = #{toTime,jdbcType=TIMESTAMP},
+      from_time = #{fromTime,jdbcType=TIMESTAMP}
+    where msg_id = #{msgId,jdbcType=VARCHAR}
+  </update>
+</mapper>

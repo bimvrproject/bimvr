@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jhbim.bimvr.dao.mapper.GroupMessageTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.jhbim.bimvr.dao.entity.pojo.GroupMessageType" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="groupno" property="groupno" jdbcType="VARCHAR" />
+    <result column="msg_id" property="msgId" jdbcType="VARCHAR" />
+    <result column="to_user" property="toUser" jdbcType="VARCHAR" />
+    <result column="from_time" property="fromTime" jdbcType="VARCHAR" />
+    <result column="to_time" property="toTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, groupno, msg_id, to_user, from_time, to_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from group_message_type
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from group_message_type
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jhbim.bimvr.dao.entity.pojo.GroupMessageType" >
+    insert into group_message_type (id, groupno, msg_id, 
+      to_user, from_time, to_time
+      )
+    values (#{id,jdbcType=VARCHAR}, #{groupno,jdbcType=VARCHAR}, #{msgId,jdbcType=VARCHAR}, 
+      #{toUser,jdbcType=VARCHAR}, #{fromTime,jdbcType=VARCHAR}, #{toTime,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jhbim.bimvr.dao.entity.pojo.GroupMessageType" >
+    insert into group_message_type
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="groupno != null" >
+        groupno,
+      </if>
+      <if test="msgId != null" >
+        msg_id,
+      </if>
+      <if test="toUser != null" >
+        to_user,
+      </if>
+      <if test="fromTime != null" >
+        from_time,
+      </if>
+      <if test="toTime != null" >
+        to_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="groupno != null" >
+        #{groupno,jdbcType=VARCHAR},
+      </if>
+      <if test="msgId != null" >
+        #{msgId,jdbcType=VARCHAR},
+      </if>
+      <if test="toUser != null" >
+        #{toUser,jdbcType=VARCHAR},
+      </if>
+      <if test="fromTime != null" >
+        #{fromTime,jdbcType=VARCHAR},
+      </if>
+      <if test="toTime != null" >
+        #{toTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jhbim.bimvr.dao.entity.pojo.GroupMessageType" >
+    update group_message_type
+    <set >
+      <if test="groupno != null" >
+        groupno = #{groupno,jdbcType=VARCHAR},
+      </if>
+      <if test="msgId != null" >
+        msg_id = #{msgId,jdbcType=VARCHAR},
+      </if>
+      <if test="toUser != null" >
+        to_user = #{toUser,jdbcType=VARCHAR},
+      </if>
+      <if test="fromTime != null" >
+        from_time = #{fromTime,jdbcType=VARCHAR},
+      </if>
+      <if test="toTime != null" >
+        to_time = #{toTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jhbim.bimvr.dao.entity.pojo.GroupMessageType" >
+    update group_message_type
+    set groupno = #{groupno,jdbcType=VARCHAR},
+      msg_id = #{msgId,jdbcType=VARCHAR},
+      to_user = #{toUser,jdbcType=VARCHAR},
+      from_time = #{fromTime,jdbcType=VARCHAR},
+      to_time = #{toTime,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <!--查询用户最后一条离开的时间-->
+  <select id="findbyuserphone" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from group_message_type
+    where to_user = #{toUser,jdbcType=VARCHAR} and groupno = #{groupno,jdbcType=VARCHAR} ORDER BY from_time desc LIMIT 1
+  </select>
+  <!--是否已读-->
+  <select id="getusercount" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from group_message_type
+    where to_user not in (SELECT to_user FROM group_message_type where to_user = #{toUser,jdbcType=VARCHAR} and groupno = #{groupno,jdbcType=VARCHAR})
+      and groupno = #{groupno,jdbcType=VARCHAR}
+      and to_time > #{toTime,jdbcType=VARCHAR}
+  </select>
+  <!--推荐群根据热度显示-->
+  <select id="getAllheat" resultMap="BaseResultMap">
+        SELECT COUNT(groupno),groupno FROM `group_message_type` GROUP BY groupno ORDER BY COUNT(groupno) desc
+    </select>
+</mapper>
