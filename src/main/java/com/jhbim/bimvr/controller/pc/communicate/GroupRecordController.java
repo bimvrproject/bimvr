@@ -116,7 +116,7 @@ public class GroupRecordController {
     /**
      * 被邀请进群是否同意或忽略进群
      * @param groupid   群号
-     * @param islike    1 同意 2 忽略
+     * @param islike  1 同意 2 忽略
      * @return
      */
     @RequestMapping("/agreedtogroup")
