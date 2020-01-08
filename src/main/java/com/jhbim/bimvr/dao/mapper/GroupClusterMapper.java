@@ -18,10 +18,12 @@ public interface GroupClusterMapper {
 
     int updateByPrimaryKey(GroupCluster record);
 
-    //根据所对应的群号查群
+    //根据所对应的群号查群和是否推荐并查
     GroupCluster findByGroupNo(String groupno);
     //根据群号和群昵称查询
     List<GroupCluster> findBygroupnoandgroupname(@Param("groupno") String groupno, @Param("groupname") String groupname);
     //根据群组查询
     List<GroupCluster> groupcluster(List<String> groupid);
+    //根据所对应的群号查群
+    GroupCluster findbygroupid(String groupno);
 }

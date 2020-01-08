@@ -7,11 +7,13 @@ import com.jhbim.bimvr.dao.mapper.GroupClusterMapper;
 import com.jhbim.bimvr.dao.mapper.GroupMessageTypeMapper;
 import com.jhbim.bimvr.dao.mapper.GroupRecordMapper;
 import com.jhbim.bimvr.system.enums.ResultStatusCode;
+import com.jhbim.bimvr.utils.IdWorker;
 import com.jhbim.bimvr.utils.ShiroUtil;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @RestController
@@ -23,6 +25,8 @@ public class GroupRecordController {
     GroupClusterMapper groupClusterMapper;
     @Resource //群聊天记录表
     GroupMessageTypeMapper groupMessageTypeMapper;
+    @Resource
+    IdWorker idWorker;
     /**
      * 查看本人是否在所对应的群组里
      * @param groupid 群号
@@ -79,11 +83,12 @@ public class GroupRecordController {
                 List<GroupMessageType> messageTypeList = groupMessageTypeMapper.getusercount(user.getPhone(),messageType.getGroupno(),messageType.getFromTime());
                 groupVo.setCount(messageTypeList.size());
             }
-
+            GroupRecord groupRecord = groupRecordMapper.fingByGroupIdandIslike(groupCluster.getGroupno(),user.getPhone());
             groupVo.setGroupno(groupCluster.getGroupno());
             groupVo.setGroupname(groupCluster.getGroupname());
             groupVo.setUsergroupId(groupCluster.getUsergroupId());
             groupVo.setPicture(groupCluster.getPicture());
+            groupVo.setLevel(groupRecord.getLevel());
             groupVoList.add(groupVo);
         }
         map.put("data",groupVoList);
@@ -91,4 +96,46 @@ public class GroupRecordController {
         return new Result(ResultStatusCode.OK,map);
     }
 
+    /**
+     * 被邀请进群记录
+     * @return
+     */
+    @RequestMapping("/bvinvitedgroup")
+    public Result bvinvitedgroup(){
+        User user = ShiroUtil.getUser();
+        List<GroupCluster> recordList = new ArrayList<>();
+        List<GroupRecord> groupRecordList = groupRecordMapper.findByusergroup(user.getPhone(),"0");
+        for (GroupRecord groupRecord : groupRecordList){
+            GroupCluster groupCluster = groupClusterMapper.findbygroupid(groupRecord.getGroupid());
+            recordList.add(groupCluster);
+        }
+        return new Result(ResultStatusCode.OK,recordList);
+    }
+
+
+    /**
+     * 被邀请进群是否同意或忽略进群
+     * @param groupid   群号
+     * @param islike    1 同意 2 忽略
+     * @return
+     */
+    @RequestMapping("/agreedtogroup")
+    public Result agreedtogroup(String [] groupid,Integer islike){
+        User user = ShiroUtil.getUser();
+        int i = groupRecordMapper.updateislike(groupid,user.getPhone(),islike);
+        if(i == 0){
+            return new Result(ResultStatusCode.FAIL,"操作失败");
+        }
+        for (int j =0;j<groupid.length;j++){
+            GroupMessageType groupMessageType = new GroupMessageType();
+            groupMessageType.setId(idWorker.nextId()+"");
+            groupMessageType.setGroupno(groupid[j]);
+            groupMessageType.setToUser(user.getPhone());
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            groupMessageType.setToTime(simpleDateFormat.format(new Date()));
+            groupMessageType.setFromTime(simpleDateFormat.format(new Date()));
+            groupMessageTypeMapper.insertSelective(groupMessageType);
+        }
+        return new Result(ResultStatusCode.SUCCESS,"操作成功");
+    }
 }

@@ -149,12 +149,12 @@
       isrecommend = #{isrecommend,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <!--根据所对应的群号查群-->
+  <!--根据所对应的群号查群和是否推荐并查-->
   <select id="findByGroupNo" resultMap="BaseResultMap">
       select
       <include refid="Base_Column_List" />
       from group_cluster
-      where groupno = #{groupno,jdbcType=VARCHAR}
+      where groupno = #{groupno,jdbcType=VARCHAR} and isrecommend = 1
   </select>
   <!--根据群号和群昵称查询-->
   <select id="findBygroupnoandgroupname" resultMap="BaseResultMap">
@@ -179,5 +179,11 @@
       <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
         #{item}
       </foreach>
+  </select>
+  <select id="findbygroupid" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from group_cluster
+    where groupno = #{groupno,jdbcType=VARCHAR}
   </select>
 </mapper>

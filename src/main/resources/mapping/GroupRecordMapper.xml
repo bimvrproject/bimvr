@@ -139,4 +139,12 @@
     from group_record
     where   userphone = #{userphone,jdbcType=VARCHAR} and islike = #{islike,jdbcType=INTEGER}
   </select>
+  <update id="updateislike">
+    update group_record
+      set  islike = #{islike,jdbcType=INTEGER}
+      where userphone = #{userphone,jdbcType=VARCHAR} and groupid in
+    <foreach collection="groupid" item="item" index="index" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </update>
 </mapper>

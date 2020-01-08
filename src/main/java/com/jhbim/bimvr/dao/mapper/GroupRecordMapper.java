@@ -23,4 +23,6 @@ public interface GroupRecordMapper {
 
     //我加入的群
      List<GroupRecord> findByusergroup(@Param("userphone") String userphone,@Param("islike") String islike);
+     //修改是否同意进群
+     int updateislike(@Param("groupid") String [] groupid,@Param("userphone") String userphone,@Param("islike") Integer islike);
 }

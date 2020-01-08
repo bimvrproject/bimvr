@@ -12,6 +12,16 @@ public class GroupVo {
 
     private Integer count=0;
 
+    private Integer level;
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
     public String getGroupno() {
         return groupno;
     }
