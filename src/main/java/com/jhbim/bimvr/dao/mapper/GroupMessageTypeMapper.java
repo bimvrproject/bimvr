@@ -25,4 +25,8 @@ public interface GroupMessageTypeMapper {
     List<GroupMessageType> getusercount(@Param("toUser") String toUser,@Param("groupno") String groupno,@Param("toTime") String toTime);
     //推荐群根据热度显示
     List<GroupMessageType> getAllheat();
+    //修改最后一次离开时间
+    int updatefromtime(@Param("fromTime") String fromTime,@Param("groupno") String groupno,@Param("toUser") String toUser,@Param("toTime") String toTime);
+    //根据群号查询聊天内容
+    List<GroupMessageType> findbygroupno(String groupno);
 }

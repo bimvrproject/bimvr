@@ -3,10 +3,12 @@ package com.jhbim.bimvr.controller.pc.communicate;
 
 
 import com.jhbim.bimvr.dao.entity.pojo.GroupCluster;
+import com.jhbim.bimvr.dao.entity.pojo.GroupMessageType;
 import com.jhbim.bimvr.dao.entity.pojo.GroupRecord;
 import com.jhbim.bimvr.dao.entity.pojo.User;
 import com.jhbim.bimvr.dao.entity.vo.Result;
 import com.jhbim.bimvr.dao.mapper.GroupClusterMapper;
+import com.jhbim.bimvr.dao.mapper.GroupMessageTypeMapper;
 import com.jhbim.bimvr.dao.mapper.GroupRecordMapper;
 import com.jhbim.bimvr.system.enums.ResultStatusCode;
 import com.jhbim.bimvr.utils.IdWorker;
@@ -38,6 +40,8 @@ public class GroupController {
     GroupRecordMapper groupRecordMapper;
     @Resource
     IdWorker idWorker;
+    @Resource
+    GroupMessageTypeMapper groupMessageTypeMapper;
     /**
      * 创建兴趣群
      */
@@ -57,6 +61,16 @@ public class GroupController {
         groupCluster.setIsrecommend(1);
         int i = groupClusterMapper.insertSelective(groupCluster);
         if (i == 1 ){
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            //group_message_type保存记录
+            GroupMessageType groupMessageType = new GroupMessageType();
+            groupMessageType.setId(idWorker.nextId()+"");
+            groupMessageType.setGroupno(groupCluster.getGroupno());
+            groupMessageType.setToUser(user.getPhone());
+            groupMessageType.setToTime(sdf.format(new Date()));
+            groupMessageType.setFromTime(sdf.format(new Date()));
+            groupMessageTypeMapper.insertSelective(groupMessageType);
+            //group_record保存记录
             GroupRecord groupRecord=new GroupRecord();
             groupRecord.setId(idWorker.nextId()+"");
             groupRecord.setGroupid(groupCluster.getGroupno());
@@ -65,7 +79,6 @@ public class GroupController {
             groupRecord.setUserphone(user.getPhone());
             groupRecord.setIslike(1);
             groupRecord.setMessage("");
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             groupRecord.setGrtime(sdf.format(new Date()));
             groupRecordMapper.insertSelective(groupRecord);
             return new Result(ResultStatusCode.SUCCESS,"创建群成功");

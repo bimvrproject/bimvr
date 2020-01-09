@@ -108,7 +108,7 @@
     select
     <include refid="Base_Column_List" />
     from group_message_type
-    where to_user = #{toUser,jdbcType=VARCHAR} and groupno = #{groupno,jdbcType=VARCHAR} ORDER BY from_time desc LIMIT 1
+    where to_user = #{toUser,jdbcType=VARCHAR} and groupno = #{groupno,jdbcType=VARCHAR} ORDER BY to_time desc LIMIT 1
   </select>
   <!--是否已读-->
   <select id="getusercount" resultMap="BaseResultMap">
@@ -123,4 +123,17 @@
   <select id="getAllheat" resultMap="BaseResultMap">
         SELECT COUNT(groupno),groupno FROM `group_message_type` GROUP BY groupno ORDER BY COUNT(groupno) desc
     </select>
+  <!--修改最后一次离开时间-->
+  <update id="updatefromtime" parameterType="com.jhbim.bimvr.dao.entity.pojo.GroupMessageType" >
+     update group_message_type
+        set from_time = #{fromTime,jdbcType=VARCHAR}
+          where groupno = #{groupno,jdbcType=VARCHAR} and to_user = #{toUser,jdbcType=VARCHAR} and to_time = #{toTime,jdbcType=VARCHAR}
+  </update>
+  <!--根据群号查询聊天内容-->
+  <select id="findbygroupno" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from group_message_type
+    where groupno = #{groupno,jdbcType=VARCHAR}
+  </select>
 </mapper>

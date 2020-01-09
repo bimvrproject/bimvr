@@ -24,11 +24,11 @@ public class GroupMessageController {
     @Resource
     IdWorker idWorker;
     @Resource
-    UserMapper userMapper;
-    @Resource
     GroupMsgMapper groupMsgMapper;
     @Resource
     GroupMessageTypeMapper groupMessageTypeMapper;
+    @Resource
+    UserMapper userMapper;
     /**
      * 推荐群根据热度显示
      * @return
@@ -83,24 +83,44 @@ public class GroupMessageController {
      * @param groupno 群id
      * @return
      */
-//    @RequestMapping("/readthecontent")
-//    public Result readthecontent(String groupno){
-//        User user = ShiroUtil.getUser();
-//        if(groupno.isEmpty()){
-//            return new Result(ResultStatusCode.BAD_REQUEST);
-//        }
-//        List<GroupMessageVo> groupMessageVoList = new ArrayList<>();
-//        List<GroupMessage> groupMessageList = groupMessageMapper.readthecontent(groupno);
-//        for (GroupMessage g : groupMessageList) {
-//            List<User> userList = userMapper.findByuserid(g.getUserId());
-//            for (User u : userList) {
-//                GroupMessageVo groupMessageVo = new GroupMessageVo();
-//                groupMessageVo.setUsername(u.getUserName());
-//                groupMessageVo.setPicture(u.getPricture());
-//                groupMessageVo.setMessage(g.getContent());
-//                groupMessageVoList.add(groupMessageVo);
-//            }
-//        }
-//        return new Result(ResultStatusCode.OK,groupMessageVoList);
-//    }
+    @RequestMapping("/readthecontent")
+    public Result readthecontent(String groupno){
+        User user = ShiroUtil.getUser();
+        if(groupno.isEmpty()){
+            return new Result(ResultStatusCode.BAD_REQUEST);
+        }
+        List<GroupMessageVo> groupMsgs = new ArrayList<>();
+        List<GroupMessageType> groupMessageTypeList = groupMessageTypeMapper.findbygroupno(groupno);
+        for (GroupMessageType g : groupMessageTypeList) {
+            if(g.getMsgId()!=null){
+                User u = userMapper.selectByPrimaryKey(g.getToUser());
+                GroupMessageVo groupMessageVo = new GroupMessageVo();
+                GroupMsg groupMsg = groupMsgMapper.selectByPrimaryKey(g.getMsgId());
+                groupMessageVo.setMessage(groupMsg.getMsg());
+                groupMessageVo.setUsername(u.getUserName());
+                groupMessageVo.setPicture(u.getPricture());
+                groupMsgs.add(groupMessageVo);
+            }
+        }
+        return new Result(ResultStatusCode.OK,groupMsgs);
+    }
+
+    /**
+     * 点击返回 获取所有的群组号 进行详细查询
+     * @param groupid 群组号
+     * @return
+     */
+    @RequestMapping("/findgroupno")
+    public Result findgroupno(String [] groupid){
+        User user = ShiroUtil.getUser();
+        for (int i=0;i<groupid.length;i++){
+            List<GroupMessageType> groupMessageTypeList = groupMessageTypeMapper.findbyuserphone(user.getPhone(),groupid[i]);
+            for (GroupMessageType messageType : groupMessageTypeList){
+                System.out.println(messageType.getGroupno()+"--"+messageType.getToTime()+"--"+messageType.getToUser()+"--"+messageType.getFromTime());
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                groupMessageTypeMapper.updatefromtime(sdf.format(new Date()),messageType.getGroupno(),user.getPhone(),messageType.getToTime());
+            }
+        }
+        return new Result(ResultStatusCode.OK,"操作成功");
+    }
 }
