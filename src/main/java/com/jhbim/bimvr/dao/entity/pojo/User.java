@@ -30,6 +30,8 @@ public class User implements Serializable {
 
     private Integer state;
 
+    private Integer account;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getUserId() {
@@ -136,6 +138,14 @@ public class User implements Serializable {
         this.state = state;
     }
 
+    public Integer getAccount() {
+        return account;
+    }
+
+    public void setAccount(Integer account) {
+        this.account = account;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -155,6 +165,7 @@ public class User implements Serializable {
         sb.append(", remarks=").append(remarks);
         sb.append(", companyname=").append(companyname);
         sb.append(", state=").append(state);
+        sb.append(", account=").append(account);
         sb.append("]");
         return sb.toString();
     }
