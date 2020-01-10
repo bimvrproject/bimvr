@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jhbim.bimvr.dao.mapper.ModelMapper" >
+  <resultMap id="BaseResultMap" type="com.jhbim.bimvr.dao.entity.pojo.Model" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="model_id" property="modelId" jdbcType="VARCHAR" />
+    <result column="model_name" property="modelName" jdbcType="VARCHAR" />
+    <result column="account" property="account" jdbcType="INTEGER" />
+    <result column="pay_account" property="payAccount" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="thumbnail" property="thumbnail" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, model_id, model_name, account, pay_account, user_id, thumbnail
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from model
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from model
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jhbim.bimvr.dao.entity.pojo.Model" >
+    insert into model (id, model_id, model_name, 
+      account, pay_account, user_id, 
+      thumbnail)
+    values (#{id,jdbcType=INTEGER}, #{modelId,jdbcType=VARCHAR}, #{modelName,jdbcType=VARCHAR}, 
+      #{account,jdbcType=INTEGER}, #{payAccount,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, 
+      #{thumbnail,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jhbim.bimvr.dao.entity.pojo.Model" >
+    insert into model
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="modelId != null" >
+        model_id,
+      </if>
+      <if test="modelName != null" >
+        model_name,
+      </if>
+      <if test="account != null" >
+        account,
+      </if>
+      <if test="payAccount != null" >
+        pay_account,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="thumbnail != null" >
+        thumbnail,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="modelId != null" >
+        #{modelId,jdbcType=VARCHAR},
+      </if>
+      <if test="modelName != null" >
+        #{modelName,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null" >
+        #{account,jdbcType=INTEGER},
+      </if>
+      <if test="payAccount != null" >
+        #{payAccount,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="thumbnail != null" >
+        #{thumbnail,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jhbim.bimvr.dao.entity.pojo.Model" >
+    update model
+    <set >
+      <if test="modelId != null" >
+        model_id = #{modelId,jdbcType=VARCHAR},
+      </if>
+      <if test="modelName != null" >
+        model_name = #{modelName,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null" >
+        account = #{account,jdbcType=INTEGER},
+      </if>
+      <if test="payAccount != null" >
+        pay_account = #{payAccount,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="thumbnail != null" >
+        thumbnail = #{thumbnail,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jhbim.bimvr.dao.entity.pojo.Model" >
+    update model
+    set model_id = #{modelId,jdbcType=VARCHAR},
+      model_name = #{modelName,jdbcType=VARCHAR},
+      account = #{account,jdbcType=INTEGER},
+      pay_account = #{payAccount,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=VARCHAR},
+      thumbnail = #{thumbnail,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
