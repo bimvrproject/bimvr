@@ -8,6 +8,7 @@ import com.jhbim.bimvr.system.enums.ResultStatusCode;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -19,7 +20,7 @@ import java.util.List;
  * @create 2020-01-10 13:17
  */
 @RestController
-//@RequestMapping("/${version}/ranking")
+@RequestMapping("/${version}/ranking")
 public class RankingController {
     private int number=1;
     @Autowired
