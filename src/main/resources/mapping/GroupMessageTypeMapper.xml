@@ -136,4 +136,14 @@
     from group_message_type
     where groupno = #{groupno,jdbcType=VARCHAR}
   </select>
+  <!--退群之后删除本人在群里的内容-->
+  <delete id="deletemsgid" parameterType="java.lang.String" >
+    delete from group_message_type
+    where to_user = #{toUser,jdbcType=VARCHAR} and groupno = #{groupno,jdbcType=VARCHAR}
+  </delete>
+  <!--解散群组-->
+  <delete id="deletegrouptype" parameterType="java.lang.String" >
+    delete from group_message_type
+    where groupno = #{groupno,jdbcType=VARCHAR}
+  </delete>
 </mapper>

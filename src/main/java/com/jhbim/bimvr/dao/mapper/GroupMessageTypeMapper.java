@@ -29,4 +29,8 @@ public interface GroupMessageTypeMapper {
     int updatefromtime(@Param("fromTime") String fromTime,@Param("groupno") String groupno,@Param("toUser") String toUser,@Param("toTime") String toTime);
     //根据群号查询聊天内容
     List<GroupMessageType> findbygroupno(String groupno);
+    //退群之后删除本人在群里的内容
+    int deletemsgid(@Param("toUser") String toUser,@Param("groupno") String groupno);
+    //解散群组
+    int deletegrouptype(String groupno);
 }

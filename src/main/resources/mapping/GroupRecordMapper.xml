@@ -139,6 +139,7 @@
     from group_record
     where   userphone = #{userphone,jdbcType=VARCHAR} and islike = #{islike,jdbcType=INTEGER}
   </select>
+  <!--修改是否同意进群-->
   <update id="updateislike">
     update group_record
       set  islike = #{islike,jdbcType=INTEGER}
@@ -147,4 +148,31 @@
       #{item}
     </foreach>
   </update>
+  <!--退出群组-->
+  <delete id="deletegroupid" parameterType="java.lang.String" >
+    delete from group_record
+    where groupid = #{groupid,jdbcType=VARCHAR} and userphone = #{userphone,jdbcType=VARCHAR}
+  </delete>
+  <!--解散群组-->
+  <delete id="deletegroup" parameterType="java.lang.String" >
+    delete from group_record
+    where groupid = #{groupid,jdbcType=VARCHAR}
+  </delete>
+  <!--转让群组-->
+  <update id="updategrouplevel">
+    update group_record
+      set  level = #{level,jdbcType=INTEGER}
+    where userphone = #{userphone,jdbcType=VARCHAR} and groupid = #{groupid,jdbcType=VARCHAR}
+  </update>
+  <!--获取该群的所有人员-->
+  <select id="getgropuserAll"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from group_record
+    where groupid = #{groupid,jdbcType=VARCHAR} and islike = #{islike,jdbcType=INTEGER} ORDER BY LEVEL
+  </select>
+  <!--根据群号查询群的信息-->
+  <select id="getgroup" resultType="Integer">
+    select COUNT(level) from group_record where groupid = #{groupid,jdbcType=VARCHAR} and level = #{level,jdbcType=INTEGER}
+  </select>
 </mapper>

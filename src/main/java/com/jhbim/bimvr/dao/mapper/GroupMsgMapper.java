@@ -14,4 +14,6 @@ public interface GroupMsgMapper {
     int updateByPrimaryKeySelective(GroupMsg record);
 
     int updateByPrimaryKey(GroupMsg record);
+    //解散群组
+    int deletegroupmsg(String groupno);
 }

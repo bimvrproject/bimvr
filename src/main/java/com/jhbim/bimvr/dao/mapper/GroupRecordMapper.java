@@ -20,9 +20,18 @@ public interface GroupRecordMapper {
 
     //查看本人是否在所对应的群组里
     GroupRecord fingByGroupIdandIslike(@Param("groupid") String groupid,@Param("userphone") String userphone);
-
     //我加入的群
      List<GroupRecord> findByusergroup(@Param("userphone") String userphone,@Param("islike") String islike);
      //修改是否同意进群
      int updateislike(@Param("groupid") String [] groupid,@Param("userphone") String userphone,@Param("islike") Integer islike);
+    //退出群组
+    int deletegroupid(@Param("groupid") String groupid,@Param("userphone") String userphone);
+    //解散群组
+    int deletegroup(String groupid);
+    //转让群组
+    int updategrouplevel(@Param("groupid") String groupid,@Param("userphone") String userphone,@Param("level") Integer level);
+    //获取该群的所有人员
+    List<GroupRecord> getgropuserAll(@Param("groupid") String groupid,@Param("islike") Integer islike);
+    //查询群管理员的个数
+    int getgroup(@Param("groupid") String groupid,@Param("level") Integer level);
 }
