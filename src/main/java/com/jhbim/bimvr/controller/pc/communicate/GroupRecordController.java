@@ -1,6 +1,7 @@
 package com.jhbim.bimvr.controller.pc.communicate;
 
 import com.jhbim.bimvr.dao.entity.pojo.*;
+import com.jhbim.bimvr.dao.entity.vo.GroupLevelVo;
 import com.jhbim.bimvr.dao.entity.vo.GroupUserVo;
 import com.jhbim.bimvr.dao.entity.vo.GroupVo;
 import com.jhbim.bimvr.dao.entity.vo.Result;
@@ -86,7 +87,12 @@ public class GroupRecordController {
                 groupUserVos.add(groupUserVo);
             }
         }
-        return new Result(ResultStatusCode.OK,groupUserVos);
+        User user = ShiroUtil.getUser();
+        GroupRecord groupRecord = groupRecordMapper.fingByGroupIdandIslike(groupid,user.getPhone());
+        GroupLevelVo groupLevelVo = new GroupLevelVo();
+        groupLevelVo.setList(groupUserVos);
+        groupLevelVo.setLevel(groupRecord.getLevel());
+        return new Result(ResultStatusCode.OK,groupLevelVo);
     }
 
 
