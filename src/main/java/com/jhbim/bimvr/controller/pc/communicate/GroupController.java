@@ -128,6 +128,14 @@ public class GroupController {
         return new Result(ResultStatusCode.FAIL,"请求发送失败");
     }
 
-
+    /**
+     * 查看群信息
+     * @param groupid
+     * @return
+     */
+    @RequestMapping("/groupinformation")
+    public Result groupinformation(String groupid){
+        return new Result(ResultStatusCode.OK,groupClusterMapper.findByGroupNo(groupid));
+    }
 
 }
