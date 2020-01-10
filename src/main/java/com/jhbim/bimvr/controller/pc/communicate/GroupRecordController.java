@@ -56,6 +56,23 @@ public class GroupRecordController {
     }
 
     /**
+     * 解散群组和退出群组
+     * @param groupid 群号
+     * @return
+     */
+    @RequestMapping("/difference")
+    public Result difference(String groupid){
+        User user = ShiroUtil.getUser();
+        GroupRecord groupRecord = groupRecordMapper.fingByGroupIdandIslike(groupid,user.getPhone());
+        if(groupRecord.getLevel()==2){
+            System.out.println("退出群组");
+        }else if(groupRecord.getLevel()==0){
+            System.out.println("解散群组");
+        }
+        return new Result(ResultStatusCode.OK,groupRecord);
+    }
+
+    /**
      * 我加入的群
      * @return
      */

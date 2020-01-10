@@ -81,7 +81,7 @@ public class GroupController {
             groupRecord.setMessage("");
             groupRecord.setGrtime(sdf.format(new Date()));
             groupRecordMapper.insertSelective(groupRecord);
-            return new Result(ResultStatusCode.SUCCESS,"创建群成功");
+            return new Result(ResultStatusCode.SUCCESS,groupCluster);
         }
         return new Result(ResultStatusCode.FAIL,"创建群失败");
     }
@@ -116,7 +116,7 @@ public class GroupController {
         groupRecord.setGroupid(groupid);
         groupRecord.setRoleId(user.getRoleId());
         groupRecord.setUserphone(user.getPhone());
-        groupRecord.setLevel(3);
+        groupRecord.setLevel(2);
         groupRecord.setIslike(0);
         groupRecord.setMessage(message);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
