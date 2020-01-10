@@ -2,6 +2,7 @@ package com.jhbim.bimvr.dao.mapper;
 
 import com.jhbim.bimvr.dao.entity.pojo.User;
 import com.jhbim.bimvr.dao.entity.vo.UserMessageVo;
+import com.jhbim.bimvr.dao.entity.vo.UserRankVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.ArrayList;
@@ -50,5 +51,10 @@ public interface UserMapper {
     //用户列表
     UserMessageVo userListMessage(String friendPhone);
     UserMessageVo userLists(String friendPhone);
+
+    //用户排行榜
+    List<UserRankVo> userRank();
+    List<UserRankVo> userRanks();
+
 
 }
