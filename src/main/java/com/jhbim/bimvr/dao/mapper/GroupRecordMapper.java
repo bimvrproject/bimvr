@@ -34,4 +34,6 @@ public interface GroupRecordMapper {
     List<GroupRecord> getgropuserAll(@Param("groupid") String groupid,@Param("islike") Integer islike);
     //查询群管理员的个数
     int getgroup(@Param("groupid") String groupid,@Param("level") Integer level);
+    //根据群号查询
+    List<GroupRecord> findbygroupnoid(@Param("groupid") String groupid,@Param("islike") Integer islike);
 }

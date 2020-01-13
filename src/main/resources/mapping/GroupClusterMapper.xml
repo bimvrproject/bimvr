@@ -180,10 +180,41 @@
         #{item}
       </foreach>
   </select>
+  <!--根据所对应的群号查群-->
   <select id="findbygroupid" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from group_cluster
     where groupno = #{groupno,jdbcType=VARCHAR}
   </select>
+  <!--修改群昵称-->
+  <update id="updategroupname" parameterType="com.jhbim.bimvr.dao.entity.pojo.GroupCluster">
+    update group_cluster
+    set groupname = #{groupname,jdbcType=VARCHAR}
+    where groupno = #{groupno,jdbcType=VARCHAR}
+  </update>
+  <!--修改群简介-->
+  <update id="updategroupbrief" parameterType="com.jhbim.bimvr.dao.entity.pojo.GroupCluster">
+    update group_cluster
+    set brief = #{brief,jdbcType=VARCHAR}
+    where groupno = #{groupno,jdbcType=VARCHAR}
+  </update>
+  <!--修改备注-->
+  <update id="updategroupremark" parameterType="com.jhbim.bimvr.dao.entity.pojo.GroupCluster">
+    update group_cluster
+    set remark = #{remark,jdbcType=VARCHAR}
+    where groupno = #{groupno,jdbcType=VARCHAR}
+  </update>
+  <!--修改群组是否推荐  0不推荐 1推荐-->
+  <update id="updategroupisrecommend" parameterType="com.jhbim.bimvr.dao.entity.pojo.GroupCluster">
+    update group_cluster
+    set isrecommend = #{isrecommend,jdbcType=INTEGER}
+    where groupno = #{groupno,jdbcType=VARCHAR}
+  </update>
+  <!--修改查找群组时是否展示即时聊天  1是显示0不显示-->
+  <update id="updategrouptype" parameterType="com.jhbim.bimvr.dao.entity.pojo.GroupCluster">
+    update group_cluster
+    set type = #{type,jdbcType=INTEGER}
+    where groupno = #{groupno,jdbcType=VARCHAR}
+  </update>
 </mapper>

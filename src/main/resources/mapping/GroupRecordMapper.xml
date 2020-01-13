@@ -175,4 +175,11 @@
   <select id="getgroup" resultType="Integer">
     select COUNT(level) from group_record where groupid = #{groupid,jdbcType=VARCHAR} and level = #{level,jdbcType=INTEGER}
   </select>
+  <!--根据群号查询-->
+  <select id="findbygroupnoid" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from group_record
+    where groupid = #{groupid,jdbcType=VARCHAR} and islike = #{islike,jdbcType=INTEGER}
+  </select>
 </mapper>

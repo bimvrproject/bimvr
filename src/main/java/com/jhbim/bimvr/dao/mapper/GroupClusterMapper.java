@@ -26,4 +26,14 @@ public interface GroupClusterMapper {
     List<GroupCluster> groupcluster(List<String> groupid);
     //根据所对应的群号查群
     GroupCluster findbygroupid(String groupno);
+    //修改群昵称
+    int updategroupname(@Param("groupno") String groupno, @Param("groupname") String groupname);
+    //修改群简介
+    int updategroupbrief(@Param("groupno") String groupno, @Param("brief") String brief);
+    //修改备注
+    int updategroupremark(@Param("groupno") String groupno, @Param("remark") String remark);
+    //修改群组是否推荐
+    int updategroupisrecommend(@Param("groupno") String groupno, @Param("isrecommend") Integer isrecommend);
+    //修改查找群组时是否展示即时聊天
+    int updategrouptype(@Param("groupno") String groupno, @Param("type") Integer type);
 }
