@@ -84,6 +84,7 @@ public class GroupRecordController {
                 groupUserVo.setImage(role.getImage());
                 groupUserVo.setPosotion(user.getPosotion());
                 groupUserVo.setLevel(g.getLevel());
+                groupUserVo.setPhone(user.getPhone());
                 groupUserVos.add(groupUserVo);
             }
         }

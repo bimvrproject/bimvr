@@ -43,10 +43,6 @@ public class UserController {
         for(UserFriend uf :userFriendList){
             stringList.add(uf.getFriendphone());
         }
-        for (String s :
-                stringList) {
-            System.out.println(s);
-        }
         UserVo userVo=new UserVo();
         userVo.setPhone(user.getPhone());
         userVo.setPicture(user.getPricture());
