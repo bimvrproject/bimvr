@@ -8,6 +8,8 @@ import com.jhbim.bimvr.system.enums.ResultStatusCode;
 import com.jhbim.bimvr.utils.ShiroUtil;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/${version}/pcUser")
@@ -16,7 +18,8 @@ public class UserController {
     UserMapper userMapper;
     @Resource
     RoleMapper roleMapper;
-
+    @Resource
+    UserFriendMapper userFriendMapper;
     /**
      *   根据token去获取用户信息
      * */
@@ -35,6 +38,15 @@ public class UserController {
     public Result getphoneandrole(@PathVariable String phone){
         User user=userMapper.selectByPrimaryKey(phone);
         Role role=roleMapper.selectByPrimaryKey(user.getRoleId());
+        List<UserFriend> userFriendList = userFriendMapper.getuserphone(phone);
+        List<String> stringList = new ArrayList<>();
+        for(UserFriend uf :userFriendList){
+            stringList.add(uf.getFriendphone());
+        }
+        for (String s :
+                stringList) {
+            System.out.println(s);
+        }
         UserVo userVo=new UserVo();
         userVo.setPhone(user.getPhone());
         userVo.setPicture(user.getPricture());
@@ -44,6 +56,7 @@ public class UserController {
         userVo.setPosotion(user.getPosotion());
         userVo.setCompanyname(user.getCompanyname());
         userVo.setRemarks(user.getRemarks());
+        userVo.setFriendphone(stringList);
         return new Result(ResultStatusCode.UserVo,userVo);
     }
 

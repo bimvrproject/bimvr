@@ -1,5 +1,7 @@
 package com.jhbim.bimvr.dao.entity.vo;
 
+import java.util.List;
+
 public class UserVo {
 
     private String Phone;
@@ -17,6 +19,10 @@ public class UserVo {
     private String remarks;
 
     private String companyname;
+
+    private List<String> friendphone;
+
+
     public String getPhone() {
         return Phone;
     }
@@ -79,5 +85,13 @@ public class UserVo {
 
     public void setCompanyname(String companyname) {
         this.companyname = companyname;
+    }
+
+    public List<String> getFriendphone() {
+        return friendphone;
+    }
+
+    public void setFriendphone(List<String> friendphone) {
+        this.friendphone = friendphone;
     }
 }

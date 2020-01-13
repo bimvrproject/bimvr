@@ -165,4 +165,10 @@
     FROM `user_friend` where
     userphone = #{userphone,jdbcType=VARCHAR} and friendphone = #{friendphone,jdbcType=VARCHAR} and type = #{type,jdbcType=INTEGER}
   </select>
+  <!--根据本人手机号查询好友的手机号-->
+  <select id="getphone" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM `user_friend` where userphone = #{userphone,jdbcType=VARCHAR}
+  </select>
 </mapper>
