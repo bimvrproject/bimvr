@@ -2,30 +2,36 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.jhbim.bimvr.dao.mapper.ZanMapper" >
   <resultMap id="BaseResultMap" type="com.jhbim.bimvr.dao.entity.pojo.Zan" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="type_id" property="typeId" jdbcType="VARCHAR" />
-    <result column="type" property="type" jdbcType="INTEGER" />
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="work_id" property="workId" jdbcType="VARCHAR" />
+    <result column="genre" property="genre" jdbcType="INTEGER" />
     <result column="user_id" property="userId" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, type_id, type, user_id, status
+    id, work_id, genre, user_id, status, create_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from zan
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="select" resultMap="BaseResultMap">
+    select * from zan where work_id= #{workId,jdbcType=VARCHAR} and genre = #{genre,jdbcType=INTEGER} and user_id = #{userId,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from zan
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.jhbim.bimvr.dao.entity.pojo.Zan" >
-    insert into zan (id, type_id, type, 
-      user_id, status)
-    values (#{id,jdbcType=INTEGER}, #{typeId,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
-      #{userId,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER})
+    insert into zan (id, work_id, genre, 
+      user_id, status, create_time
+      )
+    values (#{id,jdbcType=VARCHAR}, #{workId,jdbcType=VARCHAR}, #{genre,jdbcType=INTEGER},
+      #{userId,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.jhbim.bimvr.dao.entity.pojo.Zan" >
     insert into zan
@@ -33,11 +39,11 @@
       <if test="id != null" >
         id,
       </if>
-      <if test="typeId != null" >
-        type_id,
+      <if test="workId != null" >
+        work_id,
       </if>
-      <if test="type != null" >
-        type,
+      <if test="genre != null" >
+        genre,
       </if>
       <if test="userId != null" >
         user_id,
@@ -45,16 +51,19 @@
       <if test="status != null" >
         status,
       </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
-        #{id,jdbcType=INTEGER},
+        #{id,jdbcType=VARCHAR},
       </if>
-      <if test="typeId != null" >
-        #{typeId,jdbcType=VARCHAR},
+      <if test="workId != null" >
+        #{workId,jdbcType=VARCHAR},
       </if>
-      <if test="type != null" >
-        #{type,jdbcType=INTEGER},
+      <if test="genre != null" >
+        #{genre,jdbcType=INTEGER},
       </if>
       <if test="userId != null" >
         #{userId,jdbcType=VARCHAR},
@@ -62,16 +71,19 @@
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
       </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.jhbim.bimvr.dao.entity.pojo.Zan" >
     update zan
     <set >
-      <if test="typeId != null" >
-        type_id = #{typeId,jdbcType=VARCHAR},
+      <if test="workId != null" >
+        work_id = #{workId,jdbcType=VARCHAR},
       </if>
-      <if test="type != null" >
-        type = #{type,jdbcType=INTEGER},
+      <if test="genre != null" >
+        genre = #{genre,jdbcType=INTEGER},
       </if>
       <if test="userId != null" >
         user_id = #{userId,jdbcType=VARCHAR},
@@ -79,15 +91,26 @@
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
       </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.jhbim.bimvr.dao.entity.pojo.Zan" >
     update zan
-    set type_id = #{typeId,jdbcType=VARCHAR},
-      type = #{type,jdbcType=INTEGER},
+    set work_id = #{workId,jdbcType=VARCHAR},
+      genre = #{genre,jdbcType=INTEGER},
       user_id = #{userId,jdbcType=VARCHAR},
-      status = #{status,jdbcType=INTEGER}
-    where id = #{id,jdbcType=INTEGER}
+      status = #{status,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
   </update>
+  <select id="list" resultMap="BaseResultMap">
+    select * from zan where work_id in
+    <foreach close=")" collection="list" index="index" item="workId" open="(" separator=",">
+      #{workId,jdbcType=VARCHAR}
+    </foreach>
+    and  genre = #{genre,jdbcType=INTEGER} and  user_id = #{userId,jdbcType=VARCHAR}
+  </select>
 </mapper>

@@ -8,6 +8,8 @@ public class UserRankVo {
 
     private int sequence;
 
+    private String phone;
+
     private String pricture;
 
     private String userName;
@@ -20,6 +22,7 @@ public class UserRankVo {
 
     private Integer modelNum;
 
+    private Integer status;
 
     public UserRankVo(){}
 
@@ -77,5 +80,21 @@ public class UserRankVo {
 
     public void setModelNum(Integer modelNum) {
         this.modelNum = modelNum;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

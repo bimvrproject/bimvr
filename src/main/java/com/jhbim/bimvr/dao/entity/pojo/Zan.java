@@ -1,42 +1,45 @@
 package com.jhbim.bimvr.dao.entity.pojo;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class Zan implements Serializable {
-    private Integer id;
+    private String id;
 
-    private String typeId;
+    private String workId;
 
-    private Integer type;
+    private Integer genre;
 
     private String userId;
 
     private Integer status;
 
+    private Date createTime;
+
     private static final long serialVersionUID = 1L;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public String getTypeId() {
-        return typeId;
+    public String getWorkId() {
+        return workId;
     }
 
-    public void setTypeId(String typeId) {
-        this.typeId = typeId == null ? null : typeId.trim();
+    public void setWorkId(String workId) {
+        this.workId = workId == null ? null : workId.trim();
     }
 
-    public Integer getType() {
-        return type;
+    public Integer getGenre() {
+        return genre;
     }
 
-    public void setType(Integer type) {
-        this.type = type;
+    public void setGenre(Integer genre) {
+        this.genre = genre;
     }
 
     public String getUserId() {
@@ -55,6 +58,14 @@ public class Zan implements Serializable {
         this.status = status;
     }
 
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -62,10 +73,11 @@ public class Zan implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", typeId=").append(typeId);
-        sb.append(", type=").append(type);
+        sb.append(", workId=").append(workId);
+        sb.append(", genre=").append(genre);
         sb.append(", userId=").append(userId);
         sb.append(", status=").append(status);
+        sb.append(", createTime=").append(createTime);
         sb.append("]");
         return sb.toString();
     }
