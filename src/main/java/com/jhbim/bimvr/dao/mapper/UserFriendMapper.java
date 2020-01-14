@@ -34,8 +34,9 @@ public interface UserFriendMapper {
     //删除好友
     int deleteFriendphone(@Param("userphone")String userphone,@Param("friendphone") String friendphone);
     //阻止重复增加好友
-    UserFriend getisnotexist(@Param("userphone") String userphone,@Param("friendphone") String friendphone,@Param("type") Integer type);
+    UserFriend getisnotexist(@Param("userphone") String userphone,@Param("friendphone") String friendphone,@Param("islike") Integer islike);
     //根据本人手机号查询好友的手机号
     List<UserFriend> getphone(String mephone);
-
+    //邀请进群排除已是好友
+    List<UserFriend> getnotfriendphone(@Param("userphone") String userphone,@Param("friendphone") List<String> friendphone,@Param("islike") Integer islike);
 }

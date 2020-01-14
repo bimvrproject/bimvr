@@ -2,15 +2,11 @@ package com.jhbim.bimvr.controller.pc.communicate;
 
 
 
-import com.jhbim.bimvr.dao.entity.pojo.GroupCluster;
-import com.jhbim.bimvr.dao.entity.pojo.GroupMessageType;
-import com.jhbim.bimvr.dao.entity.pojo.GroupRecord;
-import com.jhbim.bimvr.dao.entity.pojo.User;
+import com.jhbim.bimvr.dao.entity.pojo.*;
+import com.jhbim.bimvr.dao.entity.vo.GroupfriendVo;
+import com.jhbim.bimvr.dao.entity.vo.GrouptoapplyUserVo;
 import com.jhbim.bimvr.dao.entity.vo.Result;
-import com.jhbim.bimvr.dao.mapper.GroupClusterMapper;
-import com.jhbim.bimvr.dao.mapper.GroupMessageTypeMapper;
-import com.jhbim.bimvr.dao.mapper.GroupRecordMapper;
-import com.jhbim.bimvr.dao.mapper.UserMapper;
+import com.jhbim.bimvr.dao.mapper.*;
 import com.jhbim.bimvr.system.enums.ResultStatusCode;
 import com.jhbim.bimvr.utils.IdWorker;
 import com.jhbim.bimvr.utils.PhoneRandom;
@@ -24,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -46,6 +43,10 @@ public class GroupController {
     GroupMessageTypeMapper groupMessageTypeMapper;
     @Resource
     UserMapper userMapper;
+    @Resource
+    RoleMapper roleMapper;
+    @Resource
+    UserFriendMapper userFriendMapper;
     /**
      * 创建兴趣群
      */
@@ -104,17 +105,42 @@ public class GroupController {
     }
 
     /**
-     * 请求进群记录
+     * 进群记录
      * @param groupid 群号
      * @param message 内容
      * @return
      */
     @RequestMapping("/Ingroupof")
     public Result Ingroupof(String groupid,String message){
-        if(groupid.isEmpty() || message.isEmpty()){
+        User user = ShiroUtil.getUser();
+        if(groupid.isEmpty()){
             return new Result(ResultStatusCode.BAD_REQUEST);
         }
-        User user = ShiroUtil.getUser();
+        GroupRecord record =  groupRecordMapper.getnotexistgroupuser(groupid,user.getPhone(),0);
+        if(record != null){
+            return new Result(ResultStatusCode.FAIL,"您已申请进群请勿频繁操作...");
+        }
+        GroupCluster groupCluster =  groupClusterMapper.findbygroupid(groupid);
+        if(groupCluster.getUsergroupId()==0){
+            if(user.getRoleId()==4){
+                return new Result(ResultStatusCode.OK,"非会员不能进入项目群...");
+            }
+            GroupRecord groupRecord = new GroupRecord();
+            groupRecord.setId(idWorker.nextId()+"");
+            groupRecord.setGroupid(groupid);
+            groupRecord.setRoleId(user.getRoleId());
+            groupRecord.setUserphone(user.getPhone());
+            groupRecord.setLevel(2);
+            groupRecord.setIslike(0);
+            groupRecord.setMessage(message);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            groupRecord.setGrtime(sdf.format(new Date()));
+            int i = groupRecordMapper.insertSelective(groupRecord);
+            if(i == 1){
+                return new Result(ResultStatusCode.OK,"请求发送成功");
+            }
+            return new Result(ResultStatusCode.FAIL,"请求发送失败");
+        }
         GroupRecord groupRecord = new GroupRecord();
         groupRecord.setId(idWorker.nextId()+"");
         groupRecord.setGroupid(groupid);
@@ -125,8 +151,8 @@ public class GroupController {
         groupRecord.setMessage(message);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         groupRecord.setGrtime(sdf.format(new Date()));
-        int i= groupRecordMapper.insertSelective(groupRecord);
-        if(i==1){
+        int i = groupRecordMapper.insertSelective(groupRecord);
+        if(i == 1){
             return new Result(ResultStatusCode.OK,"请求发送成功");
         }
         return new Result(ResultStatusCode.FAIL,"请求发送失败");
@@ -240,9 +266,109 @@ public class GroupController {
     @RequestMapping("/findbygroupnoid")
     public Result findbygroupnoid(String groupno){
         List<GroupRecord> recordList = groupRecordMapper.findbygroupnoid(groupno,0);
+        List<GrouptoapplyUserVo> grouptoapplyUserVos = new ArrayList<>();
         for (GroupRecord g : recordList) {
+            GrouptoapplyUserVo grouptoapplyUserVo = new GrouptoapplyUserVo();
             User user = userMapper.selectByPrimaryKey(g.getUserphone());
+            Role role = roleMapper.selectByPrimaryKey(user.getRoleId());
+            grouptoapplyUserVo.setUsername(user.getUserName());
+            grouptoapplyUserVo.setPicture(user.getPricture());
+            grouptoapplyUserVo.setMessage(g.getMessage());
+            grouptoapplyUserVo.setRoleimg(role.getImage());
+            grouptoapplyUserVo.setPhone(g.getUserphone());
+            grouptoapplyUserVos.add(grouptoapplyUserVo);
         }
-        return new Result(ResultStatusCode.OK,recordList);
+        return new Result(ResultStatusCode.OK,grouptoapplyUserVos);
+    }
+
+    /**
+     * 同意或忽略状态(进群群主或管理员)
+     * @param phone
+     * @param groupid
+     * @return
+     */
+    @RequestMapping("/updategroupislike")
+    public Result updategroupislike(String[] phone,String groupid,Integer islike){
+        groupRecordMapper.updategroupislike(phone,groupid,islike);
+        return new Result(ResultStatusCode.SUCCESS,"操作成功...");
+    }
+
+    /**
+     * 展示邀请好友进群列表(好友管理)
+     * @param groupid
+     * @return
+     */
+    @RequestMapping("/invitationgroup")
+    public Result invitationgroup(String groupid){
+        User user = ShiroUtil.getUser();
+        List<GroupRecord> recordList = groupRecordMapper.getgropuserAll(groupid,1);
+        //存储已是群成员的手机号
+        List<String> list = new ArrayList<>();
+        //存储自己好友的手机号
+        List<String> list1 = new ArrayList<>();
+        for (GroupRecord g : recordList) {
+           list.add(g.getUserphone());
+        }
+        List<UserFriend> u = userFriendMapper.getnotfriendphone(user.getPhone(),list,1);
+        for (UserFriend uf :u) {
+            list1.add(uf.getFriendphone());
+        }
+        list1.removeAll(list);
+        List<GroupfriendVo> userList = new ArrayList<>();
+        for (String s : list1) {
+           User user1 = userMapper.selectByPrimaryKey(s);
+           Role role = roleMapper.selectByPrimaryKey(user1.getRoleId());
+            GroupfriendVo groupfriendVo = new GroupfriendVo();
+            groupfriendVo.setName(user1.getUserName());
+            groupfriendVo.setCompanyname(user1.getCompanyname());
+            groupfriendVo.setPicture(user1.getPricture());
+            groupfriendVo.setPosotion(user1.getPosotion());
+            groupfriendVo.setPhone(user1.getPhone());
+            groupfriendVo.setRoleimg(role.getImage());
+            userList.add(groupfriendVo);
+        }
+        return new Result(ResultStatusCode.OK,userList);
+    }
+
+    /**
+     * 邀请别人进群 项目群非会员无法加入
+     * @param userphone
+     * @param groupid
+     * @return
+     */
+    @RequestMapping("/addgroupuser")
+    public Result addgroupuser(String userphone,String groupid){
+        User user = userMapper.selectByPrimaryKey(userphone);
+       GroupCluster groupCluster = groupClusterMapper.findbygroupid(groupid);
+        if(groupCluster.getUsergroupId()==0){
+            if(user.getRoleId()==4){
+                return new Result(ResultStatusCode.OK,"非会员不能进入项目群...");
+            }
+            GroupRecord groupRecord = new GroupRecord();
+            groupRecord.setId(idWorker.nextId()+"");
+            groupRecord.setGroupid(groupid);
+            groupRecord.setRoleId(user.getRoleId());
+            groupRecord.setUserphone(userphone);
+            groupRecord.setLevel(2);
+            groupRecord.setIslike(0);
+            groupRecord.setMessage("");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            groupRecord.setGrtime(sdf.format(new Date()));
+            groupRecordMapper.insertSelective(groupRecord);
+            return new Result(ResultStatusCode.OK,"操作成功");
+        }
+
+        GroupRecord groupRecord = new GroupRecord();
+        groupRecord.setId(idWorker.nextId()+"");
+        groupRecord.setGroupid(groupid);
+        groupRecord.setRoleId(user.getRoleId());
+        groupRecord.setUserphone(userphone);
+        groupRecord.setLevel(2);
+        groupRecord.setIslike(0);
+        groupRecord.setMessage("");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        groupRecord.setGrtime(sdf.format(new Date()));
+        groupRecordMapper.insertSelective(groupRecord);
+        return new Result(ResultStatusCode.OK,"操作成功");
     }
 }

@@ -163,12 +163,19 @@
     SELECT
     <include refid="Base_Column_List" />
     FROM `user_friend` where
-    userphone = #{userphone,jdbcType=VARCHAR} and friendphone = #{friendphone,jdbcType=VARCHAR} and type = #{type,jdbcType=INTEGER}
+    userphone = #{userphone,jdbcType=VARCHAR} and friendphone = #{friendphone,jdbcType=VARCHAR} and islike = #{islike,jdbcType=INTEGER}
   </select>
   <!--根据本人手机号查询好友的手机号-->
   <select id="getphone" resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List" />
     FROM `user_friend` where userphone = #{userphone,jdbcType=VARCHAR}
+  </select>
+  <!--邀请进群排除已是好友-->
+  <select id="getnotfriendphone" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM `user_friend` where userphone = #{userphone,jdbcType=VARCHAR} and
+    friendphone not in (SELECT friendphone FROM user_friend where friendphone=#{friendphone,jdbcType=VARCHAR}) and islike = #{islike,jdbcType=INTEGER}
   </select>
 </mapper>

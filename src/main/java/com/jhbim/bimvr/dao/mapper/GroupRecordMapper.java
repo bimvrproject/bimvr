@@ -36,4 +36,9 @@ public interface GroupRecordMapper {
     int getgroup(@Param("groupid") String groupid,@Param("level") Integer level);
     //根据群号查询
     List<GroupRecord> findbygroupnoid(@Param("groupid") String groupid,@Param("islike") Integer islike);
+    //同意或忽略状态(进群群主或管理员)
+    int updategroupislike(@Param("userphone") String[] userphone,@Param("groupid")String groupid,@Param("islike") Integer islike);
+    //阻止重复增加进群记录
+    GroupRecord getnotexistgroupuser(@Param("groupid") String groupid,@Param("userphone") String userphone,@Param("islike") Integer islike);
+
 }

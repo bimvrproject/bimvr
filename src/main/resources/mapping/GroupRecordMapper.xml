@@ -182,4 +182,20 @@
     from group_record
     where groupid = #{groupid,jdbcType=VARCHAR} and islike = #{islike,jdbcType=INTEGER}
   </select>
+  <!--同意或忽略状态(进群群主或管理员)-->
+  <update id="updategroupislike" >
+    update group_record
+    set  islike = #{islike,jdbcType=INTEGER}
+    where userphone in
+      <foreach collection="userphone" item="item" index="index" open="(" separator="," close=")">
+        #{item}
+      </foreach> and groupid = #{groupid,jdbcType=VARCHAR}
+  </update>
+  <!--阻止重复增加进群记录-->
+  <select id="getnotexistgroupuser" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+     from group_record where groupid = #{groupid,jdbcType=VARCHAR} and userphone = #{userphone,jdbcType=VARCHAR}  and islike=#{islike,jdbcType=INTEGER}
+  </select>
+
 </mapper>
