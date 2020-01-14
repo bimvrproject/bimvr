@@ -114,4 +114,10 @@
       thumbnail = #{thumbnail,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="listRank" resultMap="BaseResultMap">
+    select * from model order by pay_account desc
+  </select>
+  <select id="modelList" resultType="java.lang.String">
+    select model_id from model
+  </select>
 </mapper>

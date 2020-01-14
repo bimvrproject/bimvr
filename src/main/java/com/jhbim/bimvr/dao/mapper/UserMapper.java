@@ -22,6 +22,8 @@ public interface UserMapper {
     int updateByPrimaryKey(User record);
 
     int updatePwd(User user);
+    //修改点赞数
+    int updateAccount(@Param("account")Integer account,@Param("phone") String phone);
     //修改用户登录状态
     int updatestate(User user);
     // 修改昵称
@@ -55,6 +57,7 @@ public interface UserMapper {
     //用户排行榜
     List<UserRankVo> userRank();
     List<UserRankVo> userRanks();
+
 
 
 }

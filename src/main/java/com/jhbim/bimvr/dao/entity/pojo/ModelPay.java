@@ -1,18 +1,19 @@
 package com.jhbim.bimvr.dao.entity.pojo;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
-public class Zan implements Serializable {
+public class ModelPay implements Serializable {
     private String id;
 
-    private String workId;
-
-    private Integer genre;
+    private String modelId;
 
     private String userId;
 
-    private Integer status;
+    private BigDecimal money;
+
+    private Integer payWay;
 
     private Date createTime;
 
@@ -23,23 +24,15 @@ public class Zan implements Serializable {
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.id = id == null ? null : id.trim();
     }
 
-    public String getWorkId() {
-        return workId;
+    public String getModelId() {
+        return modelId;
     }
 
-    public void setWorkId(String workId) {
-        this.workId = workId == null ? null : workId.trim();
-    }
-
-    public Integer getGenre() {
-        return genre;
-    }
-
-    public void setGenre(Integer genre) {
-        this.genre = genre;
+    public void setModelId(String modelId) {
+        this.modelId = modelId == null ? null : modelId.trim();
     }
 
     public String getUserId() {
@@ -50,12 +43,20 @@ public class Zan implements Serializable {
         this.userId = userId == null ? null : userId.trim();
     }
 
-    public Integer getStatus() {
-        return status;
+    public BigDecimal getMoney() {
+        return money;
     }
 
-    public void setStatus(Integer status) {
-        this.status = status;
+    public void setMoney(BigDecimal money) {
+        this.money = money;
+    }
+
+    public Integer getPayWay() {
+        return payWay;
+    }
+
+    public void setPayWay(Integer payWay) {
+        this.payWay = payWay;
     }
 
     public Date getCreateTime() {
@@ -73,10 +74,10 @@ public class Zan implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", workId=").append(workId);
-        sb.append(", genre=").append(genre);
+        sb.append(", modelId=").append(modelId);
         sb.append(", userId=").append(userId);
-        sb.append(", status=").append(status);
+        sb.append(", money=").append(money);
+        sb.append(", payWay=").append(payWay);
         sb.append(", createTime=").append(createTime);
         sb.append("]");
         return sb.toString();

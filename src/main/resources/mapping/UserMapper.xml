@@ -217,6 +217,9 @@
   <update id="updatestate" parameterType="com.jhbim.bimvr.dao.entity.pojo.User">
     update user set state = #{state,jdbcType=INTEGER} where phone = #{phone,jdbcType=VARCHAR}
   </update>
+  <update id="updateAccount" >
+    update user set account = #{account,jdbcType=INTEGER} where phone = #{phone,jdbcType=VARCHAR}
+  </update>
   <!--修改密码-->
   <update id="updatePwd" parameterType="com.jhbim.bimvr.dao.entity.pojo.User">
     update user
@@ -315,14 +318,14 @@
   </select>
 
   <select id="userRank" resultMap="ResultRank">
-   select user.pricture,user.user_name,role.Image,user.posotion,user.account,count(model.user_id) as modelNum
+   select user.pricture,user.phone,user.user_name,role.Image,user.posotion,user.account,count(model.user_id) as modelNum
    from user  inner join model on user.phone=model.user_id
    inner join role  on user.role_id = role.id
    group by model.user_id order by account desc
   </select>
 
   <select id="userRanks" resultMap="ResultRank">
-   select user.pricture,user.user_name,role.Image,user.posotion,user.account
+   select user.pricture,user.phone,user.user_name,role.Image,user.posotion,user.account
    from user inner join role on user.role_id = role.id
    order by account desc
   </select>
