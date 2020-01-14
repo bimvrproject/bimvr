@@ -17,6 +17,8 @@ public class Model implements Serializable {
 
     private String thumbnail;
 
+    private Integer payStatus;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -73,6 +75,14 @@ public class Model implements Serializable {
 
     public void setThumbnail(String thumbnail) {
         this.thumbnail = thumbnail == null ? null : thumbnail.trim();
+    }
+
+    public Integer getPayStatus() {
+        return payStatus;
+    }
+
+    public void setPayStatus(Integer payStatus) {
+        this.payStatus = payStatus;
     }
 
     @Override

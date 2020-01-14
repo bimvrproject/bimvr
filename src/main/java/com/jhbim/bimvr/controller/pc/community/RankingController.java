@@ -1,16 +1,21 @@
 package com.jhbim.bimvr.controller.pc.community;
 
 
+import com.jhbim.bimvr.dao.entity.pojo.Model;
+import com.jhbim.bimvr.dao.entity.pojo.ModelPay;
 import com.jhbim.bimvr.dao.entity.pojo.User;
 import com.jhbim.bimvr.dao.entity.pojo.Zan;
 import com.jhbim.bimvr.dao.entity.vo.Result;
 import com.jhbim.bimvr.dao.entity.vo.UserRankVo;
+import com.jhbim.bimvr.dao.mapper.ModelMapper;
+import com.jhbim.bimvr.dao.mapper.ModelPayMapper;
 import com.jhbim.bimvr.dao.mapper.UserMapper;
 import com.jhbim.bimvr.dao.mapper.ZanMapper;
 import com.jhbim.bimvr.system.enums.ResultStatusCode;
 
 import com.jhbim.bimvr.utils.IdUtil;
 import com.jhbim.bimvr.utils.ShiroUtil;
+import org.apache.tools.ant.taskdefs.Get;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,6 +42,12 @@ public class RankingController {
 
     @Autowired
     private ZanMapper zanMapper;
+
+    @Autowired
+    private ModelMapper modelMapper;
+
+    @Autowired
+    private ModelPayMapper modelPayMapper;
 
     /**
      * 获取用户排行
@@ -70,7 +81,7 @@ public class RankingController {
                 }
             }
         }
-        for (int k =1;k<lists.size();k++){
+        for (int k =0;k<lists.size();k++){
             lists.get(k).setSequence(k+1);
             if (lists.get(k).getStatus()==null){
                 lists.get(k).setStatus(0);
@@ -125,6 +136,33 @@ public class RankingController {
             }
         }
         return new Result(ResultStatusCode.FAIL,"状态修改异常");
+    }
+
+    /**
+     * 模型排行
+     * @return
+     */
+    @GetMapping("/getModeRank")
+    public Result getModeRank(){
+        User user = ShiroUtil.getUser();
+        List<Model> listRank=modelMapper.listRank();
+        //获取用户购买状态
+        List<String> list = modelMapper.modelList();
+        List<ModelPay> listPay = modelPayMapper.payList(list,user.getPhone());
+        for (int i=0;i<listRank.size();i++) {
+            for (int j=0;j<listPay.size();j++) {
+                if (listRank.get(i).getModelId().equals(listPay.get(j).getModelId())){
+                  listRank.get(i).setPayStatus(1);
+                }
+            }
+        }
+        for (int i = 0; i <listRank.size();i++) {
+            listRank.get(i).setId(i+1);
+            if (listRank.get(i).getPayStatus() == null){
+                listRank.get(i).setPayStatus(0);
+            }
+        }
+        return new Result(ResultStatusCode.SUCCESS,listRank);
     }
 }
 
