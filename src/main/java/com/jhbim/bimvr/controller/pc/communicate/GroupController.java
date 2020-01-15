@@ -159,13 +159,13 @@ public class GroupController {
     }
 
     /**
-     * 查修改群简介看群信息
+     * 查看群组名片
      * @param groupid
      * @return
      */
     @RequestMapping("/groupinformation")
     public Result groupinformation(String groupid){
-        return new Result(ResultStatusCode.OK,groupClusterMapper.findByGroupNo(groupid));
+        return new Result(ResultStatusCode.OK,groupClusterMapper.findbygroupid(groupid));
     }
 
     /**
