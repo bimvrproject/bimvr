@@ -209,7 +209,7 @@ public class GroupRecordController {
                 groupMessageTypeMapper.deletemsgid(userphone,groupid);
             }
         }
-        return new Result(ResultStatusCode.OK);
+        return new Result(ResultStatusCode.OK,"删除成功...");
     }
     /**
      * 我加入的群
