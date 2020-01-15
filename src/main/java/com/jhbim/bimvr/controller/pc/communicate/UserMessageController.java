@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/${version}/usermessage")
@@ -44,6 +43,7 @@ public class UserMessageController {
         userMessage.setCloseduserPhone(friendphone);
         userMessage.setInformation(information);
         userMessage.setCreatetine(new Date());
+        userMessage.setEndtime(new Date());
         userMessage.setType(0);
         int i=userMessageMapper.insertSelective(userMessage);
         if(i==1){
@@ -70,4 +70,39 @@ public class UserMessageController {
         return new Result(ResultStatusCode.SUCCESS,userMessages);
     }
 
+    /**
+     * 展示好友与好友之间的聊天信息
+     * @param friendphone
+     * @return
+     */
+    @RequestMapping("/chatcontent")
+    public Result chatcontent(String friendphone){
+        User user = ShiroUtil.getUser();
+        //查询我给好友发的消息
+        List<UserMessage> userMessages = userMessageMapper.messaheList(user.getPhone(),friendphone);
+        //查询好友给我发的消息
+        List<UserMessage> userMessages1 = userMessageMapper.messaheList(friendphone,user.getPhone());
+        //存储这两个集合的所有数据
+        List<UserMessage> messageList = new ArrayList<>();
+        messageList.addAll(userMessages);
+        messageList.addAll(userMessages1);
+        //将集合中的数据按照日期进行排序
+        Collections.sort(messageList, new Comparator<UserMessage>() {
+            @Override
+            public int compare(UserMessage o1, UserMessage o2) {
+                int mark = 1;
+                Date date1 = o1.getCreatetine();
+                Date date2 = o2.getCreatetine();
+                //大于和小于号是按照升序和降序进行排序
+                if(date1.getTime() < date2.getTime()){
+                    mark = -1;
+                }
+                if(o1.getCreatetine().equals(o2.getCreatetine())){
+                    mark = 0;
+                }
+                return mark;
+            }
+        });
+        return new Result(ResultStatusCode.OK,messageList);
+    }
 }
