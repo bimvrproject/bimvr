@@ -352,6 +352,10 @@ public class GroupController {
     public Result addgroupuser(String userphone,String groupid){
         User user = userMapper.selectByPrimaryKey(userphone);
        GroupCluster groupCluster = groupClusterMapper.findbygroupid(groupid);
+        GroupRecord record =  groupRecordMapper.getnotexistgroupuser(groupid,user.getPhone(),0);
+        if(record != null){
+            return new Result(ResultStatusCode.FAIL,"您已邀请请勿频繁操作...");
+        }
         if(groupCluster.getUsergroupId()==0){
             if(user.getRoleId()==4){
                 return new Result(ResultStatusCode.OK,"非会员不能进入项目群...");
