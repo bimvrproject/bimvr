@@ -289,7 +289,19 @@ public class GroupController {
      */
     @RequestMapping("/updategroupislike")
     public Result updategroupislike(String[] phone,String groupid,Integer islike){
-        groupRecordMapper.updategroupislike(phone,groupid,islike);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        int j = groupRecordMapper.updategroupislike(phone,groupid,islike);
+        if (j == 1){
+            for (int i = 0; i<phone.length;i++ ){
+                GroupMessageType groupMessageType = new GroupMessageType();
+                groupMessageType.setId(idWorker.nextId()+"");
+                groupMessageType.setGroupno(groupid);
+                groupMessageType.setToUser(phone[i]);
+                groupMessageType.setToTime(sdf.format(new Date()));
+                groupMessageType.setFromTime(sdf.format(new Date()));
+                groupMessageTypeMapper.insertSelective(groupMessageType);
+            }
+        }
         return new Result(ResultStatusCode.SUCCESS,"操作成功...");
     }
 
