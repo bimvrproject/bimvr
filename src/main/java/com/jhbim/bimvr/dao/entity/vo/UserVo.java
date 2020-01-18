@@ -22,6 +22,15 @@ public class UserVo {
 
     private List<String> friendphone;
 
+    private Integer roleid;
+
+    public Integer getRoleid() {
+        return roleid;
+    }
+
+    public void setRoleid(Integer roleid) {
+        this.roleid = roleid;
+    }
 
     public String getPhone() {
         return Phone;

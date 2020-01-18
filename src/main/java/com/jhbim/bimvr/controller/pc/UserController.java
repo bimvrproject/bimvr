@@ -43,7 +43,7 @@ public class UserController {
         for(UserFriend uf :userFriendList){
             stringList.add(uf.getFriendphone());
         }
-        UserVo userVo=new UserVo();
+        UserVo userVo = new UserVo();
         userVo.setPhone(user.getPhone());
         userVo.setPicture(user.getPricture());
         userVo.setRoleName(role.getRoleName());
@@ -53,6 +53,7 @@ public class UserController {
         userVo.setCompanyname(user.getCompanyname());
         userVo.setRemarks(user.getRemarks());
         userVo.setFriendphone(stringList);
+        userVo.setRoleid(user.getRoleId());
         return new Result(ResultStatusCode.UserVo,userVo);
     }
 
