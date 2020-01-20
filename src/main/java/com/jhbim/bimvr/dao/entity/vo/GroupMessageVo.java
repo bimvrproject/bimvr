@@ -8,6 +8,16 @@ public class GroupMessageVo {
     private String username;
     //内容
     private String message;
+    //发送内容的手机号
+    private String phone;
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
     public String getPicture() {
         return picture;

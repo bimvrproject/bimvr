@@ -99,6 +99,7 @@ public class GroupMessageController {
                 groupMessageVo.setMessage(groupMsg.getMsg());
                 groupMessageVo.setUsername(u.getUserName());
                 groupMessageVo.setPicture(u.getPricture());
+                groupMessageVo.setPhone(u.getPhone());
                 groupMsgs.add(groupMessageVo);
             }
         }
