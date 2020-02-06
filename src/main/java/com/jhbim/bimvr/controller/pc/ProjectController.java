@@ -9,11 +9,12 @@ import com.jhbim.bimvr.dao.mapper.UserProjectMapper;
 import com.jhbim.bimvr.system.enums.ResultStatusCode;
 import com.jhbim.bimvr.utils.IdWorker;
 import com.jhbim.bimvr.utils.ShiroUtil;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -43,14 +44,24 @@ public class ProjectController {
         return new Result(ResultStatusCode.OK,projectList);
     }
 
-    public void CreateProject(){
+    public void CreateProject(String name,String address,String createtime,String endtime){
         User user= ShiroUtil.getUser();
         String projectid=idWorker.nextId()+"";
         //保存项目
         Project project=new Project();
-        project.setId(projectid);
-        project.setProjectModelAddr("http://36.112.65.110:8080/project/res_picture/0.png");
-        project.setCompletion(0);
+        project.setId(projectid);       //项目id
+        project.setProjectName(name);   //项目名称
+        project.setProjectModelAddr("http://36.112.65.110:8080/project/res_picture/0.png");     //项目的缩略图
+        project.setCompletion(0);       //是否完工  1完工 0未完工
+        project.setProjectStatus(3);        //项目状态 1已经完成 2正在进行中 3试用阶段
+        project.setProjectAddress(address);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            project.setCreateTime(sdf.parse(createtime));   //开始时间
+            project.setEndTime(sdf.parse(endtime));     //结束时间
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         projectMapper.insertSelective(project);
         //用户项目关系表
         UserProject userProject=new UserProject();
@@ -65,27 +76,27 @@ public class ProjectController {
      * @return
      */
     @RequestMapping("/Addproject")
-    public Result Addproject(){
+    public Result Addproject(String name,String address,String createtime,String endtime){
         User user= ShiroUtil.getUser();
         if(user.getRoleId()==4){
             return new Result(ResultStatusCode.ORDINARY);
         }
         int up = userProjectMapper.selectUserProjectnum(user.getUserId());
-        if(user.getRoleId()==1){
+        if(user.getRoleId()==1){    //超级会员
             if(up<5){
-                CreateProject();
+                CreateProject(name,address,createtime,endtime);
             }else{
                 return new Result(ResultStatusCode.CREATE_PROJECT_CEILING);
             }
-        }else if(user.getRoleId()==2){
+        }else if(user.getRoleId()==2){  //特权会员
             if(up<3){
-                CreateProject();
+                CreateProject(name,address,createtime,endtime);
             }else{
                 return new Result(ResultStatusCode.CREATE_PROJECT_CEILING);
             }
-        }else if(user.getRoleId()==3){
+        }else if(user.getRoleId()==3){  //专享会员
             if(up<1){
-                CreateProject();
+                CreateProject(name,address,createtime,endtime);
             }else{
                 return new Result(ResultStatusCode.CREATE_PROJECT_CEILING);
             }
@@ -95,11 +106,28 @@ public class ProjectController {
 
     /**
      * 根据项目id编辑内容
-     * @param project
+     * @param projectname 项目名称
+     * @param address   地址
+     * @param content   备注
+     * @param createtime    开始时间
+     * @param endtime       结束时间
+     * @param id        项目编号
      * @return
      */
     @RequestMapping("/UpdateProjectById")
-    public Result UpdateProjectById(@RequestBody Project project){
+        public Result UpdateProjectById(String projectname,String address,String content,String createtime,String endtime,String id){
+        Project project = new Project();
+        project.setId(id);
+        project.setProjectName(projectname);
+        project.setProjectAddress(address);
+        project.setProjectContent(content);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            project.setCreateTime(sdf.parse(createtime));
+            project.setEndTime(sdf.parse(endtime));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         projectMapper.updateByPrimaryKeySelective(project);
         return new Result(ResultStatusCode.OK,"编辑成功");
     }
