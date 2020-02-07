@@ -22,6 +22,8 @@ public class Project implements Serializable {
 
     private Integer completion;
 
+    private String address;
+
     private static final long serialVersionUID = 1L;
 
     public String getId() {
@@ -29,7 +31,7 @@ public class Project implements Serializable {
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.id = id == null ? null : id.trim();
     }
 
     public String getProjectName() {
@@ -96,6 +98,14 @@ public class Project implements Serializable {
         this.completion = completion;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address == null ? null : address.trim();
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -111,6 +121,7 @@ public class Project implements Serializable {
         sb.append(", createTime=").append(createTime);
         sb.append(", endTime=").append(endTime);
         sb.append(", completion=").append(completion);
+        sb.append(", address=").append(address);
         sb.append("]");
         return sb.toString();
     }

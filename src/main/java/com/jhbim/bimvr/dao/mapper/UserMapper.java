@@ -34,6 +34,8 @@ public interface UserMapper {
     int updataposition(@Param("posotion") String position,@Param("phone") String phone);
     //修改备注
     int updataremarks(@Param("remarks") String remarks,@Param("phone") String phone);
+    //修改头像
+    int updatepicture(User user);
     //根据用户手机号或昵称查询
     List<User> findByuserphoneorusername(@Param("phone") String phone,@Param("userName") String userName);
 

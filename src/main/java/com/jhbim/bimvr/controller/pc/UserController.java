@@ -106,6 +106,26 @@ public class UserController {
     }
 
     /**
+     * 修改头像
+     * @param picture 头像
+     * @param phone 手机号
+     * @return
+     */
+    @RequestMapping("/updatepicture")
+        public Result updatepicture( String picture,String phone){
+        if(picture.isEmpty() || phone.isEmpty()){
+            return new Result(ResultStatusCode.BAD_REQUEST);
+        }
+        System.out.println(picture);
+        System.out.println();
+        System.out.println(phone);
+//        User user = new User();
+//        user.setPricture("http://36.112.65.110:8080/picture/"+picture);
+//        user.setPhone(phone);
+//        userMapper.updatepicture(user);
+        return new Result(ResultStatusCode.OK,"头像修改成功");
+    }
+    /**
      * 查询当前用户的信息
      * @param phone
      * @return
