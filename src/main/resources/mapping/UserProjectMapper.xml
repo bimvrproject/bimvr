@@ -96,6 +96,6 @@
     from  user_project where user_id = #{userId,jdbcType=INTEGER} order by id desc
   </select>
   <select id="selectUserProjectnum" resultType="int" parameterType="java.lang.Integer">
-    select sum(num) from  user_project where user_id = #{userId,jdbcType=INTEGER}
+    select  IFNULL(SUM(num),0) from  user_project where  user_id = #{userId,jdbcType=INTEGER}
   </select>
 </mapper>
