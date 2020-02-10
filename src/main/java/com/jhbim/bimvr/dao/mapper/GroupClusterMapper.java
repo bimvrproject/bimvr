@@ -36,4 +36,6 @@ public interface GroupClusterMapper {
     int updategroupisrecommend(@Param("groupno") String groupno, @Param("isrecommend") Integer isrecommend);
     //修改查找群组时是否展示即时聊天
     int updategrouptype(@Param("groupno") String groupno, @Param("type") Integer type);
+    //修改群头像
+    int updategrouppicture(GroupCluster groupCluster);
 }

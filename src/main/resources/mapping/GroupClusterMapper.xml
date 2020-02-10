@@ -217,4 +217,10 @@
     set type = #{type,jdbcType=INTEGER}
     where groupno = #{groupno,jdbcType=VARCHAR}
   </update>
+  <!--修改群头像-->
+  <update id="updategrouppicture" parameterType="com.jhbim.bimvr.dao.entity.pojo.GroupCluster">
+    update group_cluster
+    set picture = #{picture,jdbcType=INTEGER}
+    where groupno = #{groupno,jdbcType=VARCHAR}
+  </update>
 </mapper>
