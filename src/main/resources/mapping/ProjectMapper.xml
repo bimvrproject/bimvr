@@ -11,11 +11,13 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
     <result column="completion" property="completion" jdbcType="INTEGER" />
-    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="rvtaddress" property="rvtaddress" jdbcType="VARCHAR" />
+    <result column="priceaddress" property="priceaddress" jdbcType="VARCHAR" />
+    <result column="drawingaddress" property="drawingaddress" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, project_name, project_model_addr, project_status, project_address, project_content, 
-    create_time, end_time, completion, address
+    create_time, end_time, completion, rvtaddress, priceaddress, drawingaddress
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -31,11 +33,13 @@
     insert into project (id, project_name, project_model_addr, 
       project_status, project_address, project_content, 
       create_time, end_time, completion, 
-      address)
+      rvtaddress, priceaddress, drawingaddress
+      )
     values (#{id,jdbcType=VARCHAR}, #{projectName,jdbcType=VARCHAR}, #{projectModelAddr,jdbcType=VARCHAR}, 
       #{projectStatus,jdbcType=INTEGER}, #{projectAddress,jdbcType=VARCHAR}, #{projectContent,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{completion,jdbcType=INTEGER}, 
-      #{address,jdbcType=VARCHAR})
+      #{rvtaddress,jdbcType=VARCHAR}, #{priceaddress,jdbcType=VARCHAR}, #{drawingaddress,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.jhbim.bimvr.dao.entity.pojo.Project" >
     insert into project
@@ -67,8 +71,14 @@
       <if test="completion != null" >
         completion,
       </if>
-      <if test="address != null" >
-        address,
+      <if test="rvtaddress != null" >
+        rvtaddress,
+      </if>
+      <if test="priceaddress != null" >
+        priceaddress,
+      </if>
+      <if test="drawingaddress != null" >
+        drawingaddress,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -99,8 +109,14 @@
       <if test="completion != null" >
         #{completion,jdbcType=INTEGER},
       </if>
-      <if test="address != null" >
-        #{address,jdbcType=VARCHAR},
+      <if test="rvtaddress != null" >
+        #{rvtaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="priceaddress != null" >
+        #{priceaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="drawingaddress != null" >
+        #{drawingaddress,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -131,8 +147,14 @@
       <if test="completion != null" >
         completion = #{completion,jdbcType=INTEGER},
       </if>
-      <if test="address != null" >
-        address = #{address,jdbcType=VARCHAR},
+      <if test="rvtaddress != null" >
+        rvtaddress = #{rvtaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="priceaddress != null" >
+        priceaddress = #{priceaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="drawingaddress != null" >
+        drawingaddress = #{drawingaddress,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
@@ -147,7 +169,9 @@
       create_time = #{createTime,jdbcType=TIMESTAMP},
       end_time = #{endTime,jdbcType=TIMESTAMP},
       completion = #{completion,jdbcType=INTEGER},
-      address = #{address,jdbcType=VARCHAR}
+      rvtaddress = #{rvtaddress,jdbcType=VARCHAR},
+      priceaddress = #{priceaddress,jdbcType=VARCHAR},
+      drawingaddress = #{drawingaddress,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

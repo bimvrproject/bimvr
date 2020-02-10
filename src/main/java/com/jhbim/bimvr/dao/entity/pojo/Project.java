@@ -22,7 +22,11 @@ public class Project implements Serializable {
 
     private Integer completion;
 
-    private String address;
+    private String rvtaddress;
+
+    private String priceaddress;
+
+    private String drawingaddress;
 
     private static final long serialVersionUID = 1L;
 
@@ -98,12 +102,28 @@ public class Project implements Serializable {
         this.completion = completion;
     }
 
-    public String getAddress() {
-        return address;
+    public String getRvtaddress() {
+        return rvtaddress;
     }
 
-    public void setAddress(String address) {
-        this.address = address == null ? null : address.trim();
+    public void setRvtaddress(String rvtaddress) {
+        this.rvtaddress = rvtaddress == null ? null : rvtaddress.trim();
+    }
+
+    public String getPriceaddress() {
+        return priceaddress;
+    }
+
+    public void setPriceaddress(String priceaddress) {
+        this.priceaddress = priceaddress == null ? null : priceaddress.trim();
+    }
+
+    public String getDrawingaddress() {
+        return drawingaddress;
+    }
+
+    public void setDrawingaddress(String drawingaddress) {
+        this.drawingaddress = drawingaddress == null ? null : drawingaddress.trim();
     }
 
     @Override
@@ -121,7 +141,9 @@ public class Project implements Serializable {
         sb.append(", createTime=").append(createTime);
         sb.append(", endTime=").append(endTime);
         sb.append(", completion=").append(completion);
-        sb.append(", address=").append(address);
+        sb.append(", rvtaddress=").append(rvtaddress);
+        sb.append(", priceaddress=").append(priceaddress);
+        sb.append(", drawingaddress=").append(drawingaddress);
         sb.append("]");
         return sb.toString();
     }

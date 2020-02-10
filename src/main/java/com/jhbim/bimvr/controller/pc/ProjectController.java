@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -62,6 +63,15 @@ public class ProjectController {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        File file = new File("C:/ftp/TomcatRoot/project/"+projectid+"/Rvt");
+        file.mkdirs();
+        File file1 = new File("C:/ftp/TomcatRoot/project/"+projectid+"/Price");
+        file1.mkdirs();
+        File file2 = new File("C:/ftp/TomcatRoot/project/"+projectid+"/Drawing");
+        file2.mkdirs();
+        project.setRvtaddress("/TomcatRoot/project/"+projectid+"/Rvt");
+        project.setPriceaddress("/TomcatRoot/project/"+projectid+"/Price");
+        project.setDrawingaddress("/TomcatRoot/project/"+projectid+"/Drawing");
         projectMapper.insertSelective(project);
         //用户项目关系表
         UserProject userProject=new UserProject();
