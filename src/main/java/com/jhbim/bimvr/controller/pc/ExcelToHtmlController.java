@@ -127,4 +127,28 @@ public class ExcelToHtmlController {
         meterialMapper.deleteByPrimaryKey(id);
         return new Result(ResultStatusCode.OK,"清单删除成功...");
     }
+
+    /**
+     * 存储excel数据
+     * @param projectid 项目id
+     * @param name  excel名称
+     * @return
+     */
+    @RequestMapping("/addexcel")
+    public Result addexcel(String projectid,String name){
+        if(projectid.isEmpty() || name.isEmpty()){
+            return new Result(ResultStatusCode.BAD_REQUEST);
+        }
+        User user = ShiroUtil.getUser();
+        Meterial meterial = new Meterial();
+        meterial.setModelId(1);     ////类型1表示建筑模型 2表示管道模型
+        meterial.setProjectId(projectid);   //项目id
+        meterial.setUserId(user.getUserId());   //用户id
+        meterial.setUrl("/project/"+projectid+"/Price/"+name); //存储地址
+        meterial.setMeterialName(name); //excel名称
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        meterial.setMtime(sdf.format(new Date()));  //上传时间
+        meterialMapper.insertSelective(meterial);
+        return new Result(ResultStatusCode.OK,"Excel数据存储成功...");
+    }
 }

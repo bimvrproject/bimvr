@@ -159,12 +159,12 @@ public class ProjectController {
         }
         User user = ShiroUtil.getUser();
         Rvt rvt = new Rvt();
-        rvt.setModelId(1);
-        rvt.setProjectId(projectid);
-        rvt.setUserId(user.getUserId());
-        rvt.setCreatetime(new Date());
-        rvt.setUrl("/project/"+projectid+"/Rvt/"+name);
-        rvtMapper.insert(rvt);
+        rvt.setModelId(1);      //类型1表示建筑模型 2表示管道模型
+        rvt.setProjectId(projectid);    //项目id
+        rvt.setUserId(user.getUserId());    //用户id
+        rvt.setCreatetime(new Date());  //上传时间
+        rvt.setUrl("/project/"+projectid+"/Rvt/"+name); //存储地址
+        rvtMapper.insertSelective(rvt);
         return new Result(ResultStatusCode.OK,"模型数据存储成功...");
     }
 }

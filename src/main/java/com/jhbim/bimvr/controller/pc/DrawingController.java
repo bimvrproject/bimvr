@@ -108,4 +108,28 @@ public class DrawingController {
         drawingMapper.deleteByPrimaryKey(id);
         return new Result(ResultStatusCode.OK,"图纸删除成功...");
     }
+
+    /**
+     * 存储CAD图纸
+     * @param projectid 项目id
+     * @param name  cad图纸名称
+     * @return
+     */
+    @RequestMapping("/addDrawing")
+    public Result addDrawing(String projectid,String name){
+        if(projectid.isEmpty() || name.isEmpty()){
+            return new Result(ResultStatusCode.BAD_REQUEST);
+        }
+        User user = ShiroUtil.getUser();
+        Drawing drawing = new Drawing();
+        drawing.setModelId(1);      //类型1表示建筑模型 2表示管道模型
+        drawing.setProjectId(projectid);        //项目id
+        drawing.setUserId(user.getUserId());       //用户id
+        drawing.setUrl("/project/"+projectid+"/Drawing/"+name); //存储笛之爱
+        drawing.setDrawName(name);  //图纸名称
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        drawing.setDtime(sdf.format(new Date())); //上传时间
+        drawingMapper.insertSelective(drawing);
+        return new Result(ResultStatusCode.OK,"CAD图纸数据存储成功...");
+    }
 }
