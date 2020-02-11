@@ -394,15 +394,13 @@ public class GroupController {
      */
     @RequestMapping("/updategrouppicture")
     public Result updategrouppicture(String picture,String groupid){
-        System.out.println(picture);
-        System.out.println(groupid);
         if(picture.isEmpty() || groupid.isEmpty()){
             return new Result(ResultStatusCode.BAD_REQUEST);
         }
-//        GroupCluster groupCluster = new GroupCluster();
-//        groupCluster.setPicture("http://36.112.65.110:8080/picture/"+picture);
-//        groupCluster.setGroupno(groupid);
-//        groupClusterMapper.updategrouppicture(groupCluster);
+        GroupCluster groupCluster = new GroupCluster();
+        groupCluster.setPicture("http://36.112.65.110:8080/groupimg/"+picture);
+        groupCluster.setGroupno(groupid);
+        groupClusterMapper.updategrouppicture(groupCluster);
         return new Result(ResultStatusCode.OK,"修改群头像成功...");
     }
 }

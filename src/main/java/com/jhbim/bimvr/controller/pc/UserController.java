@@ -116,13 +116,10 @@ public class UserController {
         if(picture.isEmpty() || phone.isEmpty()){
             return new Result(ResultStatusCode.BAD_REQUEST);
         }
-        System.out.println(picture);
-        System.out.println();
-        System.out.println(phone);
-//        User user = new User();
-//        user.setPricture("http://36.112.65.110:8080/picture/"+picture);
-//        user.setPhone(phone);
-//        userMapper.updatepicture(user);
+        User user = new User();
+        user.setPricture("http://36.112.65.110:8080/picture/"+picture);
+        user.setPhone(phone);
+        userMapper.updatepicture(user);
         return new Result(ResultStatusCode.OK,"头像修改成功");
     }
     /**
