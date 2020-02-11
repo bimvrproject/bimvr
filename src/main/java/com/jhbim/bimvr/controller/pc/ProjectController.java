@@ -165,6 +165,6 @@ public class ProjectController {
         rvt.setCreatetime(new Date());
         rvt.setUrl("/project/"+projectid+"/Rvt/"+name);
         rvtMapper.insert(rvt);
-        return new Result(ResultStatusCode.OK);
+        return new Result(ResultStatusCode.OK,"模型数据存储成功...");
     }
 }
