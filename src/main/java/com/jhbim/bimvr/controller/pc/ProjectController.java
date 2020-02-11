@@ -1,10 +1,12 @@
 package com.jhbim.bimvr.controller.pc;
 
 import com.jhbim.bimvr.dao.entity.pojo.Project;
+import com.jhbim.bimvr.dao.entity.pojo.Rvt;
 import com.jhbim.bimvr.dao.entity.pojo.User;
 import com.jhbim.bimvr.dao.entity.pojo.UserProject;
 import com.jhbim.bimvr.dao.entity.vo.Result;
 import com.jhbim.bimvr.dao.mapper.ProjectMapper;
+import com.jhbim.bimvr.dao.mapper.RvtMapper;
 import com.jhbim.bimvr.dao.mapper.UserProjectMapper;
 import com.jhbim.bimvr.system.enums.ResultStatusCode;
 import com.jhbim.bimvr.utils.IdWorker;
@@ -29,6 +31,8 @@ public class ProjectController {
     UserProjectMapper userProjectMapper;
     @Resource
     IdWorker idWorker;
+    @Resource
+    RvtMapper rvtMapper;
     /**
      * 查询登录人所有的项目
      * @return
@@ -125,7 +129,7 @@ public class ProjectController {
      * @return
      */
     @RequestMapping("/UpdateProjectById")
-        public Result UpdateProjectById(String projectname,String address,String content,String createtime,String endtime,String id){
+    public Result UpdateProjectById(String projectname,String address,String content,String createtime,String endtime,String id){
         Project project = new Project();
         project.setId(id);
         project.setProjectName(projectname);
@@ -140,5 +144,27 @@ public class ProjectController {
         }
         projectMapper.updateByPrimaryKeySelective(project);
         return new Result(ResultStatusCode.OK,"编辑成功");
+    }
+
+    /**
+     * 存储rvt模型到数据库
+     * @param projectid  项目id
+     * @param name  模型名称
+     * @return
+     */
+    @RequestMapping("/addrvt")
+    public Result addrvt(String projectid,String name){
+        if(projectid.isEmpty() || name.isEmpty()){
+            return new Result(ResultStatusCode.BAD_REQUEST);
+        }
+        User user = ShiroUtil.getUser();
+        Rvt rvt = new Rvt();
+        rvt.setModelId(1);
+        rvt.setProjectId(projectid);
+        rvt.setUserId(user.getUserId());
+        rvt.setCreatetime(new Date());
+        rvt.setUrl("/project/"+projectid+"/Rvt/"+name);
+        rvtMapper.insert(rvt);
+        return new Result(ResultStatusCode.OK);
     }
 }
