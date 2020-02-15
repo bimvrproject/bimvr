@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jhbim.bimvr.dao.mapper.ScUserModelNumMapper" >
+  <resultMap id="BaseResultMap" type="com.jhbim.bimvr.dao.entity.pojo.ScUserModelNum" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="userphone" property="userphone" jdbcType="VARCHAR" />
+    <result column="model_id" property="modelId" jdbcType="VARCHAR" />
+    <result column="num" property="num" jdbcType="INTEGER" />
+    <result column="timer" property="timer" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, userphone, model_id, num, timer
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from sc_user_model_num
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from sc_user_model_num
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.jhbim.bimvr.dao.entity.pojo.ScUserModelNum" >
+    insert into sc_user_model_num (id, userphone, model_id, 
+      num, timer)
+    values (#{id,jdbcType=BIGINT}, #{userphone,jdbcType=VARCHAR}, #{modelId,jdbcType=VARCHAR}, 
+      #{num,jdbcType=INTEGER}, #{timer,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jhbim.bimvr.dao.entity.pojo.ScUserModelNum" >
+    insert into sc_user_model_num
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userphone != null" >
+        userphone,
+      </if>
+      <if test="modelId != null" >
+        model_id,
+      </if>
+      <if test="num != null" >
+        num,
+      </if>
+      <if test="timer != null" >
+        timer,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userphone != null" >
+        #{userphone,jdbcType=VARCHAR},
+      </if>
+      <if test="modelId != null" >
+        #{modelId,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="timer != null" >
+        #{timer,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jhbim.bimvr.dao.entity.pojo.ScUserModelNum" >
+    update sc_user_model_num
+    <set >
+      <if test="userphone != null" >
+        userphone = #{userphone,jdbcType=VARCHAR},
+      </if>
+      <if test="modelId != null" >
+        model_id = #{modelId,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="timer != null" >
+        timer = #{timer,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jhbim.bimvr.dao.entity.pojo.ScUserModelNum" >
+    update sc_user_model_num
+    set userphone = #{userphone,jdbcType=VARCHAR},
+      model_id = #{modelId,jdbcType=VARCHAR},
+      num = #{num,jdbcType=INTEGER},
+      timer = #{timer,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="getcount" resultType="int" parameterType="java.lang.String">
+    select IFNULL(sum(num),0) from sc_user_model_num
+    where userphone = #{userphone,jdbcType=VARCHAR}
+  </select>
+</mapper>

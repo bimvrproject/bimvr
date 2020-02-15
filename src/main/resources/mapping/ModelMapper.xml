@@ -120,4 +120,7 @@
   <select id="modelList" resultType="java.lang.String">
     select model_id from model
   </select>
+  <select id="getmodelid"  resultType="int"  parameterType="java.lang.String">
+    select  IFNULL(sum(account),0) from model where model_id = #{modelId,jdbcType=VARCHAR}
+  </select>
 </mapper>

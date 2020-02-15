@@ -64,9 +64,9 @@ public class RankingController {
         });
         for (int i=0;i<lists.size();i++) {
             for (int j=0;j<list1.size();j++) {
-               if (lists.get(i).getUserName().equals(list1.get(j).getUserName())){
-                   list1.remove(j);
-               }
+                if (lists.get(i).getUserName().equals(list1.get(j).getUserName())){
+                    list1.remove(j);
+                }
             }
         }
         lists.addAll(list1);
@@ -101,7 +101,6 @@ public class RankingController {
     public Result dianzan(String workId,Integer genre,Integer status){
         User user = ShiroUtil.getUser();
         Zan select = zanMapper.select(workId, genre, user.getPhone());
-
         if (StringUtils.isEmpty(select)){
             Zan zan = new Zan();
             zan.setId(IdUtil.getIncreaseIdByNanoTime());
@@ -112,11 +111,45 @@ public class RankingController {
             zan.setCreateTime(new Date());
             int insert = zanMapper.insert(zan);
             if (insert>0){
-                User user1 = userMapper.selectByPrimaryKey(workId);
-                userMapper.updateAccount(user1.getAccount()+1,workId);
-                return new Result(ResultStatusCode.SUCCESS,"点赞成功");
+                //给用户点赞
+                if(genre == 1){
+                    User user1 = userMapper.selectByPrimaryKey(workId);
+                    System.out.println(user1.getPhone());
+                    int a = userMapper.updateAccount(user1.getAccount()+1,workId);
+                    if(a>0){
+                        return new Result(ResultStatusCode.SUCCESS,"点赞成功");
+                    }
+                    return new Result(ResultStatusCode.FAIL,"点赞失败");
+                }
+                //模型点赞
+                //评论点赞
             }
-        }else {
+        }else{
+            //给用户点赞
+            if(genre == 1 && status ==1){
+                if(select.getStatus() == 0){
+                    //给用户点赞
+                    if(genre == 1){
+                        System.out.println(status);
+                        Zan zan = new Zan();
+                        zan.setId(select.getId());
+                        zan.setWorkId(workId);
+                        zan.setGenre(genre);
+                        zan.setUserId(user.getPhone());
+                        zan.setStatus(status);
+                        zan.setCreateTime(new Date());
+                        int i = zanMapper.updateByPrimaryKey(zan);
+                        User user1 = userMapper.selectByPrimaryKey(workId);
+                        int a = userMapper.updateAccount(user1.getAccount()+1,workId);
+                        if(a>0){
+                            return new Result(ResultStatusCode.SUCCESS,"点赞成功");
+                        }
+                        return new Result(ResultStatusCode.FAIL,"点赞失败");
+                    }
+                }
+            }
+        }
+        if (status == 0){
             Zan unzan = new Zan();
             unzan.setId(select.getId());
             unzan.setWorkId(workId);
@@ -126,16 +159,16 @@ public class RankingController {
             unzan.setCreateTime(new Date());
             int i = zanMapper.updateByPrimaryKey(unzan);
             if (i>0){
-                User user1 = userMapper.selectByPrimaryKey(workId);
-                if (status == 1){
-                    userMapper.updateAccount(user1.getAccount()+1,workId);
-                }else {
+                //给用户取消点赞
+                if(genre == 1 && select.getStatus() == 1){
+                    User user1 = userMapper.selectByPrimaryKey(workId);
                     userMapper.updateAccount(user1.getAccount()-1,workId);
+                    return new Result(ResultStatusCode.SUCCESS,"取消点赞");
                 }
-                return new Result(ResultStatusCode.SUCCESS,"修改成功");
+                return new Result(ResultStatusCode.FAIL,"您已取消点赞...");
             }
         }
-        return new Result(ResultStatusCode.FAIL,"状态修改异常");
+        return new Result(ResultStatusCode.FAIL,"您已点赞...");
     }
 
     /**
@@ -152,7 +185,7 @@ public class RankingController {
         for (int i=0;i<listRank.size();i++) {
             for (int j=0;j<listPay.size();j++) {
                 if (listRank.get(i).getModelId().equals(listPay.get(j).getModelId())){
-                  listRank.get(i).setPayStatus(1);
+                    listRank.get(i).setPayStatus(1);
                 }
             }
         }

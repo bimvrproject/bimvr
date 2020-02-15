@@ -50,7 +50,7 @@ public class ExcelToHtmlController {
 //        System.out.println(convertByFile);
 //        String url= String.valueOf(convertByFile.subSequence(21,86));
 //        return  new Result(ResultStatusCode.OK,url);
-        String address="https://view.officeapps.live.com/op/view.aspx?src=http://21z9804m0.zicp.vip:8080/";
+        String address="https://view.officeapps.live.com/op/view.aspx?src=http://21z9804m0.zicp.vip:8080";
         String url=address+addressurl;
         return new Result(ResultStatusCode.OK,url);
     }

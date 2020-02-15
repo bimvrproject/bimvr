@@ -16,6 +16,7 @@ public enum ResultStatusCode {
     UserVo(5, "UserVo查询成功"),
     CREATE_PROJECT_CEILING(10,"您的创建项目次数已上限,如需创建,请与我们联系..."),
     ORDINARY(11,"您目前不是会员，无法操作..."),
+    UPPER_MODEL_CEILING(12,"您上架的模型数量已达到最大值..."),
     SIGN_ERROR(120, "签名错误"),
     TIME_OUT(130, "访问超时"),
     SUCCESS(200, "请求处理成功"),
