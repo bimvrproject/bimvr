@@ -2,17 +2,17 @@ package com.jhbim.bimvr.controller.pc.shopping;
 
 import com.jhbim.bimvr.dao.entity.pojo.*;
 import com.jhbim.bimvr.dao.entity.vo.Result;
-import com.jhbim.bimvr.dao.mapper.ModelMapper;
-import com.jhbim.bimvr.dao.mapper.ScShoppingMapper;
-import com.jhbim.bimvr.dao.mapper.ScUserModelMapper;
-import com.jhbim.bimvr.dao.mapper.ScUserModelNumMapper;
+import com.jhbim.bimvr.dao.entity.vo.UpperModelVo;
+import com.jhbim.bimvr.dao.mapper.*;
 import com.jhbim.bimvr.system.enums.ResultStatusCode;
 import com.jhbim.bimvr.utils.ShiroUtil;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping("/${version}/usermodel")
@@ -27,6 +27,24 @@ public class UserModelController {
     ScUserModelNumMapper scUserModelNumMapper;
     @Resource
     ModelMapper modelMapper;
+    @Resource
+    ProjectMapper projectMapper;
+
+    @RequestMapping("getuppermodel")
+    public Result getuppermodel(){
+        User user = ShiroUtil.getUser();
+        List<UpperModelVo> upperModelVoList = new ArrayList<>();
+        List<ScUserModel> scUserModelList = scUserModelMapper.findbyusernamemodel(user.getPhone());
+        for (ScUserModel s : scUserModelList) {
+            UpperModelVo upperModelVo = new UpperModelVo();
+            Project project = projectMapper.selectByPrimaryKey(s.getModelId());
+            upperModelVo.setModelid(project.getId());
+            upperModelVo.setThumbs(project.getProjectModelAddr());
+            upperModelVo.setUpper(s.getType());
+            upperModelVoList.add(upperModelVo);
+        }
+        return new Result(ResultStatusCode.OK,upperModelVoList);
+    }
     /**
      * 上架模型
      * @param onemenu 一级菜单

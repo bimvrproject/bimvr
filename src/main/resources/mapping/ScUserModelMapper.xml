@@ -125,4 +125,11 @@
       type = #{type,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <select id="findbyusernamemodel" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from sc_user_model
+    where userphone = #{userphone,jdbcType=VARCHAR}
+  </select>
 </mapper>

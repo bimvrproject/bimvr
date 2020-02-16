@@ -2,14 +2,18 @@ package com.jhbim.bimvr.controller.pc.shopping;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.jhbim.bimvr.dao.entity.pojo.Project;
 import com.jhbim.bimvr.dao.entity.pojo.ScShopping;
 import com.jhbim.bimvr.dao.entity.vo.Result;
+import com.jhbim.bimvr.dao.entity.vo.ShoppingVo;
+import com.jhbim.bimvr.dao.mapper.ProjectMapper;
 import com.jhbim.bimvr.dao.mapper.ScShoppingMapper;
 import com.jhbim.bimvr.system.enums.ResultStatusCode;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +24,8 @@ public class ShoppingController {
 
     @Resource
     ScShoppingMapper scShoppingMapper;
+    @Resource
+    ProjectMapper projectMapper;
 
     /**
      * 商城界面条件查询
@@ -40,10 +46,21 @@ public class ShoppingController {
         ScShopping scShopping = new ScShopping();
         //默认是按照上架时间降序
         if(type.equals("")){
+            System.out.println("空的");
             if(twomenu.equals("全部")){
                 scShopping.setOnemenu(onemenu);
-                List<ScShopping> scShoppingList = scShoppingMapper.getlisttimer(scShopping);
-                map.put("data",scShoppingList);
+                List<ScShopping> scShoppingList = scShoppingMapper.getlisttimerdesc(scShopping);
+                List<ShoppingVo> shoppingVos = new ArrayList<>();
+                for (ScShopping s : scShoppingList) {
+                    Project project=projectMapper.selectByPrimaryKey(s.getModelId());
+                    ShoppingVo shoppingVo = new ShoppingVo();
+                    shoppingVo.setThumbnail(project.getProjectModelAddr());
+                    shoppingVo.setPrice(s.getPrice());
+                    shoppingVo.setModelid(project.getId());
+                    shoppingVo.setThumbsnum(s.getThumbsnum());
+                    shoppingVos.add(shoppingVo);
+                }
+                map.put("data",shoppingVos);
                 map.put("pages",page.getPages());
                 map.put("total",page.getTotal());
                 return new Result(ResultStatusCode.OK,map);
@@ -51,7 +68,17 @@ public class ShoppingController {
             scShopping.setOnemenu(onemenu);
             scShopping.setTwomenu(twomenu);
             List<ScShopping> scShoppingList = scShoppingMapper.getlisttimer(scShopping);
-            map.put("data",scShoppingList);
+            List<ShoppingVo> shoppingVos = new ArrayList<>();
+            for (ScShopping s : scShoppingList) {
+                Project project=projectMapper.selectByPrimaryKey(s.getModelId());
+                ShoppingVo shoppingVo = new ShoppingVo();
+                shoppingVo.setThumbnail(project.getProjectModelAddr());
+                shoppingVo.setPrice(s.getPrice());
+                shoppingVo.setModelid(project.getId());
+                shoppingVo.setThumbsnum(s.getThumbsnum());
+                shoppingVos.add(shoppingVo);
+            }
+            map.put("data",shoppingVos);
             map.put("pages",page.getPages());
             map.put("total",page.getTotal());
             return new Result(ResultStatusCode.OK,map);
@@ -60,8 +87,18 @@ public class ShoppingController {
         if(type.equals("1")){
             if(twomenu.equals("全部")){
                 scShopping.setOnemenu(onemenu);
-                List<ScShopping> scShoppingList = scShoppingMapper.getlistthumbsnumdesc(scShopping);
-                map.put("data",scShoppingList);
+                List<ScShopping> scShoppingList = scShoppingMapper.getlistonemenuthumbsnumdesc(scShopping);
+                List<ShoppingVo> shoppingVos = new ArrayList<>();
+                for (ScShopping s : scShoppingList) {
+                    Project project=projectMapper.selectByPrimaryKey(s.getModelId());
+                    ShoppingVo shoppingVo = new ShoppingVo();
+                    shoppingVo.setThumbnail(project.getProjectModelAddr());
+                    shoppingVo.setPrice(s.getPrice());
+                    shoppingVo.setModelid(project.getId());
+                    shoppingVo.setThumbsnum(s.getThumbsnum());
+                    shoppingVos.add(shoppingVo);
+                }
+                map.put("data",shoppingVos);
                 map.put("pages",page.getPages());
                 map.put("total",page.getTotal());
                 return new Result(ResultStatusCode.OK,map);
@@ -69,7 +106,17 @@ public class ShoppingController {
             scShopping.setOnemenu(onemenu);
             scShopping.setTwomenu(twomenu);
             List<ScShopping> scShoppingList = scShoppingMapper.getlistthumbsnumdesc(scShopping);
-            map.put("data",scShoppingList);
+            List<ShoppingVo> shoppingVos = new ArrayList<>();
+            for (ScShopping s : scShoppingList) {
+                Project project=projectMapper.selectByPrimaryKey(s.getModelId());
+                ShoppingVo shoppingVo = new ShoppingVo();
+                shoppingVo.setThumbnail(project.getProjectModelAddr());
+                shoppingVo.setPrice(s.getPrice());
+                shoppingVo.setModelid(project.getId());
+                shoppingVo.setThumbsnum(s.getThumbsnum());
+                shoppingVos.add(shoppingVo);
+            }
+            map.put("data",shoppingVos);
             map.put("pages",page.getPages());
             map.put("total",page.getTotal());
             return new Result(ResultStatusCode.OK,map);
@@ -78,8 +125,18 @@ public class ShoppingController {
         if(type.equals("2")){
             if(twomenu.equals("全部")){
                 scShopping.setOnemenu(onemenu);
-                List<ScShopping> scShoppingList = scShoppingMapper.getlistthumbsnum(scShopping);
-                map.put("data",scShoppingList);
+                List<ScShopping> scShoppingList = scShoppingMapper.getlistonemenuthumbsnum(scShopping);
+                List<ShoppingVo> shoppingVos = new ArrayList<>();
+                for (ScShopping s : scShoppingList) {
+                    Project project=projectMapper.selectByPrimaryKey(s.getModelId());
+                    ShoppingVo shoppingVo = new ShoppingVo();
+                    shoppingVo.setThumbnail(project.getProjectModelAddr());
+                    shoppingVo.setPrice(s.getPrice());
+                    shoppingVo.setModelid(project.getId());
+                    shoppingVo.setThumbsnum(s.getThumbsnum());
+                    shoppingVos.add(shoppingVo);
+                }
+                map.put("data",shoppingVos);
                 map.put("pages",page.getPages());
                 map.put("total",page.getTotal());
                 return new Result(ResultStatusCode.OK,map);
@@ -87,7 +144,17 @@ public class ShoppingController {
             scShopping.setOnemenu(onemenu);
             scShopping.setTwomenu(twomenu);
             List<ScShopping> scShoppingList = scShoppingMapper.getlistthumbsnum(scShopping);
-            map.put("data",scShoppingList);
+            List<ShoppingVo> shoppingVos = new ArrayList<>();
+            for (ScShopping s : scShoppingList) {
+                Project project=projectMapper.selectByPrimaryKey(s.getModelId());
+                ShoppingVo shoppingVo = new ShoppingVo();
+                shoppingVo.setThumbnail(project.getProjectModelAddr());
+                shoppingVo.setPrice(s.getPrice());
+                shoppingVo.setModelid(project.getId());
+                shoppingVo.setThumbsnum(s.getThumbsnum());
+                shoppingVos.add(shoppingVo);
+            }
+            map.put("data",shoppingVos);
             map.put("pages",page.getPages());
             map.put("total",page.getTotal());
             return new Result(ResultStatusCode.OK,map);
