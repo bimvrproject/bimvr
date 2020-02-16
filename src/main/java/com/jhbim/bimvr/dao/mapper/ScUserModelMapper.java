@@ -18,4 +18,6 @@ public interface ScUserModelMapper {
     int updateByPrimaryKey(ScUserModel record);
     //根据用户手机号查询
     List<ScUserModel> findbyusernamemodel(String phone);
+    //模型上架或下架
+    int updatetype(ScUserModel scUserModel);
 }

@@ -30,6 +30,10 @@ public class UserModelController {
     @Resource
     ProjectMapper projectMapper;
 
+    /**
+     * 我的模型
+     * @return
+     */
     @RequestMapping("getuppermodel")
     public Result getuppermodel(){
         User user = ShiroUtil.getUser();
@@ -87,5 +91,22 @@ public class UserModelController {
         scUserModelNumMapper.insertSelective(scUserModelNum);
 
         return new Result(ResultStatusCode.OK,"上架成功...");
+    }
+
+    /**
+     * 模型上架或下架
+     * @param type   0上架 1下架
+     * @param modelid  模型id
+     * @return
+     */
+    @RequestMapping("/lowermodel")
+    public Result lowermodel(int type,String modelid){
+        User user = ShiroUtil.getUser();
+        ScUserModel scUserModel = new ScUserModel();
+        scUserModel.setUserphone(user.getPhone());
+        scUserModel.setType(type);
+        scUserModel.setModelId(modelid);
+        scUserModelMapper.updatetype(scUserModel);
+        return new Result(ResultStatusCode.OK,"操作成功...");
     }
 }

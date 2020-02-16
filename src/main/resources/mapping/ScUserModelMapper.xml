@@ -132,4 +132,9 @@
     from sc_user_model
     where userphone = #{userphone,jdbcType=VARCHAR}
   </select>
+  <update id="updatetype" parameterType="com.jhbim.bimvr.dao.entity.pojo.ScUserModel" >
+    update sc_user_model
+    set type = #{type,jdbcType=INTEGER}
+    where userphone = #{userphone,jdbcType=VARCHAR} and model_id = #{modelId,jdbcType=VARCHAR}
+  </update>
 </mapper>
