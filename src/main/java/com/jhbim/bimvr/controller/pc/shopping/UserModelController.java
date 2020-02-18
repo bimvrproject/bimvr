@@ -106,7 +106,15 @@ public class UserModelController {
         scUserModel.setUserphone(user.getPhone());
         scUserModel.setType(type);
         scUserModel.setModelId(modelid);
-        scUserModelMapper.updatetype(scUserModel);
-        return new Result(ResultStatusCode.OK,"操作成功...");
+        int i = scUserModelMapper.updatetype(scUserModel);
+        if(i>0){
+            scShoppingMapper.modellowerdelete(modelid);
+            ScUserModelNum scUserModelNum = new ScUserModelNum();
+            scUserModelNum.setModelId(modelid);
+            scUserModelNum.setUserphone(user.getPhone());
+            scUserModelNumMapper.deletemodellower(scUserModelNum);
+            return new Result(ResultStatusCode.OK,"操作成功...");
+        }
+        return new Result(ResultStatusCode.OK,"操作失败...");
     }
 }

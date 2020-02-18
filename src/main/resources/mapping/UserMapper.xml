@@ -256,6 +256,12 @@
       set   pricture =  #{pricture,jdbcType=VARCHAR}
       where phone = #{phone,jdbcType=VARCHAR}
   </update>
+<!--修改密码-->
+  <update id="updatepwd" parameterType="java.lang.String">
+    update user
+      set  password = #{password,jdbcType=VARCHAR}
+      where phone = #{phone,jdbcType=VARCHAR}
+  </update>
   <!--根据用户手机号或昵称查询-->
   <select id="findByuserphoneorusername" parameterType="java.lang.String" resultMap="BaseResultMap">
     select

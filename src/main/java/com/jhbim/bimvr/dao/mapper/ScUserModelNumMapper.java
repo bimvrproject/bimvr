@@ -1,5 +1,6 @@
 package com.jhbim.bimvr.dao.mapper;
 
+import com.jhbim.bimvr.dao.entity.pojo.ScUserModel;
 import com.jhbim.bimvr.dao.entity.pojo.ScUserModelNum;
 
 public interface ScUserModelNumMapper {
@@ -17,4 +18,7 @@ public interface ScUserModelNumMapper {
 
     //查询用户上架的模型数量
     int getcount(String userphone);
+
+    //模型下架删除记录
+    int deletemodellower(ScUserModelNum scUserModelNum);
 }

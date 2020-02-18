@@ -188,4 +188,8 @@
       </if>
     </where>
   </select>
+  <delete id="modellowerdelete" parameterType="java.lang.String" >
+    delete from sc_shopping
+    where  model_id = #{modelId,jdbcType=VARCHAR}
+  </delete>
 </mapper>

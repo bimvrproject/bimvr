@@ -5,7 +5,12 @@ import com.jhbim.bimvr.dao.entity.vo.Result;
 import com.jhbim.bimvr.dao.entity.vo.UserVo;
 import com.jhbim.bimvr.dao.mapper.*;
 import com.jhbim.bimvr.system.enums.ResultStatusCode;
+import com.jhbim.bimvr.system.shiro.LoginType;
+import com.jhbim.bimvr.system.shiro.UserToken;
+import com.jhbim.bimvr.utils.MD5Util;
 import com.jhbim.bimvr.utils.ShiroUtil;
+import org.apache.shiro.SecurityUtils;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -20,6 +25,8 @@ public class UserController {
     RoleMapper roleMapper;
     @Resource
     UserFriendMapper userFriendMapper;
+    @Resource
+    RedisTemplate redisTemplate;
     /**
      *   根据token去获取用户信息
      * */
@@ -143,5 +150,40 @@ public class UserController {
             return new Result(ResultStatusCode.OK);
         }
         return new Result(ResultStatusCode.OK,userMapper.findByuserphoneorusername(phoneusername,phoneusername));
+    }
+    @RequestMapping("/updatepwd")
+    public Result updatepwd(String phone,String smsCode,String pwd){
+        Result result = new Result();
+        if(redisTemplate.opsForValue().get(phone)==null){
+            result.setCode(1);
+            result.setMsg("短信验证码输入超时!");
+        }else{
+            String code = redisTemplate.opsForValue().get(phone).toString();
+            if(!code.equals(smsCode)){
+                result.setCode(2);
+                result.setMsg("短信验证码错误!");
+            }else{
+                User user = new User();
+                user.setPhone(phone);
+                String regex = "[a-z0-9A-Z]+$";
+                if(pwd.matches(regex)==false){
+                    result.setCode(6);
+                    result.setMsg("不合法的字符");
+                    return result;
+                }else{
+                    user.setPassword(MD5Util.encrypt(pwd));
+                    int i = userMapper.updatepwd(user);
+                    if(i>0){
+                        result.setCode(0);
+                        result.setMsg("修改成功");
+                    }else{
+                        result.setMsg("修改失败");
+                    }
+                }
+
+
+            }
+        }
+        return result;
     }
 }

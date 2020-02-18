@@ -95,4 +95,8 @@
     select IFNULL(sum(num),0) from sc_user_model_num
     where userphone = #{userphone,jdbcType=VARCHAR}
   </select>
+  <delete id="deletemodellower" >
+    delete from sc_user_model_num
+    where  model_id = #{modelId,jdbcType=VARCHAR} and  userphone = #{userphone,jdbcType=VARCHAR}
+  </delete>
 </mapper>

@@ -29,4 +29,6 @@ public interface ScShoppingMapper {
     List<ScShopping> getlistthumbsnum(ScShopping scShopping);
     //当二级菜单为“全部”时，按照一级菜单和点赞数升序查询
     List<ScShopping> getlistonemenuthumbsnum(ScShopping scShopping);
+    //模型下架删除该模型在商品表里的数据
+    int modellowerdelete(String modelid);
 }
