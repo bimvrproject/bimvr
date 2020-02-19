@@ -167,4 +167,14 @@ public class ProjectController {
         rvtMapper.insertSelective(rvt);
         return new Result(ResultStatusCode.OK,"模型数据存储成功...");
     }
+
+    /**
+     * 根据项目id查询该项目的内容
+     * @param projectid 项目id
+     * @return
+     */
+    @RequestMapping("/findbyprojectid")
+    public Result findbyprojectid(String projectid){
+        return new Result(ResultStatusCode.OK,projectMapper.selectByPrimaryKey(projectid));
+    }
 }
