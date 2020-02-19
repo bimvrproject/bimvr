@@ -151,6 +151,14 @@ public class UserController {
         }
         return new Result(ResultStatusCode.OK,userMapper.findByuserphoneorusername(phoneusername,phoneusername));
     }
+
+    /**
+     * 修改密码
+     * @param phone 手机号
+     * @param smsCode 验证码
+     * @param pwd 密码
+     * @return
+     */
     @RequestMapping("/updatepwd")
     public Result updatepwd(String phone,String smsCode,String pwd){
         Result result = new Result();

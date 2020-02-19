@@ -18,6 +18,7 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,6 +38,8 @@ public class LoginController {
     RedisTemplate redisTemplate;
     @Resource
     UserMapper userMapper;
+    @Value("${version}")
+    private volatile  String version;
     /**
      * 用户密码登录
      * @param username
@@ -234,4 +237,12 @@ public class LoginController {
         return result;
     }
 
+    /**
+     * 获取版本号
+     * @return
+     */
+    @RequestMapping("/version")
+    public Result versoin(){
+        return new Result(ResultStatusCode.OK,version);
+    }
 }
