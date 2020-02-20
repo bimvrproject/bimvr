@@ -47,11 +47,17 @@ public class GroupController {
     RoleMapper roleMapper;
     @Resource
     UserFriendMapper userFriendMapper;
+    @Resource
+    ProjectGroupMapper projectGroupMapper;
+
     /**
      * 创建兴趣群
+     * @param groupType  群类型 0项目群 1兴趣群
+     * @param projectid  项目id
+     * @return
      */
     @GetMapping("/createGroup")
-    public Result createGroup(@RequestParam int groupType){
+    public Result createGroup(int groupType,String projectid){
         User user = ShiroUtil.getUser();
         GroupCluster groupCluster = new GroupCluster();
         PhoneRandom phoneRandom = new PhoneRandom();
@@ -86,6 +92,11 @@ public class GroupController {
             groupRecord.setMessage("");
             groupRecord.setGrtime(sdf.format(new Date()));
             groupRecordMapper.insertSelective(groupRecord);
+            //项目与群号对应表
+            ProjectGroup projectGroup = new ProjectGroup();
+            projectGroup.setGroupno(phoneRandom.getTel());
+            projectGroup.setProjectid(projectid);
+            projectGroupMapper.insertSelective(projectGroup);
             return new Result(ResultStatusCode.SUCCESS,groupCluster);
         }
         return new Result(ResultStatusCode.FAIL,"创建群失败");

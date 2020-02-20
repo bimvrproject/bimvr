@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jhbim.bimvr.dao.mapper.ProjectGroupMapper" >
+  <resultMap id="BaseResultMap" type="com.jhbim.bimvr.dao.entity.pojo.ProjectGroup" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="projectid" property="projectid" jdbcType="VARCHAR" />
+    <result column="groupno" property="groupno" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, projectid, groupno
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from project_group
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from project_group
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.jhbim.bimvr.dao.entity.pojo.ProjectGroup" >
+    insert into project_group (id, projectid, groupno
+      )
+    values (#{id,jdbcType=BIGINT}, #{projectid,jdbcType=VARCHAR}, #{groupno,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jhbim.bimvr.dao.entity.pojo.ProjectGroup" >
+    insert into project_group
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="projectid != null" >
+        projectid,
+      </if>
+      <if test="groupno != null" >
+        groupno,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="projectid != null" >
+        #{projectid,jdbcType=VARCHAR},
+      </if>
+      <if test="groupno != null" >
+        #{groupno,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jhbim.bimvr.dao.entity.pojo.ProjectGroup" >
+    update project_group
+    <set >
+      <if test="projectid != null" >
+        projectid = #{projectid,jdbcType=VARCHAR},
+      </if>
+      <if test="groupno != null" >
+        groupno = #{groupno,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jhbim.bimvr.dao.entity.pojo.ProjectGroup" >
+    update project_group
+    set projectid = #{projectid,jdbcType=VARCHAR},
+      groupno = #{groupno,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findByprojectid" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from project_group
+    where  projectid = #{projectid,jdbcType=VARCHAR}
+  </select>
+</mapper>

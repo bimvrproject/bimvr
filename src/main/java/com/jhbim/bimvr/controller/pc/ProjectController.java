@@ -1,13 +1,8 @@
 package com.jhbim.bimvr.controller.pc;
 
-import com.jhbim.bimvr.dao.entity.pojo.Project;
-import com.jhbim.bimvr.dao.entity.pojo.Rvt;
-import com.jhbim.bimvr.dao.entity.pojo.User;
-import com.jhbim.bimvr.dao.entity.pojo.UserProject;
+import com.jhbim.bimvr.dao.entity.pojo.*;
 import com.jhbim.bimvr.dao.entity.vo.Result;
-import com.jhbim.bimvr.dao.mapper.ProjectMapper;
-import com.jhbim.bimvr.dao.mapper.RvtMapper;
-import com.jhbim.bimvr.dao.mapper.UserProjectMapper;
+import com.jhbim.bimvr.dao.mapper.*;
 import com.jhbim.bimvr.system.enums.ResultStatusCode;
 import com.jhbim.bimvr.utils.IdWorker;
 import com.jhbim.bimvr.utils.ShiroUtil;
@@ -18,9 +13,7 @@ import javax.annotation.Resource;
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/${version}/project")
@@ -33,6 +26,10 @@ public class ProjectController {
     IdWorker idWorker;
     @Resource
     RvtMapper rvtMapper;
+    @Resource
+    ProjectGroupMapper projectGroupMapper;
+    @Resource
+    GroupClusterMapper groupClusterMapper;
     /**
      * 查询登录人所有的项目
      * @return
@@ -175,6 +172,22 @@ public class ProjectController {
      */
     @RequestMapping("/findbyprojectid")
     public Result findbyprojectid(String projectid){
-        return new Result(ResultStatusCode.OK,projectMapper.selectByPrimaryKey(projectid));
+        Map<String,Object> map = new HashMap<>();
+        Project project = projectMapper.selectByPrimaryKey(projectid);
+        ProjectGroup projectGroup = projectGroupMapper.findByprojectid(projectid);
+        if(projectGroup!=null){
+            GroupCluster groupCluster = groupClusterMapper.findbygroupid(projectGroup.getGroupno());
+            map.put("grouptype",groupCluster.getUsergroupId());
+        }else{
+            map.put("grouptype",null);
+        }
+        map.put("projectid",project.getId());
+        map.put("projectName",project.getProjectName());
+        map.put("projectModelAddr",project.getProjectModelAddr());
+        map.put("projectAddress",project.getProjectAddress());
+        map.put("projectContent",project.getProjectContent());
+        map.put("createTime",project.getCreateTime());
+        map.put("endTime",project.getEndTime());
+        return new Result(ResultStatusCode.OK,map);
     }
 }
