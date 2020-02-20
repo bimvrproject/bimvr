@@ -2,6 +2,8 @@ package com.jhbim.bimvr.dao.mapper;
 
 import com.jhbim.bimvr.dao.entity.pojo.ProjectGroup;
 
+import java.util.List;
+
 public interface ProjectGroupMapper {
     int deleteByPrimaryKey(Long id);
 
@@ -15,6 +17,5 @@ public interface ProjectGroupMapper {
 
     int updateByPrimaryKey(ProjectGroup record);
 
-    ProjectGroup findByprojectid(String projectid);
-
+    List<ProjectGroup> findByprojectid(String projectid);
 }

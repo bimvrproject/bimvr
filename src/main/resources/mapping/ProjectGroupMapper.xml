@@ -5,9 +5,10 @@
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="projectid" property="projectid" jdbcType="VARCHAR" />
     <result column="groupno" property="groupno" jdbcType="VARCHAR" />
+    <result column="grouptype" property="grouptype" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, projectid, groupno
+    id, projectid, groupno, grouptype
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -20,10 +21,10 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.jhbim.bimvr.dao.entity.pojo.ProjectGroup" >
-    insert into project_group (id, projectid, groupno
-      )
-    values (#{id,jdbcType=BIGINT}, #{projectid,jdbcType=VARCHAR}, #{groupno,jdbcType=VARCHAR}
-      )
+    insert into project_group (id, projectid, groupno, 
+      grouptype)
+    values (#{id,jdbcType=BIGINT}, #{projectid,jdbcType=VARCHAR}, #{groupno,jdbcType=VARCHAR}, 
+      #{grouptype,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.jhbim.bimvr.dao.entity.pojo.ProjectGroup" >
     insert into project_group
@@ -37,6 +38,9 @@
       <if test="groupno != null" >
         groupno,
       </if>
+      <if test="grouptype != null" >
+        grouptype,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -47,6 +51,9 @@
       </if>
       <if test="groupno != null" >
         #{groupno,jdbcType=VARCHAR},
+      </if>
+      <if test="grouptype != null" >
+        #{grouptype,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -59,13 +66,17 @@
       <if test="groupno != null" >
         groupno = #{groupno,jdbcType=VARCHAR},
       </if>
+      <if test="grouptype != null" >
+        grouptype = #{grouptype,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.jhbim.bimvr.dao.entity.pojo.ProjectGroup" >
     update project_group
     set projectid = #{projectid,jdbcType=VARCHAR},
-      groupno = #{groupno,jdbcType=VARCHAR}
+      groupno = #{groupno,jdbcType=VARCHAR},
+      grouptype = #{grouptype,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
   <select id="findByprojectid" resultMap="BaseResultMap" parameterType="java.lang.String" >

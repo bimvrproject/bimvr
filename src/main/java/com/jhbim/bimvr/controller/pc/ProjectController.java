@@ -28,8 +28,6 @@ public class ProjectController {
     RvtMapper rvtMapper;
     @Resource
     ProjectGroupMapper projectGroupMapper;
-    @Resource
-    GroupClusterMapper groupClusterMapper;
     /**
      * 查询登录人所有的项目
      * @return
@@ -174,20 +172,35 @@ public class ProjectController {
     public Result findbyprojectid(String projectid){
         Map<String,Object> map = new HashMap<>();
         Project project = projectMapper.selectByPrimaryKey(projectid);
-        ProjectGroup projectGroup = projectGroupMapper.findByprojectid(projectid);
-        if(projectGroup!=null){
-            GroupCluster groupCluster = groupClusterMapper.findbygroupid(projectGroup.getGroupno());
-            map.put("grouptype",groupCluster.getUsergroupId());
-        }else{
-            map.put("grouptype",null);
+        if(project==null){
+            return new Result(ResultStatusCode.BAD_REQUEST);
         }
-        map.put("projectid",project.getId());
-        map.put("projectName",project.getProjectName());
-        map.put("projectModelAddr",project.getProjectModelAddr());
-        map.put("projectAddress",project.getProjectAddress());
-        map.put("projectContent",project.getProjectContent());
-        map.put("createTime",project.getCreateTime());
-        map.put("endTime",project.getEndTime());
-        return new Result(ResultStatusCode.OK,map);
+        List<ProjectGroup> projectGroup = projectGroupMapper.findByprojectid(projectid);
+        if(projectGroup.isEmpty()){
+            map.put("projectid",project.getId());
+            map.put("projectName",project.getProjectName());
+            map.put("projectModelAddr",project.getProjectModelAddr());
+            map.put("projectAddress",project.getProjectAddress());
+            map.put("projectContent",project.getProjectContent());
+            map.put("createTime",project.getCreateTime());
+            map.put("endTime",project.getEndTime());
+            map.put("grouptype",null);
+            return new Result(ResultStatusCode.OK,map);
+        }
+        List list = new ArrayList<Map<String, Object>>();
+        for (ProjectGroup group : projectGroup){
+            Map<String,Object> map1=new HashMap<>();
+            map1.put("projectid",project.getId());
+            map1.put("projectName",project.getProjectName());
+            map1.put("projectModelAddr",project.getProjectModelAddr());
+            map1.put("projectAddress",project.getProjectAddress());
+            map1.put("projectContent",project.getProjectContent());
+            map1.put("createTime",project.getCreateTime());
+            map1.put("endTime",project.getEndTime());
+            map1.put("grouptype",group.getGrouptype());
+            map1.put("groupno",group.getGroupno());
+            list.add(map1);
+        }
+        return new Result(ResultStatusCode.OK,list);
     }
 }

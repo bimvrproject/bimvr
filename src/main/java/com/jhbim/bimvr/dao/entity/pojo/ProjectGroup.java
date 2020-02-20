@@ -9,6 +9,8 @@ public class ProjectGroup implements Serializable {
 
     private String groupno;
 
+    private Integer grouptype;
+
     private static final long serialVersionUID = 1L;
 
     public Long getId() {
@@ -35,6 +37,14 @@ public class ProjectGroup implements Serializable {
         this.groupno = groupno == null ? null : groupno.trim();
     }
 
+    public Integer getGrouptype() {
+        return grouptype;
+    }
+
+    public void setGrouptype(Integer grouptype) {
+        this.grouptype = grouptype;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -44,6 +54,7 @@ public class ProjectGroup implements Serializable {
         sb.append(", id=").append(id);
         sb.append(", projectid=").append(projectid);
         sb.append(", groupno=").append(groupno);
+        sb.append(", grouptype=").append(grouptype);
         sb.append("]");
         return sb.toString();
     }

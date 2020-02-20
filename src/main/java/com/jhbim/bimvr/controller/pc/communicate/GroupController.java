@@ -96,6 +96,7 @@ public class GroupController {
             ProjectGroup projectGroup = new ProjectGroup();
             projectGroup.setGroupno(phoneRandom.getTel());
             projectGroup.setProjectid(projectid);
+            projectGroup.setGrouptype(groupType);
             projectGroupMapper.insertSelective(projectGroup);
             return new Result(ResultStatusCode.SUCCESS,groupCluster);
         }
