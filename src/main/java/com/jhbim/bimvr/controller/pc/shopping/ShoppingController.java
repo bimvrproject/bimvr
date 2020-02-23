@@ -4,10 +4,14 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.jhbim.bimvr.dao.entity.pojo.Project;
 import com.jhbim.bimvr.dao.entity.pojo.ScShopping;
+import com.jhbim.bimvr.dao.entity.pojo.User;
+import com.jhbim.bimvr.dao.entity.pojo.UserProject;
 import com.jhbim.bimvr.dao.entity.vo.Result;
 import com.jhbim.bimvr.dao.entity.vo.ShoppingVo;
 import com.jhbim.bimvr.dao.mapper.ProjectMapper;
 import com.jhbim.bimvr.dao.mapper.ScShoppingMapper;
+import com.jhbim.bimvr.dao.mapper.UserMapper;
+import com.jhbim.bimvr.dao.mapper.UserProjectMapper;
 import com.jhbim.bimvr.system.enums.ResultStatusCode;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,6 +30,10 @@ public class ShoppingController {
     ScShoppingMapper scShoppingMapper;
     @Resource
     ProjectMapper projectMapper;
+    @Resource
+    UserProjectMapper userProjectMapper;
+    @Resource
+    UserMapper userMapper;
 
     /**
      * 商城界面条件查询
@@ -46,18 +54,20 @@ public class ShoppingController {
         ScShopping scShopping = new ScShopping();
         //默认是按照上架时间降序
         if(type.equals("")){
-            System.out.println("空的");
             if(twomenu.equals("全部")){
                 scShopping.setOnemenu(onemenu);
                 List<ScShopping> scShoppingList = scShoppingMapper.getlisttimerdesc(scShopping);
                 List<ShoppingVo> shoppingVos = new ArrayList<>();
                 for (ScShopping s : scShoppingList) {
                     Project project=projectMapper.selectByPrimaryKey(s.getModelId());
+                    UserProject userProject = userProjectMapper.findbyprojectid(project.getId());
+                    User user = userMapper.findByuserid(userProject.getUserId());
                     ShoppingVo shoppingVo = new ShoppingVo();
                     shoppingVo.setThumbnail(project.getProjectModelAddr());
                     shoppingVo.setPrice(s.getPrice());
                     shoppingVo.setModelid(project.getId());
                     shoppingVo.setThumbsnum(s.getThumbsnum());
+                    shoppingVo.setUserphone(user.getPhone());
                     shoppingVos.add(shoppingVo);
                 }
                 map.put("data",shoppingVos);
@@ -71,11 +81,14 @@ public class ShoppingController {
             List<ShoppingVo> shoppingVos = new ArrayList<>();
             for (ScShopping s : scShoppingList) {
                 Project project=projectMapper.selectByPrimaryKey(s.getModelId());
+                UserProject userProject = userProjectMapper.findbyprojectid(project.getId());
+                User user = userMapper.findByuserid(userProject.getUserId());
                 ShoppingVo shoppingVo = new ShoppingVo();
                 shoppingVo.setThumbnail(project.getProjectModelAddr());
                 shoppingVo.setPrice(s.getPrice());
                 shoppingVo.setModelid(project.getId());
                 shoppingVo.setThumbsnum(s.getThumbsnum());
+                shoppingVo.setUserphone(user.getPhone());
                 shoppingVos.add(shoppingVo);
             }
             map.put("data",shoppingVos);
@@ -91,11 +104,14 @@ public class ShoppingController {
                 List<ShoppingVo> shoppingVos = new ArrayList<>();
                 for (ScShopping s : scShoppingList) {
                     Project project=projectMapper.selectByPrimaryKey(s.getModelId());
+                    UserProject userProject = userProjectMapper.findbyprojectid(project.getId());
+                    User user = userMapper.findByuserid(userProject.getUserId());
                     ShoppingVo shoppingVo = new ShoppingVo();
                     shoppingVo.setThumbnail(project.getProjectModelAddr());
                     shoppingVo.setPrice(s.getPrice());
                     shoppingVo.setModelid(project.getId());
                     shoppingVo.setThumbsnum(s.getThumbsnum());
+                    shoppingVo.setUserphone(user.getPhone());
                     shoppingVos.add(shoppingVo);
                 }
                 map.put("data",shoppingVos);
@@ -109,11 +125,14 @@ public class ShoppingController {
             List<ShoppingVo> shoppingVos = new ArrayList<>();
             for (ScShopping s : scShoppingList) {
                 Project project=projectMapper.selectByPrimaryKey(s.getModelId());
+                UserProject userProject = userProjectMapper.findbyprojectid(project.getId());
+                User user = userMapper.findByuserid(userProject.getUserId());
                 ShoppingVo shoppingVo = new ShoppingVo();
                 shoppingVo.setThumbnail(project.getProjectModelAddr());
                 shoppingVo.setPrice(s.getPrice());
                 shoppingVo.setModelid(project.getId());
                 shoppingVo.setThumbsnum(s.getThumbsnum());
+                shoppingVo.setUserphone(user.getPhone());
                 shoppingVos.add(shoppingVo);
             }
             map.put("data",shoppingVos);
@@ -129,11 +148,14 @@ public class ShoppingController {
                 List<ShoppingVo> shoppingVos = new ArrayList<>();
                 for (ScShopping s : scShoppingList) {
                     Project project=projectMapper.selectByPrimaryKey(s.getModelId());
+                    UserProject userProject = userProjectMapper.findbyprojectid(project.getId());
+                    User user = userMapper.findByuserid(userProject.getUserId());
                     ShoppingVo shoppingVo = new ShoppingVo();
                     shoppingVo.setThumbnail(project.getProjectModelAddr());
                     shoppingVo.setPrice(s.getPrice());
                     shoppingVo.setModelid(project.getId());
                     shoppingVo.setThumbsnum(s.getThumbsnum());
+                    shoppingVo.setUserphone(user.getPhone());
                     shoppingVos.add(shoppingVo);
                 }
                 map.put("data",shoppingVos);
@@ -147,11 +169,14 @@ public class ShoppingController {
             List<ShoppingVo> shoppingVos = new ArrayList<>();
             for (ScShopping s : scShoppingList) {
                 Project project=projectMapper.selectByPrimaryKey(s.getModelId());
+                UserProject userProject = userProjectMapper.findbyprojectid(project.getId());
+                User user = userMapper.findByuserid(userProject.getUserId());
                 ShoppingVo shoppingVo = new ShoppingVo();
                 shoppingVo.setThumbnail(project.getProjectModelAddr());
                 shoppingVo.setPrice(s.getPrice());
                 shoppingVo.setModelid(project.getId());
                 shoppingVo.setThumbsnum(s.getThumbsnum());
+                shoppingVo.setUserphone(user.getPhone());
                 shoppingVos.add(shoppingVo);
             }
             map.put("data",shoppingVos);

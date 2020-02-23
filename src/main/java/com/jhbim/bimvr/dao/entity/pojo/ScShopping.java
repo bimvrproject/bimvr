@@ -1,6 +1,7 @@
 package com.jhbim.bimvr.dao.entity.pojo;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class ScShopping implements Serializable {
@@ -12,7 +13,7 @@ public class ScShopping implements Serializable {
 
     private String twomenu;
 
-    private Integer price;
+    private BigDecimal price;
 
     private Date timer;
 
@@ -52,11 +53,11 @@ public class ScShopping implements Serializable {
         this.twomenu = twomenu == null ? null : twomenu.trim();
     }
 
-    public Integer getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

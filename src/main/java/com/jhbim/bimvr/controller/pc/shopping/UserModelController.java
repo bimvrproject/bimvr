@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -58,7 +59,7 @@ public class UserModelController {
      * @return
      */
     @RequestMapping("/addusermodel")
-    public Result addusermodel(String onemenu,String twomenu,String modelid,int price){
+    public Result addusermodel(String onemenu, String twomenu, String modelid,BigDecimal price){
         User user = ShiroUtil.getUser();
         int count = scUserModelNumMapper.getcount(user.getPhone());
         if(modelcount == count){

@@ -29,4 +29,7 @@ public interface UserProjectMapper {
      * @return
      */
     int selectUserProjectnum(Integer userid);
+
+    //根据项目id查询
+    UserProject findbyprojectid(String projectid);
 }

@@ -6,7 +6,7 @@
     <result column="model_id" property="modelId" jdbcType="VARCHAR" />
     <result column="onemenu" property="onemenu" jdbcType="VARCHAR" />
     <result column="twomenu" property="twomenu" jdbcType="VARCHAR" />
-    <result column="price" property="price" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
     <result column="timer" property="timer" jdbcType="TIMESTAMP" />
     <result column="thumbsnum" property="thumbsnum" jdbcType="INTEGER" />
   </resultMap>
@@ -28,7 +28,7 @@
       twomenu, price, timer, 
       thumbsnum)
     values (#{id,jdbcType=BIGINT}, #{modelId,jdbcType=VARCHAR}, #{onemenu,jdbcType=VARCHAR}, 
-      #{twomenu,jdbcType=VARCHAR}, #{price,jdbcType=INTEGER}, #{timer,jdbcType=TIMESTAMP}, 
+      #{twomenu,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{timer,jdbcType=TIMESTAMP},
       #{thumbsnum,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.jhbim.bimvr.dao.entity.pojo.ScShopping" >
@@ -70,7 +70,7 @@
         #{twomenu,jdbcType=VARCHAR},
       </if>
       <if test="price != null" >
-        #{price,jdbcType=INTEGER},
+        #{price,jdbcType=DECIMAL},
       </if>
       <if test="timer != null" >
         #{timer,jdbcType=TIMESTAMP},
@@ -93,7 +93,7 @@
         twomenu = #{twomenu,jdbcType=VARCHAR},
       </if>
       <if test="price != null" >
-        price = #{price,jdbcType=INTEGER},
+        price = #{price,jdbcType=DECIMAL},
       </if>
       <if test="timer != null" >
         timer = #{timer,jdbcType=TIMESTAMP},
@@ -109,7 +109,7 @@
     set model_id = #{modelId,jdbcType=VARCHAR},
       onemenu = #{onemenu,jdbcType=VARCHAR},
       twomenu = #{twomenu,jdbcType=VARCHAR},
-      price = #{price,jdbcType=INTEGER},
+      price = #{price,jdbcType=DECIMAL},
       timer = #{timer,jdbcType=TIMESTAMP},
       thumbsnum = #{thumbsnum,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}

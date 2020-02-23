@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jhbim.bimvr.dao.mapper.BuyModelRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.jhbim.bimvr.dao.entity.pojo.BuyModelRecord" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="selluserphone" property="selluserphone" jdbcType="VARCHAR" />
+    <result column="buyuserphone" property="buyuserphone" jdbcType="VARCHAR" />
+    <result column="modelid" property="modelid" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="buttime" property="buttime" jdbcType="TIMESTAMP" />
+    <result column="pay_way" property="payWay" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, selluserphone, buyuserphone, modelid, price, buttime, pay_way
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from buy_model_record
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from buy_model_record
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.jhbim.bimvr.dao.entity.pojo.BuyModelRecord" >
+    insert into buy_model_record (id, selluserphone, buyuserphone, 
+      modelid, price, buttime, 
+      pay_way)
+    values (#{id,jdbcType=BIGINT}, #{selluserphone,jdbcType=VARCHAR}, #{buyuserphone,jdbcType=VARCHAR}, 
+      #{modelid,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{buttime,jdbcType=TIMESTAMP}, 
+      #{payWay,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jhbim.bimvr.dao.entity.pojo.BuyModelRecord" >
+    insert into buy_model_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="selluserphone != null" >
+        selluserphone,
+      </if>
+      <if test="buyuserphone != null" >
+        buyuserphone,
+      </if>
+      <if test="modelid != null" >
+        modelid,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="buttime != null" >
+        buttime,
+      </if>
+      <if test="payWay != null" >
+        pay_way,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="selluserphone != null" >
+        #{selluserphone,jdbcType=VARCHAR},
+      </if>
+      <if test="buyuserphone != null" >
+        #{buyuserphone,jdbcType=VARCHAR},
+      </if>
+      <if test="modelid != null" >
+        #{modelid,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="buttime != null" >
+        #{buttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payWay != null" >
+        #{payWay,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jhbim.bimvr.dao.entity.pojo.BuyModelRecord" >
+    update buy_model_record
+    <set >
+      <if test="selluserphone != null" >
+        selluserphone = #{selluserphone,jdbcType=VARCHAR},
+      </if>
+      <if test="buyuserphone != null" >
+        buyuserphone = #{buyuserphone,jdbcType=VARCHAR},
+      </if>
+      <if test="modelid != null" >
+        modelid = #{modelid,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="buttime != null" >
+        buttime = #{buttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payWay != null" >
+        pay_way = #{payWay,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jhbim.bimvr.dao.entity.pojo.BuyModelRecord" >
+    update buy_model_record
+    set selluserphone = #{selluserphone,jdbcType=VARCHAR},
+      buyuserphone = #{buyuserphone,jdbcType=VARCHAR},
+      modelid = #{modelid,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      buttime = #{buttime,jdbcType=TIMESTAMP},
+      pay_way = #{payWay,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,11 +1,22 @@
 package com.jhbim.bimvr.dao.entity.vo;
 
+import java.math.BigDecimal;
+
 public class ShoppingVo {
 
     private String thumbnail; //缩略图
-    private int price;  //价格
+    private BigDecimal price;  //价格
     private String modelid;  //模型id
     private int thumbsnum;//点赞数量
+    private String userphone; //
+
+    public String getUserphone() {
+        return userphone;
+    }
+
+    public void setUserphone(String userphone) {
+        this.userphone = userphone;
+    }
 
     public String getThumbnail() {
         return thumbnail;
@@ -15,11 +26,11 @@ public class ShoppingVo {
         this.thumbnail = thumbnail;
     }
 
-    public int getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jhbim.bimvr.dao.mapper.UserWalletMapper" >
+  <resultMap id="BaseResultMap" type="com.jhbim.bimvr.dao.entity.pojo.UserWallet" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="userphone" property="userphone" jdbcType="VARCHAR" />
+    <result column="money" property="money" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, userphone, money
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_wallet
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from user_wallet
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.jhbim.bimvr.dao.entity.pojo.UserWallet" >
+    insert into user_wallet (id, userphone, money
+      )
+    values (#{id,jdbcType=BIGINT}, #{userphone,jdbcType=VARCHAR}, #{money,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jhbim.bimvr.dao.entity.pojo.UserWallet" >
+    insert into user_wallet
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userphone != null" >
+        userphone,
+      </if>
+      <if test="money != null" >
+        money,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userphone != null" >
+        #{userphone,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null" >
+        #{money,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jhbim.bimvr.dao.entity.pojo.UserWallet" >
+    update user_wallet
+    <set >
+      <if test="userphone != null" >
+        userphone = #{userphone,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null" >
+        money = #{money,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jhbim.bimvr.dao.entity.pojo.UserWallet" >
+    update user_wallet
+    set userphone = #{userphone,jdbcType=VARCHAR},
+      money = #{money,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateplusmoney" parameterType="com.jhbim.bimvr.dao.entity.pojo.UserWallet" >
+    update user_wallet
+    set money = money + #{money,jdbcType=INTEGER}
+    where userphone = #{userphone,jdbcType=VARCHAR}
+  </update>
+
+  <update id="updatereducemoney" parameterType="com.jhbim.bimvr.dao.entity.pojo.UserWallet" >
+    update user_wallet
+    set money = money - #{money,jdbcType=INTEGER}
+    where userphone = #{userphone,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByuserphone" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from user_wallet
+    where userphone = #{userphone,jdbcType=VARCHAR}
+  </select>
+</mapper>

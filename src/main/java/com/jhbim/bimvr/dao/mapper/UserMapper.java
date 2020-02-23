@@ -53,7 +53,7 @@ public interface UserMapper {
     //用户排序
     List<User> userSort(List<String> list);
     //根据用户id查询
-    List<User> findByuserid(Integer userid);
+    User findByuserid(Integer userid);
     //用户列表
     UserMessageVo userListMessage(String friendPhone);
     UserMessageVo userLists(String friendPhone);

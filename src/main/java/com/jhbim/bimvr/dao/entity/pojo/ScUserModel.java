@@ -1,6 +1,7 @@
 package com.jhbim.bimvr.dao.entity.pojo;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 public class ScUserModel implements Serializable {
     private Long id;
@@ -13,7 +14,7 @@ public class ScUserModel implements Serializable {
 
     private String twomenu;
 
-    private Integer price;
+    private BigDecimal price;
 
     private Integer num;
 
@@ -61,11 +62,11 @@ public class ScUserModel implements Serializable {
         this.twomenu = twomenu == null ? null : twomenu.trim();
     }
 
-    public Integer getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

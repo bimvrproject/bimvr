@@ -4,8 +4,10 @@ package com.jhbim.bimvr.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.jhbim.bimvr.dao.entity.pojo.User;
+import com.jhbim.bimvr.dao.entity.pojo.UserWallet;
 import com.jhbim.bimvr.dao.entity.vo.Result;
 import com.jhbim.bimvr.dao.mapper.UserMapper;
+import com.jhbim.bimvr.dao.mapper.UserWalletMapper;
 import com.jhbim.bimvr.service.IUserService;
 import com.jhbim.bimvr.system.enums.ResultStatusCode;
 import com.jhbim.bimvr.system.shiro.LoginType;
@@ -38,6 +40,8 @@ public class LoginController {
     RedisTemplate redisTemplate;
     @Resource
     UserMapper userMapper;
+    @Resource
+    UserWalletMapper userWalletMapper;
     @Value("${version}")
     private volatile  String version;
     /**
@@ -197,7 +201,13 @@ public class LoginController {
                     user.setPassword(MD5Util.encrypt(pwd));
                     user.setCreateTime(new Date());
                     user.setPricture("http://36.112.65.110:8080/project/res_picture/0.png");
-                    userMapper.insertSelective(user);
+                   int i = userMapper.insertSelective(user);
+                   if(i>0){
+                       //用户钱包
+                       UserWallet userWallet = new UserWallet();
+                       userWallet.setUserphone(phone);
+                       userWalletMapper.insertSelective(userWallet);
+                   }
                 }
                 return new Result(ResultStatusCode.RegiterSuccess);
             }

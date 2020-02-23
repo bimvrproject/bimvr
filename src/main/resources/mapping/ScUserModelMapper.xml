@@ -7,7 +7,7 @@
     <result column="onemenu" property="onemenu" jdbcType="VARCHAR" />
     <result column="model_id" property="modelId" jdbcType="VARCHAR" />
     <result column="twomenu" property="twomenu" jdbcType="VARCHAR" />
-    <result column="price" property="price" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
     <result column="num" property="num" jdbcType="INTEGER" />
     <result column="type" property="type" jdbcType="INTEGER" />
   </resultMap>
@@ -103,7 +103,7 @@
         twomenu = #{twomenu,jdbcType=VARCHAR},
       </if>
       <if test="price != null" >
-        price = #{price,jdbcType=INTEGER},
+        price = #{price,jdbcType=DECIMAL},
       </if>
       <if test="num != null" >
         num = #{num,jdbcType=INTEGER},
@@ -120,7 +120,7 @@
       onemenu = #{onemenu,jdbcType=VARCHAR},
       model_id = #{modelId,jdbcType=VARCHAR},
       twomenu = #{twomenu,jdbcType=VARCHAR},
-      price = #{price,jdbcType=INTEGER},
+      price = #{price,jdbcType=DECIMAL},
       num = #{num,jdbcType=INTEGER},
       type = #{type,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
