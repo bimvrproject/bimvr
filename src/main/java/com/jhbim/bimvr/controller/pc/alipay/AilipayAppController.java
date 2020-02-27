@@ -3,10 +3,7 @@ package com.jhbim.bimvr.controller.pc.alipay;
 import com.jhbim.bimvr.service.AlipayAppService;
 import com.jhbim.bimvr.utils.ResultStatus;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +30,7 @@ public class AilipayAppController {
      * @param request
      * @return
      */
-    @PostMapping("/aliPayCertUnifiedOrder")
+    @GetMapping("/aliPayCertUnifiedOrder")
     public ResultStatus aliPayCertUnifiedOrder(String request){
         return alipayAppService.aliPayCertUnifiedOrder(request);
     }
