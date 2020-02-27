@@ -39,7 +39,7 @@ public class ZrkAliPayCertConfig {
     /**
      * 回调地址
      */
-    public static String ALIPAY_NOTIFY_URL = "http://21z9804m0.zicp.vip:9090/thirdPay/alipayCertNotify";
+    public static String ALIPAY_NOTIFY_URL = "http://21z9804m0.zicp.vip:9090/alipayapp/alipayCertNotify";
 
     /**
      * 字符集
