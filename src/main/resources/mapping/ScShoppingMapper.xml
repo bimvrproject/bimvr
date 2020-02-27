@@ -192,4 +192,9 @@
     delete from sc_shopping
     where  model_id = #{modelId,jdbcType=VARCHAR}
   </delete>
+  <update id="updatethumbsnum" parameterType="com.jhbim.bimvr.dao.entity.pojo.ScShopping" >
+    update sc_shopping
+    set  thumbsnum = #{thumbsnum,jdbcType=INTEGER}
+    where model_id = #{modelId,jdbcType=VARCHAR}
+  </update>
 </mapper>

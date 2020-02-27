@@ -31,4 +31,6 @@ public interface ScShoppingMapper {
     List<ScShopping> getlistonemenuthumbsnum(ScShopping scShopping);
     //模型下架删除该模型在商品表里的数据
     int modellowerdelete(String modelid);
+
+    int updatethumbsnum(ScShopping scShopping);
 }

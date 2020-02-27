@@ -1,21 +1,14 @@
 package com.jhbim.bimvr.controller.pc.community;
 
 
-import com.jhbim.bimvr.dao.entity.pojo.Model;
-import com.jhbim.bimvr.dao.entity.pojo.ModelPay;
-import com.jhbim.bimvr.dao.entity.pojo.User;
-import com.jhbim.bimvr.dao.entity.pojo.Zan;
+import com.jhbim.bimvr.dao.entity.pojo.*;
 import com.jhbim.bimvr.dao.entity.vo.Result;
 import com.jhbim.bimvr.dao.entity.vo.UserRankVo;
-import com.jhbim.bimvr.dao.mapper.ModelMapper;
-import com.jhbim.bimvr.dao.mapper.ModelPayMapper;
-import com.jhbim.bimvr.dao.mapper.UserMapper;
-import com.jhbim.bimvr.dao.mapper.ZanMapper;
+import com.jhbim.bimvr.dao.mapper.*;
 import com.jhbim.bimvr.system.enums.ResultStatusCode;
 
 import com.jhbim.bimvr.utils.IdUtil;
 import com.jhbim.bimvr.utils.ShiroUtil;
-import org.apache.tools.ant.taskdefs.Get;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -48,6 +42,9 @@ public class RankingController {
 
     @Autowired
     private ModelPayMapper modelPayMapper;
+
+    @Resource
+    ScShoppingMapper scShoppingMapper;
 
     /**
      * 获取用户排行
@@ -95,12 +92,14 @@ public class RankingController {
      * @param workId 对应的作品或评论的id或者用户
      * @param genre 点赞类型  1用户点赞  2 模型点赞  3 评论点赞
      * @param status 点赞状态  0--取消赞   1--有效赞
+     * @param modelid 模型id
      * @return
      */
     @PostMapping("/dianzan")
-    public Result dianzan(String workId,Integer genre,Integer status){
+    public Result dianzan(String workId,Integer genre,Integer status,String modelid){
         User user = ShiroUtil.getUser();
         Zan select = zanMapper.select(workId, genre, user.getPhone());
+        //Zan表如何为空 直接增加信息即可,反之根据条件修改即可
         if (StringUtils.isEmpty(select)){
             Zan zan = new Zan();
             zan.setId(IdUtil.getIncreaseIdByNanoTime());
@@ -111,10 +110,10 @@ public class RankingController {
             zan.setCreateTime(new Date());
             int insert = zanMapper.insert(zan);
             if (insert>0){
+                System.out.println("进了没");
                 //给用户点赞
                 if(genre == 1){
                     User user1 = userMapper.selectByPrimaryKey(workId);
-                    System.out.println(user1.getPhone());
                     int a = userMapper.updateAccount(user1.getAccount()+1,workId);
                     if(a>0){
                         return new Result(ResultStatusCode.SUCCESS,"点赞成功");
@@ -122,15 +121,33 @@ public class RankingController {
                     return new Result(ResultStatusCode.FAIL,"点赞失败");
                 }
                 //模型点赞
+                if(genre == 2){
+                    Model m = modelMapper.selectbymodelid(modelid);
+                    Model model = new Model();
+                    model.setAccount(m.getAccount()+1);
+                    model.setModelId(modelid);
+                    int i = modelMapper.updateAccount(model);
+                    if(i>0){
+                        ScShopping scShopping = new ScShopping();
+                        scShopping.setModelId(m.getModelId());
+                        scShopping.setThumbsnum(m.getAccount()+1);
+                        scShoppingMapper.updatethumbsnum(scShopping);
+                        System.out.println("123123132");
+                        return new Result(ResultStatusCode.SUCCESS,"点赞成功");
+                    }
+                    return new Result(ResultStatusCode.FAIL,"点赞失败");
+                }
                 //评论点赞
+                if(genre == 3){
+
+                }
             }
         }else{
-            //给用户点赞
-            if(genre == 1 && status ==1){
+            //给用户点赞、模型点赞
+            if(genre == 1 && status ==1 || genre == 2 && status ==1){
                 if(select.getStatus() == 0){
                     //给用户点赞
                     if(genre == 1){
-                        System.out.println(status);
                         Zan zan = new Zan();
                         zan.setId(select.getId());
                         zan.setWorkId(workId);
@@ -139,17 +156,48 @@ public class RankingController {
                         zan.setStatus(status);
                         zan.setCreateTime(new Date());
                         int i = zanMapper.updateByPrimaryKey(zan);
-                        User user1 = userMapper.selectByPrimaryKey(workId);
-                        int a = userMapper.updateAccount(user1.getAccount()+1,workId);
-                        if(a>0){
-                            return new Result(ResultStatusCode.SUCCESS,"点赞成功");
+                        if(i>0) {
+                            User user1 = userMapper.selectByPrimaryKey(workId);
+                            int a = userMapper.updateAccount(user1.getAccount() + 1, workId);
+                            if (a > 0) {
+                                return new Result(ResultStatusCode.SUCCESS, "点赞成功");
+                            }
                         }
                         return new Result(ResultStatusCode.FAIL,"点赞失败");
+                    }
+                    //模型点赞
+                    if(genre == 2){
+                        Zan zan = new Zan();
+                        zan.setId(select.getId());
+                        zan.setWorkId(workId);
+                        zan.setGenre(genre);
+                        zan.setUserId(user.getPhone());
+                        zan.setStatus(status);
+                        zan.setCreateTime(new Date());
+                        int i = zanMapper.updateByPrimaryKey(zan);
+                        if(i>0){
+                            Model m = modelMapper.selectbymodelid(modelid);
+                            Model model = new Model();
+                            model.setAccount(m.getAccount()+1);
+                            System.out.println();
+                            model.setModelId(modelid);
+                            int j = modelMapper.updateAccount(model);
+                            if(j>0){
+                                ScShopping scShopping = new ScShopping();
+                                scShopping.setModelId(m.getModelId());
+                                scShopping.setThumbsnum(m.getAccount()+1);
+                                scShoppingMapper.updatethumbsnum(scShopping);
+                                System.out.println();
+                                return new Result(ResultStatusCode.SUCCESS,"点赞成功");
+                            }
+                            return new Result(ResultStatusCode.FAIL,"点赞失败");
+                        }
                     }
                 }
             }
         }
-        if (status == 0){
+        //用户取消点赞
+        if (genre == 1 && status == 0){
             Zan unzan = new Zan();
             unzan.setId(select.getId());
             unzan.setWorkId(workId);
@@ -167,6 +215,34 @@ public class RankingController {
                 }
                 return new Result(ResultStatusCode.FAIL,"您已取消点赞...");
             }
+        }
+        //模型取消点赞
+        if (genre == 2 && status == 0){
+            Zan unzan = new Zan();
+            unzan.setId(select.getId());
+            unzan.setWorkId(workId);
+            unzan.setGenre(genre);
+            unzan.setUserId(user.getPhone());
+            unzan.setStatus(status);
+            unzan.setCreateTime(new Date());
+            int j = zanMapper.updateByPrimaryKey(unzan);
+            if(j>0) {
+                if (genre == 2 && select.getStatus() == 1) {
+                    Model m = modelMapper.selectbymodelid(modelid);
+                    Model model = new Model();
+                    model.setAccount(m.getAccount() - 1);
+                    model.setModelId(modelid);
+                    int i = modelMapper.updateAccount(model);
+                    if (i > 0) {
+                        ScShopping scShopping = new ScShopping();
+                        scShopping.setModelId(m.getModelId());
+                        scShopping.setThumbsnum(m.getAccount() - 1);
+                        scShoppingMapper.updatethumbsnum(scShopping);
+                        return new Result(ResultStatusCode.SUCCESS, "取消点赞");
+                    }
+                }
+            }
+            return new Result(ResultStatusCode.FAIL,"您已取消点赞...");
         }
         return new Result(ResultStatusCode.FAIL,"您已点赞...");
     }

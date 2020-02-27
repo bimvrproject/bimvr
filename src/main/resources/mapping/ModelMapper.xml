@@ -123,4 +123,15 @@
   <select id="getmodelid"  resultType="int"  parameterType="java.lang.String">
     select  IFNULL(sum(account),0) from model where model_id = #{modelId,jdbcType=VARCHAR}
   </select>
+  <update id="updateAccount" parameterType="com.jhbim.bimvr.dao.entity.pojo.Model" >
+    update model
+    set account = #{account,jdbcType=INTEGER}
+    where model_id = #{modelId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectbymodelid" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from model
+    where  model_id = #{modelId,jdbcType=VARCHAR}
+  </select>
 </mapper>

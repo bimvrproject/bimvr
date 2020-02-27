@@ -22,4 +22,8 @@ public interface ModelMapper {
     List<String> modelList();
     //根据模型(项目)id查询模型的点赞数
     int getmodelid(String projectid);
+    //点赞数
+    int updateAccount(Model model);
+    //根据模型id查询
+    Model selectbymodelid(String modelid);
 }

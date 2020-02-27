@@ -164,7 +164,7 @@ public class User implements Serializable {
         sb.append(", posotion=").append(posotion);
         sb.append(", remarks=").append(remarks);
         sb.append(", companyname=").append(companyname);
-        sb.append(", state=").append(state);
+        sb.append(", static=").append(state);
         sb.append(", account=").append(account);
         sb.append("]");
         return sb.toString();
