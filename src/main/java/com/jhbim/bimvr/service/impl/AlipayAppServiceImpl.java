@@ -44,8 +44,8 @@ public class AlipayAppServiceImpl implements AlipayAppService {
     private final static  String attachRegex = "BIMAPP";
     @Override
     public ResultStatus aliPayCertUnifiedOrder(BigDecimal orderAmount,String productNum,String userphone) {
-        if (productNum.isEmpty()){
-            return  new ResultStatus(ResultStatusEnum.ERROR.getStatus(),"参数传输失败");
+        if (orderAmount==null || productNum.isEmpty() || userphone.isEmpty()){
+            return  new ResultStatus(ResultStatusEnum.ERROR.getStatus(),"参数解析失败");
         }
         /**
          * 定义变量，可以根据实际需求获取并生成相应变量，变量值仅供参考
