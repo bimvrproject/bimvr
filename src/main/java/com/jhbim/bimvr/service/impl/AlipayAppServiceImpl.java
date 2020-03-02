@@ -78,6 +78,7 @@ public class AlipayAppServiceImpl implements AlipayAppService {
         request1.setBizModel(model);
         request1.setNotifyUrl(ZrkAliPayCertConfig.ALIPAY_NOTIFY_URL);
         log.info(">>>>支付宝统一下单接口请求参数：" + model.getBody() + "," + model.getOutTradeNo() + "," + model.getTotalAmount());
+
         /**实例化客户端*/
         CertAlipayRequest certAlipayRequest = new CertAlipayRequest();
         certAlipayRequest.setServerUrl(ZrkAliPayCertConfig.SERVERURL);
