@@ -9,7 +9,11 @@ import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradeAppPayRequest;
 import com.alipay.api.response.AlipayTradeAppPayResponse;
 import com.jhbim.bimvr.config.ZrkAliPayCertConfig;
+import com.jhbim.bimvr.dao.entity.pojo.Project;
+import com.jhbim.bimvr.dao.entity.vo.Result;
+import com.jhbim.bimvr.dao.mapper.ProjectMapper;
 import com.jhbim.bimvr.service.AlipayAppService;
+import com.jhbim.bimvr.utils.IdWorker;
 import com.jhbim.bimvr.utils.ResultStatus;
 import com.jhbim.bimvr.utils.ResultStatusEnum;
 import org.slf4j.Logger;
@@ -17,6 +21,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -30,22 +36,29 @@ public class AlipayAppServiceImpl implements AlipayAppService {
      */
     @Value("${alipay_cert_file_path}")
     private volatile String AliPay_CERT_FILE_PATH;
+    @Resource
+    IdWorker idWorker;
+    @Resource
+    ProjectMapper projectMapper;
 
     private final static  String attachRegex = "BIMAPP";
     @Override
-    public ResultStatus aliPayCertUnifiedOrder(String request) {
+    public ResultStatus aliPayCertUnifiedOrder(BigDecimal orderAmount,String productNum,String userphone) {
+        if (productNum.isEmpty()){
+            return  new ResultStatus(ResultStatusEnum.ERROR.getStatus(),"参数传输失败");
+        }
         /**
          * 定义变量，可以根据实际需求获取并生成相应变量，变量值仅供参考
          */
-        String body = "商品名称";
-        String outTradeNo = "999999999";
-        Double totalFee = 0.01;
+        Project project = projectMapper.selectByPrimaryKey(productNum);
+        String outTradeNo = idWorker.nextId()+"";
+        String projectbody=project.getProjectName();
         /**
          * 拼接自己的业务参数
          *  例如 用户id + 商品id + 订单id
          *  用指定分隔符进行拼接，以便后续做业务处理
          */
-        String passBackParams = "123" + attachRegex + "111" + attachRegex + "222";
+        String passBackParams = userphone + attachRegex + productNum + attachRegex + outTradeNo;
 
         /**
          * 以下部分可以共用，复制即可
@@ -55,11 +68,11 @@ public class AlipayAppServiceImpl implements AlipayAppService {
         AlipayTradeAppPayRequest request1 = new AlipayTradeAppPayRequest();
         //SDK已经封装掉了公共参数，这里只需要传入业务参数。以下方法为sdk的model入参方式(model和biz_content同时存在的情况下取biz_content)。
         AlipayTradeAppPayModel model = new AlipayTradeAppPayModel();
-        model.setBody(body);
-        model.setSubject(body);
+        model.setBody(projectbody);
+        model.setSubject(projectbody);
         model.setOutTradeNo(outTradeNo);
         model.setTimeoutExpress("30m");
-        model.setTotalAmount(totalFee + "");
+        model.setTotalAmount(orderAmount + "");
         model.setProductCode("QUICK_MSECURITY_PAY");
         model.setPassbackParams(URLEncoder.encode(passBackParams));
         request1.setBizModel(model);

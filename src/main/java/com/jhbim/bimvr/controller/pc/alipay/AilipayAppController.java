@@ -8,11 +8,12 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
 import java.util.Map;
 
 /**
  * @Description: 第三方支付接口
- * @Author: zrk
+ * @Author: chen
  * @Date: 2019/9/10
  */
 @Slf4j
@@ -27,12 +28,14 @@ public class AilipayAppController {
     /**
      * 支付宝下订单接口(公钥证书方式)
      *      参数可根据自己的业务需求传相应参数
-     * @param request
+     * @param orderAmount   订单金额
+     * @param productNum    商品编号
+     * @param userphone     用户手机号
      * @return
      */
-    @GetMapping("/aliPayCertUnifiedOrder")
-    public ResultStatus aliPayCertUnifiedOrder(String request){
-        return alipayAppService.aliPayCertUnifiedOrder(request);
+    @PostMapping("/aliPayCertUnifiedOrder")
+    public ResultStatus aliPayCertUnifiedOrder(BigDecimal orderAmount, String productNum, String userphone){
+        return alipayAppService.aliPayCertUnifiedOrder(orderAmount,productNum,userphone);
     }
 
     /**
