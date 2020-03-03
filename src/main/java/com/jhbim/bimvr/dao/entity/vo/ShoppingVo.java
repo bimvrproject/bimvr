@@ -8,7 +8,16 @@ public class ShoppingVo {
     private BigDecimal price;  //价格
     private String modelid;  //模型id
     private int thumbsnum;//点赞数量
-    private String userphone; //
+    private String userphone; //用户手机号
+    private String projectname; //项目名称
+
+    public String getProjectname() {
+        return projectname;
+    }
+
+    public void setProjectname(String projectname) {
+        this.projectname = projectname;
+    }
 
     public String getUserphone() {
         return userphone;

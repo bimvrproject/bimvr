@@ -68,6 +68,7 @@ public class ShoppingController {
                     shoppingVo.setModelid(project.getId());
                     shoppingVo.setThumbsnum(s.getThumbsnum());
                     shoppingVo.setUserphone(user.getPhone());
+                    shoppingVo.setProjectname(project.getProjectName());
                     shoppingVos.add(shoppingVo);
                 }
                 map.put("data",shoppingVos);
@@ -89,6 +90,7 @@ public class ShoppingController {
                 shoppingVo.setModelid(project.getId());
                 shoppingVo.setThumbsnum(s.getThumbsnum());
                 shoppingVo.setUserphone(user.getPhone());
+                shoppingVo.setProjectname(project.getProjectName());
                 shoppingVos.add(shoppingVo);
             }
             map.put("data",shoppingVos);
@@ -112,6 +114,7 @@ public class ShoppingController {
                     shoppingVo.setModelid(project.getId());
                     shoppingVo.setThumbsnum(s.getThumbsnum());
                     shoppingVo.setUserphone(user.getPhone());
+                    shoppingVo.setProjectname(project.getProjectName());
                     shoppingVos.add(shoppingVo);
                 }
                 map.put("data",shoppingVos);
@@ -133,6 +136,7 @@ public class ShoppingController {
                 shoppingVo.setModelid(project.getId());
                 shoppingVo.setThumbsnum(s.getThumbsnum());
                 shoppingVo.setUserphone(user.getPhone());
+                shoppingVo.setProjectname(project.getProjectName());
                 shoppingVos.add(shoppingVo);
             }
             map.put("data",shoppingVos);
@@ -156,6 +160,7 @@ public class ShoppingController {
                     shoppingVo.setModelid(project.getId());
                     shoppingVo.setThumbsnum(s.getThumbsnum());
                     shoppingVo.setUserphone(user.getPhone());
+                    shoppingVo.setProjectname(project.getProjectName());
                     shoppingVos.add(shoppingVo);
                 }
                 map.put("data",shoppingVos);
@@ -177,6 +182,7 @@ public class ShoppingController {
                 shoppingVo.setModelid(project.getId());
                 shoppingVo.setThumbsnum(s.getThumbsnum());
                 shoppingVo.setUserphone(user.getPhone());
+                shoppingVo.setProjectname(project.getProjectName());
                 shoppingVos.add(shoppingVo);
             }
             map.put("data",shoppingVos);
