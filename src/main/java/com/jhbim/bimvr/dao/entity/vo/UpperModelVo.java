@@ -7,6 +7,16 @@ public class UpperModelVo {
 
     private int upper;      //是否上架 0上架 1下架
 
+    private String projectname;  //模型名称也就是项目名称
+
+    public String getProjectname() {
+        return projectname;
+    }
+
+    public void setProjectname(String projectname) {
+        this.projectname = projectname;
+    }
+
     public String getModelid() {
         return modelid;
     }

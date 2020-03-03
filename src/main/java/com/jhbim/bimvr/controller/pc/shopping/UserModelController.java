@@ -46,6 +46,7 @@ public class UserModelController {
             upperModelVo.setModelid(project.getId());
             upperModelVo.setThumbs(project.getProjectModelAddr());
             upperModelVo.setUpper(s.getType());
+            upperModelVo.setProjectname(project.getProjectName());
             upperModelVoList.add(upperModelVo);
         }
         return new Result(ResultStatusCode.OK,upperModelVoList);
