@@ -1,6 +1,7 @@
 package com.jhbim.bimvr.dao.entity.pojo;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 public class Model implements Serializable {
     private Integer id;
@@ -18,6 +19,16 @@ public class Model implements Serializable {
     private String thumbnail;
 
     private Integer payStatus;
+
+    private BigDecimal price;
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
 
     private static final long serialVersionUID = 1L;
 

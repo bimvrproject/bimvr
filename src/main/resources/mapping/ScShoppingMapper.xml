@@ -197,4 +197,7 @@
     set  thumbsnum = #{thumbsnum,jdbcType=INTEGER}
     where model_id = #{modelId,jdbcType=VARCHAR}
   </update>
+  <select id="selectmodelid" resultType="decimal" parameterType="java.lang.String" >
+    select IFNULL(sum(price),null) from sc_shopping where model_id = #{modelId,jdbcType=VARCHAR}
+  </select>
 </mapper>

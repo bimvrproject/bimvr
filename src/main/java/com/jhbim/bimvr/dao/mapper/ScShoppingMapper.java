@@ -2,6 +2,7 @@ package com.jhbim.bimvr.dao.mapper;
 
 import com.jhbim.bimvr.dao.entity.pojo.ScShopping;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface ScShoppingMapper {
@@ -33,4 +34,7 @@ public interface ScShoppingMapper {
     int modellowerdelete(String modelid);
 
     int updatethumbsnum(ScShopping scShopping);
+    //根据模型id查询价格
+    BigDecimal selectmodelid(String modelid);
+
 }

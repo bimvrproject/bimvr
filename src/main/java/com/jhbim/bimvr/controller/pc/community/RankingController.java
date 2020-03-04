@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -132,7 +133,6 @@ public class RankingController {
                         scShopping.setModelId(m.getModelId());
                         scShopping.setThumbsnum(m.getAccount()+1);
                         scShoppingMapper.updatethumbsnum(scShopping);
-                        System.out.println("123123132");
                         return new Result(ResultStatusCode.SUCCESS,"点赞成功");
                     }
                     return new Result(ResultStatusCode.FAIL,"点赞失败");
@@ -266,7 +266,9 @@ public class RankingController {
             }
         }
         for (int i = 0; i <listRank.size();i++) {
+            BigDecimal shopping_price = scShoppingMapper.selectmodelid(listRank.get(i).getModelId());
             listRank.get(i).setId(i+1);
+            listRank.get(i).setPrice(shopping_price);
             if (listRank.get(i).getPayStatus() == null){
                 listRank.get(i).setPayStatus(0);
             }
