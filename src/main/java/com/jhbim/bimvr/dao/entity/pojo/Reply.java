@@ -1,6 +1,7 @@
 package com.jhbim.bimvr.dao.entity.pojo;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class Reply implements Serializable {
     private String id;
@@ -14,6 +15,8 @@ public class Reply implements Serializable {
     private Integer fromUserid;
 
     private Integer toUserid;
+
+    private Date createTime;
 
     private static final long serialVersionUID = 1L;
 
@@ -65,6 +68,14 @@ public class Reply implements Serializable {
         this.toUserid = toUserid;
     }
 
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -77,6 +88,7 @@ public class Reply implements Serializable {
         sb.append(", content=").append(content);
         sb.append(", fromUserid=").append(fromUserid);
         sb.append(", toUserid=").append(toUserid);
+        sb.append(", createTime=").append(createTime);
         sb.append("]");
         return sb.toString();
     }

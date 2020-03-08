@@ -7,9 +7,10 @@
     <result column="compose_type" property="composeType" jdbcType="INTEGER" />
     <result column="content" property="content" jdbcType="VARCHAR" />
     <result column="from_userid" property="fromUserid" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, compose_id, compose_type, content, from_userid
+    id, compose_id, compose_type, content, from_userid, create_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -23,9 +24,11 @@
   </delete>
   <insert id="insert" parameterType="com.jhbim.bimvr.dao.entity.pojo.Comment" >
     insert into comment (id, compose_id, compose_type, 
-      content, from_userid)
+      content, from_userid, create_time
+      )
     values (#{id,jdbcType=VARCHAR}, #{composeId,jdbcType=VARCHAR}, #{composeType,jdbcType=INTEGER}, 
-      #{content,jdbcType=VARCHAR}, #{fromUserid,jdbcType=VARCHAR})
+      #{content,jdbcType=VARCHAR}, #{fromUserid,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.jhbim.bimvr.dao.entity.pojo.Comment" >
     insert into comment
@@ -45,6 +48,9 @@
       <if test="fromUserid != null" >
         from_userid,
       </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -61,6 +67,9 @@
       </if>
       <if test="fromUserid != null" >
         #{fromUserid,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -79,6 +88,9 @@
       <if test="fromUserid != null" >
         from_userid = #{fromUserid,jdbcType=VARCHAR},
       </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -87,7 +99,8 @@
     set compose_id = #{composeId,jdbcType=VARCHAR},
       compose_type = #{composeType,jdbcType=INTEGER},
       content = #{content,jdbcType=VARCHAR},
-      from_userid = #{fromUserid,jdbcType=VARCHAR}
+      from_userid = #{fromUserid,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>
