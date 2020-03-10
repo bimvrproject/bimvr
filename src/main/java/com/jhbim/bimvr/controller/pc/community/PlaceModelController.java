@@ -184,7 +184,6 @@ public class PlaceModelController {
         Model model = new Model();
         model.setModelId(p.getModelid());
         model.setModelName(p.getMainlandname()+p.getPlotname());
-        System.out.println(p.getMainlandname()+p.getPlotname());
         int account = modelMapper.accountcount(model); //模型点赞数
         int comment = commentMapper.composeidnum(p.getModelid()); //模型评论数
         map.put("accountnum",account);
