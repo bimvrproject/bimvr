@@ -5,13 +5,14 @@ import java.lang.management.ManagementFactory;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.security.MessageDigest;
+import java.util.Random;
 import java.util.UUID;
 
 /**
  *  用于生产各种各样的ID
  */
 public class IdUtil {
-
+    private final static int RANDOM_BASE = 10;
     private static String middle = "";
 
     static {
@@ -19,6 +20,20 @@ public class IdUtil {
                 MathUtils.makeUpNewData(NetworkUtils.getPid(), 4);                                 //4位PID进程hash
     }
 
+    /**
+     * 产生指定长度的数字值随机数
+     * @param length    需要产生的长度
+     * @return
+     */
+    public static String getRandomStr(int length) {
+        Random random = new Random();
+        String randStr = "";
+        for (int i = 0; i < length; i++) {
+            String randItem = String.valueOf(random.nextInt(RANDOM_BASE));
+            randStr += randItem;
+        }
+        return randStr;
+    }
     /**
      * 以毫微秒做基础计数, 返回唯一有序增长ID
      * <pre>System.nanoTime()</pre>
