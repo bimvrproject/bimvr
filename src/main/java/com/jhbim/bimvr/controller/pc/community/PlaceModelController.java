@@ -1,30 +1,33 @@
 package com.jhbim.bimvr.controller.pc.community;
 
 import com.jhbim.bimvr.dao.entity.pojo.PlaceModel;
-import com.jhbim.bimvr.dao.entity.pojo.User;
 import com.jhbim.bimvr.dao.entity.vo.Result;
 import com.jhbim.bimvr.dao.mapper.PlaceModelMapper;
+import com.jhbim.bimvr.dao.mapper.ScShoppingMapper;
 import com.jhbim.bimvr.system.enums.ResultStatusCode;
 import com.jhbim.bimvr.utils.IdUtil;
 import com.jhbim.bimvr.utils.IdWorker;
-import com.jhbim.bimvr.utils.ShiroUtil;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.Date;
 
 
 @RestController
 @RequestMapping("/${version}/placemodel")
 public class PlaceModelController {
+    //创建地块的数量
    private static int count = 6;
     @Resource
     PlaceModelMapper placeModelMapper;
     @Resource
     IdWorker idWorker;
+    @Resource
+    ScShoppingMapper scShoppingMapper;
     /**
-     * 放置模型
+     * 创建地块
      * @param mainlandname  大陆名称
      * @param userphone 用户手机号
      * @param x x轴
@@ -58,7 +61,7 @@ public class PlaceModelController {
     }
 
     /**
-     * 根据地块名称查询
+     * 展示本人的地块和查询地块
      * @param plotname 地块名称
      * @param type 0 是查询自己的 1 是根据地块查询
      * @param userphone 用户手机号
@@ -104,7 +107,7 @@ public class PlaceModelController {
     }
 
     /**
-     *  //根据id更换模型
+     *  地块拖拽模型和地块更换模型
      * @param id id编号
      * @param modelid 模型id
      * @return
@@ -114,9 +117,11 @@ public class PlaceModelController {
         if(id.isEmpty() || modelid.isEmpty()){
             return new Result(ResultStatusCode.BAD_REQUEST,"参数解析失败...");
         }
+        BigDecimal shopping_price = scShoppingMapper.selectmodelid(modelid);
         PlaceModel placeModel = new PlaceModel();
         placeModel.setId(id);
         placeModel.setModelid(modelid);
+        placeModel.setPrice(shopping_price);
         int i = placeModelMapper.updatemodel(placeModel);
         if(i>0){
             return new Result(ResultStatusCode.OK,"更换成功...");

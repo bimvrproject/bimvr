@@ -13,9 +13,10 @@
     <result column="y" property="y" jdbcType="INTEGER" />
     <result column="z" property="z" jdbcType="INTEGER" />
     <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, mainlandname, usephone, modelid, plotname, num, heat, x, y, z, createtime
+    id, mainlandname, usephone, modelid, plotname, num, heat, x, y, z, createtime, price
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -31,11 +32,11 @@
     insert into placemodel (id, mainlandname, usephone, 
       modelid, plotname, num, 
       heat, x, y, z, 
-      createtime)
+      createtime, price)
     values (#{id,jdbcType=VARCHAR}, #{mainlandname,jdbcType=VARCHAR}, #{usephone,jdbcType=VARCHAR}, 
       #{modelid,jdbcType=VARCHAR}, #{plotname,jdbcType=VARCHAR}, #{num,jdbcType=INTEGER}, 
       #{heat,jdbcType=INTEGER}, #{x,jdbcType=INTEGER}, #{y,jdbcType=INTEGER}, #{z,jdbcType=INTEGER}, 
-      #{createtime,jdbcType=TIMESTAMP})
+      #{createtime,jdbcType=TIMESTAMP}, #{price,jdbcType=DECIMAL})
   </insert>
   <insert id="insertSelective" parameterType="com.jhbim.bimvr.dao.entity.pojo.PlaceModel" >
     insert into placemodel
@@ -73,6 +74,9 @@
       <if test="createtime != null" >
         createtime,
       </if>
+      <if test="price != null" >
+        price,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -107,6 +111,9 @@
       </if>
       <if test="createtime != null" >
         #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
       </if>
     </trim>
   </insert>
@@ -143,6 +150,9 @@
       <if test="createtime != null" >
         createtime = #{createtime,jdbcType=TIMESTAMP},
       </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -157,7 +167,8 @@
       x = #{x,jdbcType=INTEGER},
       y = #{y,jdbcType=INTEGER},
       z = #{z,jdbcType=INTEGER},
-      createtime = #{createtime,jdbcType=TIMESTAMP}
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      price = #{price,jdbcType=DECIMAL}
     where id = #{id,jdbcType=VARCHAR}
   </update>
   <select id="selectByplotname" resultMap="BaseResultMap" parameterType="java.lang.String" >
@@ -203,7 +214,7 @@
 
   <update id="updatemodel" parameterType="com.jhbim.bimvr.dao.entity.pojo.PlaceModel" >
     update placemodel
-    set modelid = #{modelid,jdbcType=VARCHAR}
+    set modelid = #{modelid,jdbcType=VARCHAR}, price = #{price,jdbcType=DECIMAL}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

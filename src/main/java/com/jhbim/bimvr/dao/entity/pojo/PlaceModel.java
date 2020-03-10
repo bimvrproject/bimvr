@@ -1,6 +1,7 @@
 package com.jhbim.bimvr.dao.entity.pojo;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class PlaceModel implements Serializable {
@@ -25,6 +26,8 @@ public class PlaceModel implements Serializable {
     private Integer z;
 
     private Date createtime;
+
+    private BigDecimal price;
 
     private static final long serialVersionUID = 1L;
 
@@ -116,6 +119,14 @@ public class PlaceModel implements Serializable {
         this.createtime = createtime;
     }
 
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -133,6 +144,7 @@ public class PlaceModel implements Serializable {
         sb.append(", y=").append(y);
         sb.append(", z=").append(z);
         sb.append(", createtime=").append(createtime);
+        sb.append(", price=").append(price);
         sb.append("]");
         return sb.toString();
     }
