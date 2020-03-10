@@ -14,4 +14,7 @@ public interface CommentMapper {
     int updateByPrimaryKeySelective(Comment record);
 
     int updateByPrimaryKey(Comment record);
+
+    //根据模型id查询该模型评论条数
+    int composeidnum(String composeid);
 }

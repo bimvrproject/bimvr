@@ -134,4 +134,11 @@
     from model
     where  model_id = #{modelId,jdbcType=VARCHAR}
   </select>
+
+  <select id="accountcount" resultType="int" parameterType="com.jhbim.bimvr.dao.entity.pojo.Model" >
+    select
+    IFNULL(SUM(account),0)
+    from model
+    where  model_id = #{modelId,jdbcType=VARCHAR} and  model_name = #{modelName,jdbcType=VARCHAR}
+  </select>
 </mapper>

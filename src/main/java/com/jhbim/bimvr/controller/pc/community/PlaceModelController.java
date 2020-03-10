@@ -4,6 +4,7 @@ import com.jhbim.bimvr.dao.entity.pojo.Model;
 import com.jhbim.bimvr.dao.entity.pojo.PlaceModel;
 import com.jhbim.bimvr.dao.entity.pojo.User;
 import com.jhbim.bimvr.dao.entity.vo.Result;
+import com.jhbim.bimvr.dao.mapper.CommentMapper;
 import com.jhbim.bimvr.dao.mapper.ModelMapper;
 import com.jhbim.bimvr.dao.mapper.PlaceModelMapper;
 import com.jhbim.bimvr.dao.mapper.ScShoppingMapper;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @RestController
@@ -32,6 +35,8 @@ public class PlaceModelController {
     ScShoppingMapper scShoppingMapper;
     @Resource
     ModelMapper modelMapper;
+    @Resource
+    CommentMapper commentMapper;
     /**
      * 创建地块
      * @param mainlandname  大陆名称
@@ -56,14 +61,14 @@ public class PlaceModelController {
         placeModel.setId(idWorker.nextId()+""); //主键id
         placeModel.setMainlandname(mainlandname);   //大陆名称
         placeModel.setUsephone(userphone);      //登录人手机号
-        placeModel.setPlotname(num+"地块  ");        //字母加数字随机
+        placeModel.setPlotname(num+"地块");        //字母加数字随机
         placeModel.setX(x);              //x轴
         placeModel.setY(y);             //y轴
         placeModel.setZ(z);            //z轴
         placeModel.setCreatetime(new Date());   //创建时间
         placeModelMapper.insertSelective(placeModel);
 
-        return new Result(ResultStatusCode.OK,"创建成功...");
+        return new Result(ResultStatusCode.OK,placeModel);
     }
 
     /**
@@ -141,5 +146,50 @@ public class PlaceModelController {
             return new Result(ResultStatusCode.OK,"操作成功...");
         }
         return new Result(ResultStatusCode.FAIL,"操作失败...");
+    }
+
+    /**
+     * 根据id和地块模型查询
+     * @param id id
+     * @param plotname 地块名称
+     * @return
+     */
+    @RequestMapping("/findByidandplotname")
+    public Result findByidandplotname(String id,String plotname){
+        if(id.isEmpty() || plotname.isEmpty()){
+            return new Result(ResultStatusCode.BAD_REQUEST,"参数解析失败");
+        }
+        PlaceModel p = new PlaceModel();
+        p.setId(id);
+        p.setPlotname(plotname);
+        PlaceModel placeModel = placeModelMapper.findByidandplotname(p);
+        return new Result(ResultStatusCode.OK,placeModel);
+    }
+
+    /**
+     * 进去某个地块 显示模型相关的数据 以及模型的点赞数量和评论数量
+     * @param id id编号
+     * @param mainlandname 大陆名称
+     * @param plotname  地块名称
+     * @return
+     */
+    @RequestMapping("/findByidandmainlandnameandplotname")
+    public Result findByidandmainlandnameandplotname(String id,String mainlandname,String plotname){
+        Map<String,Object> map = new HashMap<>();
+        PlaceModel placeModel = new PlaceModel();
+        placeModel.setId(id);
+        placeModel.setMainlandname(mainlandname);
+        placeModel.setPlotname(plotname);
+        PlaceModel p = placeModelMapper.findByidandmainlandnameandplotname(placeModel);
+        Model model = new Model();
+        model.setModelId(p.getModelid());
+        model.setModelName(p.getMainlandname()+p.getPlotname());
+        System.out.println(p.getMainlandname()+p.getPlotname());
+        int account = modelMapper.accountcount(model); //模型点赞数
+        int comment = commentMapper.composeidnum(p.getModelid()); //模型评论数
+        map.put("accountnum",account);
+        map.put("content",p);
+        map.put("commentnum",comment);
+        return new Result(ResultStatusCode.OK,map);
     }
 }

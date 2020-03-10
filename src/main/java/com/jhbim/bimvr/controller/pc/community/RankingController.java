@@ -111,7 +111,6 @@ public class RankingController {
             zan.setCreateTime(new Date());
             int insert = zanMapper.insert(zan);
             if (insert>0){
-                System.out.println("进了没");
                 //给用户点赞
                 if(genre == 1){
                     User user1 = userMapper.selectByPrimaryKey(workId);

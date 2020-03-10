@@ -103,4 +103,7 @@
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  <select id="composeidnum" resultType="int" parameterType="java.lang.String" >
+    select IFNULL(SUM(compose_id),0) from `comment` where compose_id=2
+  </select>
 </mapper>

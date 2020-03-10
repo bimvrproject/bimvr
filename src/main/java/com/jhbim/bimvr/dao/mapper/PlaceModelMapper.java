@@ -36,5 +36,12 @@ public interface PlaceModelMapper {
     //根据id更换模型
     int updatemodel(PlaceModel record);
 
+    //根据模型id查询
     PlaceModel selectmodelid(@Param("modelid") String modelid);
+
+    //根据id和地块模型查询
+    PlaceModel findByidandplotname(PlaceModel record);
+
+    //根据id、大陆名称、以及地块名称查询
+    PlaceModel findByidandmainlandnameandplotname(PlaceModel record);
 }

@@ -228,4 +228,17 @@
       </if>
     </where>
   </select>
+  <select id="findByidandplotname" resultMap="BaseResultMap" parameterType="com.jhbim.bimvr.dao.entity.pojo.PlaceModel" >
+    select
+    <include refid="Base_Column_List" />
+    from placemodel
+    where id = #{id,jdbcType=VARCHAR} and plotname = #{plotname,jdbcType=VARCHAR}
+  </select>
+
+  <select id="findByidandmainlandnameandplotname" resultMap="BaseResultMap" parameterType="com.jhbim.bimvr.dao.entity.pojo.PlaceModel" >
+    select
+    <include refid="Base_Column_List" />
+    from placemodel
+    where id = #{id,jdbcType=VARCHAR} and mainlandname = #{mainlandname,jdbcType=VARCHAR} and plotname = #{plotname,jdbcType=VARCHAR}
+  </select>
 </mapper>

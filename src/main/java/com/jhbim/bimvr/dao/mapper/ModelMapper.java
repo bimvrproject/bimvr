@@ -26,4 +26,7 @@ public interface ModelMapper {
     int updateAccount(Model model);
     //根据模型id查询
     Model selectbymodelid(String modelid);
+
+    //根据模型id和名称查询
+    int accountcount(Model model);
 }
