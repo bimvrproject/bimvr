@@ -114,4 +114,16 @@
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+
+  <select id="findByreplycommentid" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from reply
+    where comment_id = #{commentId,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteByCommentid" parameterType="java.lang.String" >
+    delete from reply
+    where comment_id = #{commentId,jdbcType=VARCHAR}
+  </delete>
 </mapper>

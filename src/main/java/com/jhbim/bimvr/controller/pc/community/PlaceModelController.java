@@ -2,12 +2,10 @@ package com.jhbim.bimvr.controller.pc.community;
 
 import com.jhbim.bimvr.dao.entity.pojo.Model;
 import com.jhbim.bimvr.dao.entity.pojo.PlaceModel;
+import com.jhbim.bimvr.dao.entity.pojo.Project;
 import com.jhbim.bimvr.dao.entity.pojo.User;
 import com.jhbim.bimvr.dao.entity.vo.Result;
-import com.jhbim.bimvr.dao.mapper.CommentMapper;
-import com.jhbim.bimvr.dao.mapper.ModelMapper;
-import com.jhbim.bimvr.dao.mapper.PlaceModelMapper;
-import com.jhbim.bimvr.dao.mapper.ScShoppingMapper;
+import com.jhbim.bimvr.dao.mapper.*;
 import com.jhbim.bimvr.system.enums.ResultStatusCode;
 import com.jhbim.bimvr.utils.IdUtil;
 import com.jhbim.bimvr.utils.IdWorker;
@@ -17,9 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 
 @RestController
@@ -37,6 +33,10 @@ public class PlaceModelController {
     ModelMapper modelMapper;
     @Resource
     CommentMapper commentMapper;
+    @Resource
+    UserMapper userMapper;
+    @Resource
+    ProjectMapper projectMapper;
     /**
      * 创建地块
      * @param mainlandname  大陆名称
@@ -189,6 +189,28 @@ public class PlaceModelController {
         map.put("accountnum",account);
         map.put("content",p);
         map.put("commentnum",comment);
+        return new Result(ResultStatusCode.OK,map);
+    }
+
+    /**
+     * 点击作者展示信息和模型
+     * @param userphone 用户手机号
+     * @return
+     */
+    @RequestMapping("/showmyself")
+    public Result showmyself(String userphone){
+        Map<String,Object> map = new HashMap<>();
+        User user = userMapper.selectByPrimaryKey(userphone);
+        List<PlaceModel> placeModelList = placeModelMapper.selectByUserphone(userphone);
+        List<Project> projectList=new ArrayList<>();
+        for (PlaceModel p : placeModelList) {
+            Project project = projectMapper.selectByPrimaryKey(p.getModelid());
+            projectList.add(project);
+        }
+        map.put("content",projectList);
+        map.put("username",user.getUserName());
+        map.put("position",user.getPosotion());
+        map.put("picture",user.getPricture());
         return new Result(ResultStatusCode.OK,map);
     }
 }

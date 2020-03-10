@@ -47,6 +47,9 @@ public class RankingController {
     @Resource
     ScShoppingMapper scShoppingMapper;
 
+    @Resource
+    CommentMapper commentMapper;
+
     /**
      * 获取用户排行
      * @return
@@ -93,11 +96,10 @@ public class RankingController {
      * @param workId 对应的作品或评论的id或者用户
      * @param genre 点赞类型  1用户点赞  2 模型点赞  3 评论点赞
      * @param status 点赞状态  0--取消赞   1--有效赞
-     * @param modelid 模型id
      * @return
      */
     @PostMapping("/dianzan")
-    public Result dianzan(String workId,Integer genre,Integer status,String modelid){
+    public Result dianzan(String workId,Integer genre,Integer status){
         User user = ShiroUtil.getUser();
         Zan select = zanMapper.select(workId, genre, user.getPhone());
         //Zan表如何为空 直接增加信息即可,反之根据条件修改即可
@@ -122,10 +124,10 @@ public class RankingController {
                 }
                 //模型点赞
                 if(genre == 2){
-                    Model m = modelMapper.selectbymodelid(modelid);
+                    Model m = modelMapper.selectbymodelid(workId);
                     Model model = new Model();
                     model.setAccount(m.getAccount()+1);
-                    model.setModelId(modelid);
+                    model.setModelId(workId);
                     int i = modelMapper.updateAccount(model);
                     if(i>0){
                         ScShopping scShopping = new ScShopping();
@@ -134,16 +136,23 @@ public class RankingController {
                         scShoppingMapper.updatethumbsnum(scShopping);
                         return new Result(ResultStatusCode.SUCCESS,"点赞成功");
                     }
-                    return new Result(ResultStatusCode.FAIL,"点赞失败");
                 }
                 //评论点赞
                 if(genre == 3){
-
+                    Comment c = commentMapper.selectByPrimaryKey(workId);
+                    Comment comment = new Comment();
+                    comment.setAccountnum(c.getAccountnum()+1);
+                    comment.setId(workId);
+                    int i = commentMapper.updateaccountnum(comment);
+                    if(i>0){
+                        return new Result(ResultStatusCode.SUCCESS,"点赞成功");
+                    }
+                    return new Result(ResultStatusCode.FAIL,"点赞失败");
                 }
             }
         }else{
             //给用户点赞、模型点赞
-            if(genre == 1 && status ==1 || genre == 2 && status ==1){
+            if(genre == 1 && status ==1 || genre == 2 && status ==1 || genre == 3 && status ==1){
                 if(select.getStatus() == 0){
                     //给用户点赞
                     if(genre == 1){
@@ -175,11 +184,11 @@ public class RankingController {
                         zan.setCreateTime(new Date());
                         int i = zanMapper.updateByPrimaryKey(zan);
                         if(i>0){
-                            Model m = modelMapper.selectbymodelid(modelid);
+                            Model m = modelMapper.selectbymodelid(workId);
                             Model model = new Model();
                             model.setAccount(m.getAccount()+1);
                             System.out.println();
-                            model.setModelId(modelid);
+                            model.setModelId(workId);
                             int j = modelMapper.updateAccount(model);
                             if(j>0){
                                 ScShopping scShopping = new ScShopping();
@@ -187,6 +196,29 @@ public class RankingController {
                                 scShopping.setThumbsnum(m.getAccount()+1);
                                 scShoppingMapper.updatethumbsnum(scShopping);
                                 System.out.println();
+                                return new Result(ResultStatusCode.SUCCESS,"点赞成功");
+                            }
+                            return new Result(ResultStatusCode.FAIL,"点赞失败");
+                        }
+                    }
+                    //评论点赞
+                    if(genre == 3){
+                        Zan zan = new Zan();
+                        zan.setId(select.getId());
+                        zan.setWorkId(workId);
+                        zan.setGenre(genre);
+                        zan.setUserId(user.getPhone());
+                        zan.setStatus(status);
+                        zan.setCreateTime(new Date());
+                        int i = zanMapper.updateByPrimaryKey(zan);
+                        if(i>0){
+                            Comment c = commentMapper.selectByPrimaryKey(workId);
+                            Comment comment = new Comment();
+                            comment.setAccountnum(c.getAccountnum()+1);
+                            comment.setId(workId);
+                            int j = commentMapper.updateaccountnum(comment);
+                            System.out.println();
+                            if(j>0){
                                 return new Result(ResultStatusCode.SUCCESS,"点赞成功");
                             }
                             return new Result(ResultStatusCode.FAIL,"点赞失败");
@@ -227,10 +259,10 @@ public class RankingController {
             int j = zanMapper.updateByPrimaryKey(unzan);
             if(j>0) {
                 if (genre == 2 && select.getStatus() == 1) {
-                    Model m = modelMapper.selectbymodelid(modelid);
+                    Model m = modelMapper.selectbymodelid(workId);
                     Model model = new Model();
                     model.setAccount(m.getAccount() - 1);
-                    model.setModelId(modelid);
+                    model.setModelId(workId);
                     int i = modelMapper.updateAccount(model);
                     if (i > 0) {
                         ScShopping scShopping = new ScShopping();
@@ -242,6 +274,30 @@ public class RankingController {
                 }
             }
             return new Result(ResultStatusCode.FAIL,"您已取消点赞...");
+        }
+        //评论点赞取消
+        if (genre == 3 && status == 0){
+            Zan unzan = new Zan();
+            unzan.setId(select.getId());
+            unzan.setWorkId(workId);
+            unzan.setGenre(genre);
+            unzan.setUserId(user.getPhone());
+            unzan.setStatus(status);
+            unzan.setCreateTime(new Date());
+            int j = zanMapper.updateByPrimaryKey(unzan);
+            if(j>0){
+                if (genre == 3 && select.getStatus() == 1) {
+                    Comment c = commentMapper.selectByPrimaryKey(workId);
+                    Comment comment = new Comment();
+                    comment.setAccountnum(c.getAccountnum()-1);
+                    comment.setId(workId);
+                    int i = commentMapper.updateaccountnum(comment);
+                    if(i>0){
+                        return new Result(ResultStatusCode.SUCCESS,"取消点赞");
+                    }
+                    return new Result(ResultStatusCode.FAIL,"您已取消点赞");
+                }
+            }
         }
         return new Result(ResultStatusCode.FAIL,"您已点赞...");
     }

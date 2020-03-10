@@ -16,6 +16,8 @@ public class Comment implements Serializable {
 
     private Date createTime;
 
+    private Integer accountnum;
+
     private static final long serialVersionUID = 1L;
 
     public String getId() {
@@ -66,6 +68,14 @@ public class Comment implements Serializable {
         this.createTime = createTime;
     }
 
+    public Integer getAccountnum() {
+        return accountnum;
+    }
+
+    public void setAccountnum(Integer accountnum) {
+        this.accountnum = accountnum;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -78,6 +88,7 @@ public class Comment implements Serializable {
         sb.append(", content=").append(content);
         sb.append(", fromUserid=").append(fromUserid);
         sb.append(", createTime=").append(createTime);
+        sb.append(", accountnum=").append(accountnum);
         sb.append("]");
         return sb.toString();
     }
