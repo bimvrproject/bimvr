@@ -217,4 +217,15 @@
     set modelid = #{modelid,jdbcType=VARCHAR}, price = #{price,jdbcType=DECIMAL}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+
+  <select id="selectmodelid" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from placemodel
+    <where>
+      <if test="modelid != null">
+        modelid = #{modelid,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
 </mapper>

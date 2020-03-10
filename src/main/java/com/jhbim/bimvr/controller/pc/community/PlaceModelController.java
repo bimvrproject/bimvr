@@ -1,12 +1,16 @@
 package com.jhbim.bimvr.controller.pc.community;
 
+import com.jhbim.bimvr.dao.entity.pojo.Model;
 import com.jhbim.bimvr.dao.entity.pojo.PlaceModel;
+import com.jhbim.bimvr.dao.entity.pojo.User;
 import com.jhbim.bimvr.dao.entity.vo.Result;
+import com.jhbim.bimvr.dao.mapper.ModelMapper;
 import com.jhbim.bimvr.dao.mapper.PlaceModelMapper;
 import com.jhbim.bimvr.dao.mapper.ScShoppingMapper;
 import com.jhbim.bimvr.system.enums.ResultStatusCode;
 import com.jhbim.bimvr.utils.IdUtil;
 import com.jhbim.bimvr.utils.IdWorker;
+import com.jhbim.bimvr.utils.ShiroUtil;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,6 +30,8 @@ public class PlaceModelController {
     IdWorker idWorker;
     @Resource
     ScShoppingMapper scShoppingMapper;
+    @Resource
+    ModelMapper modelMapper;
     /**
      * 创建地块
      * @param mainlandname  大陆名称
@@ -114,6 +120,7 @@ public class PlaceModelController {
      */
     @RequestMapping("/updatemodel")
     public Result updatemodel(String id,String modelid){
+        User user = ShiroUtil.getUser();
         if(id.isEmpty() || modelid.isEmpty()){
             return new Result(ResultStatusCode.BAD_REQUEST,"参数解析失败...");
         }
@@ -124,8 +131,15 @@ public class PlaceModelController {
         placeModel.setPrice(shopping_price);
         int i = placeModelMapper.updatemodel(placeModel);
         if(i>0){
-            return new Result(ResultStatusCode.OK,"更换成功...");
+            PlaceModel placeModel1 = placeModelMapper.selectmodelid(modelid);
+            Model model = new Model();
+            model.setModelId(modelid);      //模型id
+            model.setModelName(placeModel1.getMainlandname()+placeModel1.getPlotname());       //模型名称 大陆+地块名称
+            model.setUserId(user.getPhone());       //用户手机号
+            model.setThumbnail("https://cn.bing.com/th?id=OIP.aEDqlO75im7TYzuNTf1NlQHaE8&pid=Api&rs=1");  //缩略图
+            modelMapper.insertSelective(model);
+            return new Result(ResultStatusCode.OK,"操作成功...");
         }
-        return new Result(ResultStatusCode.FAIL,"更换失败...");
+        return new Result(ResultStatusCode.FAIL,"操作失败...");
     }
 }

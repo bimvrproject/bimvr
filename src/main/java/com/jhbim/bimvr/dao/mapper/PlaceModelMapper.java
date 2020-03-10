@@ -26,6 +26,7 @@ public interface PlaceModelMapper {
 
     //查询本人的地块
     List<PlaceModel> selectByUserphone(@Param("usephone") String usephone);
+
     //查看本人已创建几个地块
     int count(@Param("usephone") String usephone);
 
@@ -34,4 +35,6 @@ public interface PlaceModelMapper {
 
     //根据id更换模型
     int updatemodel(PlaceModel record);
+
+    PlaceModel selectmodelid(@Param("modelid") String modelid);
 }
