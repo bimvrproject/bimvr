@@ -1,6 +1,7 @@
 package com.jhbim.bimvr.dao.entity.pojo;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class Dictionaries implements Serializable {
     private Integer id;
@@ -16,6 +17,12 @@ public class Dictionaries implements Serializable {
     private String thumbnail;
 
     private String icon;
+
+    private Date createtome;
+
+    private String userphone;
+
+    private Integer state;
 
     private static final long serialVersionUID = 1L;
 
@@ -75,6 +82,30 @@ public class Dictionaries implements Serializable {
         this.icon = icon == null ? null : icon.trim();
     }
 
+    public Date getCreatetome() {
+        return createtome;
+    }
+
+    public void setCreatetome(Date createtome) {
+        this.createtome = createtome;
+    }
+
+    public String getUserphone() {
+        return userphone;
+    }
+
+    public void setUserphone(String userphone) {
+        this.userphone = userphone == null ? null : userphone.trim();
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -88,6 +119,9 @@ public class Dictionaries implements Serializable {
         sb.append(", url=").append(url);
         sb.append(", thumbnail=").append(thumbnail);
         sb.append(", icon=").append(icon);
+        sb.append(", createtome=").append(createtome);
+        sb.append(", userphone=").append(userphone);
+        sb.append(", state=").append(state);
         sb.append("]");
         return sb.toString();
     }

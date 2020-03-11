@@ -1,6 +1,7 @@
 package com.jhbim.bimvr.dao.mapper;
 
 import com.jhbim.bimvr.dao.entity.pojo.Dictionaries;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,6 +18,7 @@ public interface DictionariesMapper {
 
     int updateByPrimaryKey(Dictionaries record);
 
+
     /**
      * 查询父级权限
      * @return
@@ -28,5 +30,5 @@ public interface DictionariesMapper {
      * @param parentid
      * @return
      */
-    List<Dictionaries> selectByparentidchildren(Integer parentid);
+    List<Dictionaries> selectByparentidchildren(@Param("parentid") Integer parentid, @Param("userphone") String userphone);
 }

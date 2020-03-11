@@ -3,9 +3,11 @@ package com.jhbim.bimvr.controller.pc;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.jhbim.bimvr.dao.entity.pojo.Dictionaries;
+import com.jhbim.bimvr.dao.entity.pojo.User;
 import com.jhbim.bimvr.dao.entity.vo.Result;
 import com.jhbim.bimvr.dao.mapper.DictionariesMapper;
 import com.jhbim.bimvr.system.enums.ResultStatusCode;
+import com.jhbim.bimvr.utils.ShiroUtil;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,7 +38,8 @@ public class DictionariesController {
      */
     @RequestMapping("/Byparentid")
     public Result Byparentid(Integer parentid){
-        return new Result(ResultStatusCode.OK,dictionariesMapper.selectByparentidchildren(parentid));
+        User user = ShiroUtil.getUser();
+        return new Result(ResultStatusCode.OK,dictionariesMapper.selectByparentidchildren(parentid,user.getPhone()));
     }
 
     /**
@@ -47,10 +50,11 @@ public class DictionariesController {
      */
     @RequestMapping("/findByPaging")
     public Result findByPaging(Integer parentid, Integer pageNum){
+        User user = ShiroUtil.getUser();
         //默认一页6张
         Integer pageSize=6;
         Page<Dictionaries> page= PageHelper.offsetPage(pageNum,pageSize);
-        List<Dictionaries> list=dictionariesMapper.selectByparentidchildren(parentid);
+        List<Dictionaries> list=dictionariesMapper.selectByparentidchildren(parentid,user.getPhone());
         Map<String,Object> map=new HashMap<>();
         map.put("data",list);
         map.put("pages",page.getPages());
