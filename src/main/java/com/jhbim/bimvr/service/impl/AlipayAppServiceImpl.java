@@ -8,9 +8,8 @@ import com.alipay.api.domain.AlipayTradeAppPayModel;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradeAppPayRequest;
 import com.alipay.api.response.AlipayTradeAppPayResponse;
-import com.jhbim.bimvr.config.ZrkAliPayCertConfig;
+import com.jhbim.bimvr.config.AliPayCertConfig;
 import com.jhbim.bimvr.dao.entity.pojo.Project;
-import com.jhbim.bimvr.dao.entity.vo.Result;
 import com.jhbim.bimvr.dao.mapper.ProjectMapper;
 import com.jhbim.bimvr.service.AlipayAppService;
 import com.jhbim.bimvr.utils.IdWorker;
@@ -76,20 +75,20 @@ public class AlipayAppServiceImpl implements AlipayAppService {
         model.setProductCode("QUICK_MSECURITY_PAY");
         model.setPassbackParams(URLEncoder.encode(passBackParams));
         request1.setBizModel(model);
-        request1.setNotifyUrl(ZrkAliPayCertConfig.ALIPAY_NOTIFY_URL);
+        request1.setNotifyUrl(AliPayCertConfig.ALIPAY_NOTIFY_URL);
         log.info(">>>>支付宝统一下单接口请求参数：" + model.getBody() + "," + model.getOutTradeNo() + "," + model.getTotalAmount());
 
         /**实例化客户端*/
         CertAlipayRequest certAlipayRequest = new CertAlipayRequest();
-        certAlipayRequest.setServerUrl(ZrkAliPayCertConfig.SERVERURL);
-        certAlipayRequest.setAppId(ZrkAliPayCertConfig.APPID);
-        certAlipayRequest.setPrivateKey(ZrkAliPayCertConfig.APP_PRIVATE_KEY);
-        certAlipayRequest.setFormat(ZrkAliPayCertConfig.FORMAT);
-        certAlipayRequest.setCharset(ZrkAliPayCertConfig.CHARSET);
-        certAlipayRequest.setSignType(ZrkAliPayCertConfig.SIGN_TYPE);
-        certAlipayRequest.setCertPath(AliPay_CERT_FILE_PATH + ZrkAliPayCertConfig.app_cert_path);
-        certAlipayRequest.setAlipayPublicCertPath(AliPay_CERT_FILE_PATH + ZrkAliPayCertConfig.alipay_cert_path);
-        certAlipayRequest.setRootCertPath(AliPay_CERT_FILE_PATH + ZrkAliPayCertConfig.alipay_root_cert_path);
+        certAlipayRequest.setServerUrl(AliPayCertConfig.SERVERURL);
+        certAlipayRequest.setAppId(AliPayCertConfig.APPID);
+        certAlipayRequest.setPrivateKey(AliPayCertConfig.APP_PRIVATE_KEY);
+        certAlipayRequest.setFormat(AliPayCertConfig.FORMAT);
+        certAlipayRequest.setCharset(AliPayCertConfig.CHARSET);
+        certAlipayRequest.setSignType(AliPayCertConfig.SIGN_TYPE);
+        certAlipayRequest.setCertPath(AliPay_CERT_FILE_PATH + AliPayCertConfig.app_cert_path);
+        certAlipayRequest.setAlipayPublicCertPath(AliPay_CERT_FILE_PATH + AliPayCertConfig.alipay_cert_path);
+        certAlipayRequest.setRootCertPath(AliPay_CERT_FILE_PATH + AliPayCertConfig.alipay_root_cert_path);
         try {
             //构造client
             AlipayClient alipayClient = new DefaultAlipayClient(certAlipayRequest);
@@ -127,9 +126,9 @@ public class AlipayAppServiceImpl implements AlipayAppService {
             //切记alipaypublickey是支付宝的公钥，请去open.alipay.com对应应用下查看。
             boolean flag = AlipaySignature.rsaCertCheckV1(
                     params,
-                    AliPay_CERT_FILE_PATH+ZrkAliPayCertConfig.alipay_cert_path,
-                    ZrkAliPayCertConfig.CHARSET,
-                    ZrkAliPayCertConfig.SIGN_TYPE);
+                    AliPay_CERT_FILE_PATH+ AliPayCertConfig.alipay_cert_path,
+                    AliPayCertConfig.CHARSET,
+                    AliPayCertConfig.SIGN_TYPE);
             if(flag) {
                 log.info(">>>支付宝回调签名认证成功");
                 //商户订单号

@@ -2,10 +2,10 @@ package com.jhbim.bimvr.config;
 
 /**
  * @Description: 支付宝支付配置类(公钥证书)
- * @Author: zrk
+ * @Author: chen
  * @Date: 2019/9/10
  */
-public class ZrkAliPayCertConfig {
+public class AliPayCertConfig {
     /**
      * 商户私钥
      */
