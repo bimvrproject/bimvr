@@ -7,7 +7,7 @@ spring:
     time-zone: GMT+8
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/bimvrserver?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=CONVERT_TO_NULL&useSSL=false&serverTimezone=CTT
+    url: jdbc:mysql://36.112.65.110:3306/bimvrserver?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=CONVERT_TO_NULL&useSSL=false&serverTimezone=CTT
     username: root
     password: Jhkj13911822521
     filters: wall,mergeStat
@@ -20,15 +20,6 @@ logging:
   config: classpath:log/logback-spring.xml
   path: F:/log/bimvr
 
-# 沙箱账号
-pay:
-  alipay:
-    gatewayUrl: https://openapi.alipay.com/gateway.do
-    appid: 2021001131601667
-    appPrivateKey: MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDP8gxtzaVkyyBqo8pRfANYHlWpDghkgUaoXXb1kIZEuJN+MJe/5CsBzpzovq7xovTO/5bu2kvWL8IIGnSVN7fawpcWmZubp2B/SnTgKmfwOeZJSlKi1p9l4wtrKgjx8RBIHNaQu2EmubimtcIWwrMMloGaU9tRPgszPTGSoeKFqJiIybEErPW8SG4jm/KjxwJFbnvWqbfdmMa7R4iaV2s6aPx45kMpP8Pb7nxfCvggBUIoB0jwSIn67uRHijsR7M6JdW9Q3KOxjnYxFQRjnhiVuaKDvD+pWx1wJ8KKem3n0Dp6o0dEM33PtwyrsVZVBlJC3SqcYMC5vo2j80mmzr1RAgMBAAECggEANjJ27NNxbRDIFSM1YwF4eaoGV3Zx14geG1mo3J3bcOPOhVAy7O+SCfmIydyRCieXuK/C7eP1ahCueKA0jIOmJp0a9ef5N5trOiH0zkwfJOxiSe3WFdzsVIjVfAvLowtaXAEwJy6/RnGXX9P1jysVsY00oD2E5urNzn//gKEywfTT6rQbI3xUWAW4hUFQH8qm3EE4IobtN8cOjepoyK+9y4F/ILReNOT7/8LpQnVpqZIY0fmQ32UN5Uomas5HmIOlI3TdbxcvYBBzNGJS0JJGS2/YJwaXkiDHktIDghkFpDI//G5Ye/bkSZ8U6hB4v25f6D44MFhUo5JS95V3aJbLRQKBgQDq1HtHFHY2TmupRwQlVnxbzgzoIFQXNj1+jc+FJC/E7PtrWETwBW8156h2xKsC8NxRP6GfDP8vqYlM15OFMp1SFp24C6h7WGLxrkbY+rRihxhfBby2UbPRMsCJxXAKtR4pukyMsyeY7Pcow8B7WKMWY6JA2eoXXgvg5VuWXAR+xwKBgQDisR0XtWGZbkfzabeKJEoWAQoTG+sSJJKBbhCqMfB1cJWHYfPvzKUfYYDNXV2xXc3qqC9tLKao+1LNPipC2NUS+wxWnf6wxmafuwe7tc/f914NHqrGE1nB5aSin8YfrSyhOENZ8CakkSrkcYEoM9bXeh+GT0cII9r7nBHwFIwrJwKBgQCwG+vb8ad5sLQi/iRI0CRxQQUC7IPD6KSTjUxtICdG+ybOaSNCEgFGHtaDQ5iwmuvPbvYJbtjN6MoUO7Phd4TuNBHSHcQbxLxnXXi6bsHrBj+ru4S8AmflYrdsWwpcrVnSl2mjNxRiJoxxIOTwXBfqyYu8MPDS12/3GGroR1gDrwKBgQCIqGT1ae7QY98UKmLu8DmJUk8UffwUD+ASDpwVPc3LvncmCjLYGPJiHJFdPC/DQN1l3MXadtRxgjDEcflgGv84Vgd2IADt6GztVf6vdkc+qQ0Vs6sXhYrSjPHW56K0bd09w4E2ssNY6fqFhLdr2PRnKcPfX+NeUN8uV0OpC3oEeQKBgD6v4Kz0Afh6E6+hHS5lQsLRqJU1fIioRCU9z+HoGqTXpyROrOGfmoTxNsJ8LzbEWTOGWnGT01NWOk2UrDRZriYCtc73ruGhKLyvnMgh+X9oVceFBx2/rLr4DI5fiFTbBU1r3sAzbb27KllKvedBORPujRGtnHzoIRyKmzrZRuuy
-    alipayPublicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAz/IMbc2lZMsgaqPKUXwDWB5VqQ4IZIFGqF129ZCGRLiTfjCXv+QrAc6c6L6u8aL0zv+W7tpL1i/CCBp0lTe32sKXFpmbm6dgf0p04Cpn8DnmSUpSotafZeMLayoI8fEQSBzWkLthJrm4prXCFsKzDJaBmlPbUT4LMz0xkqHihaiYiMmxBKz1vEhuI5vyo8cCRW571qm33ZjGu0eImldrOmj8eOZDKT/D2+58Xwr4IAVCKAdI8EiJ+u7kR4o7EezOiXVvUNyjsY52MRUEY54Ylbmig7w/qVsdcCfCinpt59A6eqNHRDN9z7cMq7FWVQZSQt0qnGDAub6No/NJps69UQIDAQAB
-    returnUrl: http://21z9804m0.zicp.vip
-    notifyUrl: http://pgqj3z.natappfree.cc/alipay/notify
 ##文件跟路径
 alipay_cert_file_path: D:/ideaProject/bimvr/src/main/resources/
 
