@@ -21,6 +21,6 @@ logging:
   path: F:/log/bimvr
 
 ##文件跟路径
-alipay_cert_file_path: D:/ideaProject/bimvr/src/main/resources/
+alipay_cert_file_path: C:/Program Files/workspace/bimvr/src/main/resources/
 
 
