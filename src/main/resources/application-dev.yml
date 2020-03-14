@@ -23,4 +23,10 @@ logging:
 ##文件跟路径
 alipay_cert_file_path: C:/Program Files/workspace/bimvr/src/main/resources/
 
+#FTP配置信息
+host: 36.112.65.110
+prot: 21
+username: Administrator
+password: Jhkj73630915
+
 
