@@ -81,14 +81,37 @@ public class PlaceModelController {
     @RequestMapping("/findbyplotname")
     public Result findbyplotname(String plotname,int type,String userphone ){
         if(type==0){
-            return new Result(ResultStatusCode.OK,placeModelMapper.selectByUserphone(userphone));
+            List<PlaceModel> placeModel =  placeModelMapper.selectByUserphone(userphone);
+            for (PlaceModel p : placeModel) {
+                Project project = projectMapper.selectByPrimaryKey(p.getModelid());
+                p.setPicture(project.getProjectModelAddr());
+            }
+            return new Result(ResultStatusCode.OK,placeModel);
         }
         if(type==1){
             PlaceModel placeModel = new PlaceModel();
             placeModel.setPlotname(plotname);
             placeModel.setHeat(1);
             placeModelMapper.updateheat(placeModel);
-            return new Result(ResultStatusCode.OK,placeModelMapper.selectByplotname(plotname));
+
+            PlaceModel pm =  placeModelMapper.selectByplotname(plotname);
+            PlaceModel p = new PlaceModel();
+            Project project = projectMapper.selectByPrimaryKey(pm.getModelid());
+            p.setId(pm.getId());
+            p.setMainlandname(pm.getMainlandname());
+            p.setUsephone(pm.getUsephone());
+            p.setModelid(pm.getModelid());
+            p.setPlotname(pm.getPlotname());
+            p.setNum(pm.getNum());
+            p.setHeat(pm.getHeat());
+            p.setX(pm.getX());
+            p.setY(pm.getY());
+            p.setZ(pm.getZ());
+            p.setCreatetime(pm.getCreatetime());
+            p.setPrice(pm.getPrice());
+            p.setPicture(project.getProjectModelAddr());
+
+            return new Result(ResultStatusCode.OK,p);
         }
        return new Result(ResultStatusCode.FAIL);
     }

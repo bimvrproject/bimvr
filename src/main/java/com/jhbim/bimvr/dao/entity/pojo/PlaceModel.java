@@ -29,6 +29,16 @@ public class PlaceModel implements Serializable {
 
     private BigDecimal price;
 
+    private String picture;
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
     private static final long serialVersionUID = 1L;
 
     public String getId() {
