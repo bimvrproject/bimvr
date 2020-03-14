@@ -83,8 +83,13 @@ public class PlaceModelController {
         if(type==0){
             List<PlaceModel> placeModel =  placeModelMapper.selectByUserphone(userphone);
             for (PlaceModel p : placeModel) {
-                Project project = projectMapper.selectByPrimaryKey(p.getModelid());
-                p.setPicture(project.getProjectModelAddr());
+                if(p.getModelid()==null){
+                    p.setPicture(null);
+
+                }else{
+                    Project project = projectMapper.selectByPrimaryKey(p.getModelid());
+                    p.setPicture(project.getProjectModelAddr());
+                }
             }
             return new Result(ResultStatusCode.OK,placeModel);
         }
@@ -109,11 +114,14 @@ public class PlaceModelController {
             p.setZ(pm.getZ());
             p.setCreatetime(pm.getCreatetime());
             p.setPrice(pm.getPrice());
-            p.setPicture(project.getProjectModelAddr());
-
+            if(pm.getModelid()==null){
+                p.setPicture(null);
+            }else{
+                p.setPicture(project.getProjectModelAddr());
+            }
             return new Result(ResultStatusCode.OK,p);
         }
-       return new Result(ResultStatusCode.FAIL);
+        return new Result(ResultStatusCode.FAIL);
     }
 
     /**
