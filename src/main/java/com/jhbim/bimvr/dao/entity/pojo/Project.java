@@ -28,6 +28,16 @@ public class Project implements Serializable {
 
     private String drawingaddress;
 
+    private String Placemodelname;  //该模型在社区里面的名称
+
+    public String getPlacemodelname() {
+        return Placemodelname;
+    }
+
+    public void setPlacemodelname(String placemodelname) {
+        Placemodelname = placemodelname;
+    }
+
     private static final long serialVersionUID = 1L;
 
     public String getId() {

@@ -236,6 +236,7 @@ public class PlaceModelController {
         List<Project> projectList=new ArrayList<>();
         for (PlaceModel p : placeModelList) {
             Project project = projectMapper.selectByPrimaryKey(p.getModelid());
+            project.setPlacemodelname(p.getPlotname());
             projectList.add(project);
         }
         map.put("content",projectList);
