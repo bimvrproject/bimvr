@@ -6,11 +6,16 @@ import com.jhbim.bimvr.dao.mapper.*;
 import com.jhbim.bimvr.system.enums.ResultStatusCode;
 import com.jhbim.bimvr.utils.IdWorker;
 import com.jhbim.bimvr.utils.ShiroUtil;
+import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPReply;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.io.File;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -18,6 +23,7 @@ import java.util.*;
 @RestController
 @RequestMapping("/${version}/project")
 public class ProjectController {
+    public final static Logger log = LoggerFactory.getLogger(ProjectController.class);
     @Resource
     ProjectMapper projectMapper;
     @Resource
@@ -28,6 +34,18 @@ public class ProjectController {
     RvtMapper rvtMapper;
     @Resource
     ProjectGroupMapper projectGroupMapper;
+
+    @Value("${host}")
+    private volatile String HOST;
+
+    @Value("${prot}")
+    private volatile Integer PROT;
+
+    @Value("${username}")
+    private volatile String USERNAME;
+
+    @Value("${password}")
+    private volatile String PASSWROD;
     /**
      * 查询登录人所有的项目
      * @return
@@ -62,12 +80,56 @@ public class ProjectController {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        File file = new File("C:/ftp/TomcatRoot/project/"+projectid+"/Rvt");
-        file.mkdirs();
-        File file1 = new File("C:/ftp/TomcatRoot/project/"+projectid+"/Price");
-        file1.mkdirs();
-        File file2 = new File("C:/ftp/TomcatRoot/project/"+projectid+"/Drawing");
-        file2.mkdirs();
+        FTPClient ftpClient = new FTPClient();
+        try {
+            ftpClient.connect(HOST, PROT);
+            ftpClient.login(USERNAME, PASSWROD);
+            int reply = ftpClient.getReplyCode();
+            if (!FTPReply.isPositiveCompletion(reply)) {
+                log.info("FTP server refused connection");
+                ftpClient.disconnect();
+            }
+            // 切换到根目录
+            ftpClient.changeWorkingDirectory("/TomcatRoot/project/");
+            String path = projectid+"/Rvt/";
+            String[] pah = path.split("/");
+            // 分层创建目录 Rvt
+            for (String pa : pah) {
+                ftpClient.makeDirectory(pa);
+                // 切到到对应目录
+                ftpClient.changeWorkingDirectory(pa);
+            }
+
+            // 切换到根目录
+            ftpClient.changeWorkingDirectory("/TomcatRoot/project/");
+            String path1 = projectid+"/Price/";
+            String[] pah1 = path1.split("/");
+            // 分层创建目录 Price
+            for (String pa : pah1) {
+                ftpClient.makeDirectory(pa);
+                // 切到到对应目录
+                ftpClient.changeWorkingDirectory(pa);
+            }
+
+            // 切换到根目录
+            ftpClient.changeWorkingDirectory("/TomcatRoot/project/");
+            String path2 =projectid+"/Drawing/";
+            String[] pah2 = path2.split("/");
+            // 分层创建目录 Drawing
+            for (String pa : pah2) {
+                ftpClient.makeDirectory(pa);
+                // 切到到对应目录
+                ftpClient.changeWorkingDirectory(pa);
+            }
+
+            if (ftpClient != null && ftpClient.isConnected()) {
+                ftpClient.logout();
+                ftpClient.disconnect();
+                log.info("FTP服务器关闭连接!");
+            }
+        } catch (IOException e) {
+            log.info(e.getMessage());
+        }
         project.setRvtaddress("/TomcatRoot/project/"+projectid+"/Rvt");
         project.setPriceaddress("/TomcatRoot/project/"+projectid+"/Price");
         project.setDrawingaddress("/TomcatRoot/project/"+projectid+"/Drawing");
