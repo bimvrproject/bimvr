@@ -238,6 +238,8 @@ public class PlaceModelController {
             if(p.getModelid() != null){
                 Project project = projectMapper.selectByPrimaryKey(p.getModelid());
                 project.setPlacemodelname(p.getPlotname());
+                project.setPlacemodelid(p.getId());
+                project.setMainlandname(p.getMainlandname());
                 projectList.add(project);
             }
         }

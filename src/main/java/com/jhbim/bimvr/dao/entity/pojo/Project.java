@@ -30,6 +30,26 @@ public class Project implements Serializable {
 
     private String Placemodelname;  //该模型在社区里面的名称
 
+    private String mainlandname; //地块的所属大陆
+
+    private String placemodelid; //地块ID
+
+    public String getMainlandname() {
+        return mainlandname;
+    }
+
+    public void setMainlandname(String mainlandname) {
+        this.mainlandname = mainlandname;
+    }
+
+    public String getPlacemodelid() {
+        return placemodelid;
+    }
+
+    public void setPlacemodelid(String placemodelid) {
+        this.placemodelid = placemodelid;
+    }
+
     public String getPlacemodelname() {
         return Placemodelname;
     }
