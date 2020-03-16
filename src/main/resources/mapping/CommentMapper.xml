@@ -115,7 +115,7 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
   <select id="composeidnum" resultType="int" parameterType="java.lang.String" >
-    select IFNULL(SUM(compose_id),0) from `comment` where compose_id=2
+    select IFNULL(count(compose_id),0) from `comment` where compose_id = #{composeId,jdbcType=VARCHAR}
   </select>
   <select id="findBymodelid" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
