@@ -21,4 +21,6 @@ public interface ReplyMapper {
     List<Reply> findByreplycommentid(String commentid);
     //根据父级评论id删除子级评论
     int deleteByCommentid(String id);
+
+    int updateaccountnum(Reply reply);
 }

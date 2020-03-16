@@ -11,6 +11,7 @@ import com.jhbim.bimvr.dao.mapper.ReplyMapper;
 import com.jhbim.bimvr.dao.mapper.UserMapper;
 import com.jhbim.bimvr.system.enums.ResultStatusCode;
 import com.jhbim.bimvr.utils.IdWorker;
+import com.jhbim.bimvr.utils.ShiroUtil;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -81,6 +82,7 @@ public class CommentController {
      */
     @RequestMapping("/findBymodelid")
     public Result findBymodelid(String composeId,String userphone){
+        User u = ShiroUtil.getUser();
         List<CommentVo> list = new ArrayList<>();
         //父级评论表的内容存储
         List<Comment> comments = commentMapper.findBymodelid(composeId);
@@ -98,8 +100,18 @@ public class CommentController {
             for (Reply r : replies) {
                 ReplyVo replyVo = new ReplyVo();
                 User replyuser = userMapper.findByuserid(r.getToUserid());
+                replyVo.setId(r.getId());
+                replyVo.setPicture(replyuser.getPricture());
                 replyVo.setTousername(replyuser.getUserName());
+                replyVo.setUserphone(replyuser.getPhone());
+                replyVo.setTime(r.getCreateTime());
                 replyVo.setContent(r.getContent());
+                replyVo.setAccountnum(r.getAccountnum());
+                if(r.getToUserid().equals(u.getUserId())){
+                    replyVo.setState(1);
+                }else{
+                    replyVo.setState(0);
+                }
                 replyVoList.add(replyVo);
             }
             commentVo.setReplyVos(replyVoList);
@@ -109,6 +121,7 @@ public class CommentController {
                 commentVo.setState(0);
             }
             commentVo.setAccountnum(c.getAccountnum());
+            commentVo.setUserphone(c.getFromUserid());
             list.add(commentVo);
         }
         return new Result(ResultStatusCode.OK,list);

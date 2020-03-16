@@ -160,6 +160,10 @@ public class PlaceModelController {
         if(id.isEmpty() || modelid.isEmpty()){
             return new Result(ResultStatusCode.BAD_REQUEST,"参数解析失败...");
         }
+        PlaceModel pm = placeModelMapper.selectmodelid(modelid);
+        if(pm != null){
+            return new Result(ResultStatusCode.FAIL,"该模型已在其他地块使用");
+        }
         BigDecimal shopping_price = scShoppingMapper.selectmodelid(modelid);
         PlaceModel placeModel = new PlaceModel();
         placeModel.setId(id);
@@ -212,6 +216,9 @@ public class PlaceModelController {
         placeModel.setMainlandname(mainlandname);
         placeModel.setPlotname(plotname);
         PlaceModel p = placeModelMapper.findByidandmainlandnameandplotname(placeModel);
+        if(p == null){
+            return new Result(ResultStatusCode.FAIL,"未找到该地块...");
+        }
         Model model = new Model();
         model.setModelId(p.getModelid());
         model.setModelName(p.getMainlandname()+p.getPlotname());

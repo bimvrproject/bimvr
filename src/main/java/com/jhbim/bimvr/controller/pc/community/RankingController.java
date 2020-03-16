@@ -50,6 +50,9 @@ public class RankingController {
     @Resource
     CommentMapper commentMapper;
 
+    @Resource
+    ReplyMapper replyMapper;
+
     /**
      * 获取用户排行
      * @return
@@ -140,14 +143,27 @@ public class RankingController {
                 //评论点赞
                 if(genre == 3){
                     Comment c = commentMapper.selectByPrimaryKey(workId);
-                    Comment comment = new Comment();
-                    comment.setAccountnum(c.getAccountnum()+1);
-                    comment.setId(workId);
-                    int i = commentMapper.updateaccountnum(comment);
-                    if(i>0){
-                        return new Result(ResultStatusCode.SUCCESS,"点赞成功");
+                    if(c != null){
+                        Comment comment = new Comment();
+                        comment.setAccountnum(c.getAccountnum()+1);
+                        comment.setId(workId);
+                        int i = commentMapper.updateaccountnum(comment);
+                        if(i>0){
+                            return new Result(ResultStatusCode.SUCCESS,"点赞成功");
+                        }
+                        return new Result(ResultStatusCode.FAIL,"点赞失败");
                     }
-                    return new Result(ResultStatusCode.FAIL,"点赞失败");
+                    Reply reply = replyMapper.selectByPrimaryKey(workId);
+                    if(reply != null){
+                        Reply r = new Reply();
+                        r.setAccountnum(reply.getAccountnum()+1);
+                        r.setId(workId);
+                        int i = replyMapper.updateaccountnum(r);
+                        if(i>0){
+                            return new Result(ResultStatusCode.SUCCESS,"点赞成功");
+                        }
+                        return new Result(ResultStatusCode.FAIL,"点赞失败");
+                    }
                 }
             }
         }else{
@@ -213,15 +229,29 @@ public class RankingController {
                         int i = zanMapper.updateByPrimaryKey(zan);
                         if(i>0){
                             Comment c = commentMapper.selectByPrimaryKey(workId);
-                            Comment comment = new Comment();
-                            comment.setAccountnum(c.getAccountnum()+1);
-                            comment.setId(workId);
-                            int j = commentMapper.updateaccountnum(comment);
-                            System.out.println();
-                            if(j>0){
-                                return new Result(ResultStatusCode.SUCCESS,"点赞成功");
+                            if(c != null){
+                                Comment comment = new Comment();
+                                comment.setAccountnum(c.getAccountnum()+1);
+                                comment.setId(workId);
+                                int j = commentMapper.updateaccountnum(comment);
+                                System.out.println();
+                                if(j>0){
+                                    return new Result(ResultStatusCode.SUCCESS,"点赞成功");
+                                }
+                                return new Result(ResultStatusCode.FAIL,"点赞失败");
                             }
-                            return new Result(ResultStatusCode.FAIL,"点赞失败");
+                            Reply reply = replyMapper.selectByPrimaryKey(workId);
+                            if(reply != null){
+                                Reply r = new Reply();
+                                r.setAccountnum(reply.getAccountnum()+1);
+                                r.setId(workId);
+                                int j = replyMapper.updateaccountnum(r);
+                                System.out.println();
+                                if(j>0){
+                                    return new Result(ResultStatusCode.SUCCESS,"点赞成功");
+                                }
+                                return new Result(ResultStatusCode.FAIL,"点赞失败");
+                            }
                         }
                     }
                 }
@@ -288,16 +318,30 @@ public class RankingController {
             if(j>0){
                 if (genre == 3 && select.getStatus() == 1) {
                     Comment c = commentMapper.selectByPrimaryKey(workId);
-                    Comment comment = new Comment();
-                    comment.setAccountnum(c.getAccountnum()-1);
-                    comment.setId(workId);
-                    int i = commentMapper.updateaccountnum(comment);
-                    if(i>0){
-                        return new Result(ResultStatusCode.SUCCESS,"取消点赞");
+                    if(c != null){
+                        Comment comment = new Comment();
+                        comment.setAccountnum(c.getAccountnum()-1);
+                        comment.setId(workId);
+                        int i = commentMapper.updateaccountnum(comment);
+                        if(i>0){
+                            return new Result(ResultStatusCode.SUCCESS,"取消点赞");
+                        }
+                        return new Result(ResultStatusCode.SUCCESS,"取消点赞失败");
                     }
-                    return new Result(ResultStatusCode.FAIL,"您已取消点赞");
+                    Reply reply = replyMapper.selectByPrimaryKey(workId);
+                    if(reply != null){
+                        Reply r = new Reply();
+                        r.setAccountnum(reply.getAccountnum()-1);
+                        r.setId(workId);
+                        int i = replyMapper.updateaccountnum(r);
+                        if(i>0){
+                            return new Result(ResultStatusCode.SUCCESS,"取消点赞");
+                        }
+                        return new Result(ResultStatusCode.SUCCESS,"取消点赞失败");
+                    }
                 }
             }
+            return new Result(ResultStatusCode.FAIL,"您已取消点赞");
         }
         return new Result(ResultStatusCode.FAIL,"您已点赞...");
     }

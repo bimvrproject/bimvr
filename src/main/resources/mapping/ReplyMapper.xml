@@ -9,9 +9,10 @@
     <result column="from_userid" property="fromUserid" jdbcType="INTEGER" />
     <result column="to_userid" property="toUserid" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="accountnum" property="accountnum" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, comment_id, reply_type, content, from_userid, to_userid, create_time
+    id, comment_id, reply_type, content, from_userid, to_userid, create_time, accountnum
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -26,10 +27,10 @@
   <insert id="insert" parameterType="com.jhbim.bimvr.dao.entity.pojo.Reply" >
     insert into reply (id, comment_id, reply_type, 
       content, from_userid, to_userid, 
-      create_time)
+      create_time, accountnum)
     values (#{id,jdbcType=VARCHAR}, #{commentId,jdbcType=VARCHAR}, #{replyType,jdbcType=INTEGER}, 
       #{content,jdbcType=VARCHAR}, #{fromUserid,jdbcType=INTEGER}, #{toUserid,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=TIMESTAMP})
+      #{createTime,jdbcType=TIMESTAMP}, #{accountnum,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.jhbim.bimvr.dao.entity.pojo.Reply" >
     insert into reply
@@ -55,6 +56,9 @@
       <if test="createTime != null" >
         create_time,
       </if>
+      <if test="accountnum != null" >
+        accountnum,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -77,6 +81,9 @@
       </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="accountnum != null" >
+        #{accountnum,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -101,6 +108,9 @@
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="accountnum != null" >
+        accountnum = #{accountnum,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -111,7 +121,8 @@
       content = #{content,jdbcType=VARCHAR},
       from_userid = #{fromUserid,jdbcType=INTEGER},
       to_userid = #{toUserid,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP}
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      accountnum = #{accountnum,jdbcType=INTEGER}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 
@@ -126,4 +137,10 @@
     delete from reply
     where comment_id = #{commentId,jdbcType=VARCHAR}
   </delete>
+
+  <update id="updateaccountnum" parameterType="com.jhbim.bimvr.dao.entity.pojo.Reply" >
+    update reply
+    set accountnum = #{accountnum,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
 </mapper>

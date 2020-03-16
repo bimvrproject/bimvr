@@ -21,7 +21,17 @@ public class CommentVo {
 
     private Integer state;  //0是别人发的评论 1是本人发的
 
-    private Integer accountnum;
+    private Integer accountnum;  //点赞数
+
+    private String userphone;   //发评人手机号
+
+    public String getUserphone() {
+        return userphone;
+    }
+
+    public void setUserphone(String userphone) {
+        this.userphone = userphone;
+    }
 
     public Integer getAccountnum() {
         return accountnum;
