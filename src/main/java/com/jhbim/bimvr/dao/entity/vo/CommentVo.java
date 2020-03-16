@@ -19,7 +19,17 @@ public class CommentVo {
 
     private List<ReplyVo> replyVos;  //存储子级评论
 
-    private Integer state;
+    private Integer state;  //0是别人发的评论 1是本人发的
+
+    private Integer accountnum;
+
+    public Integer getAccountnum() {
+        return accountnum;
+    }
+
+    public void setAccountnum(Integer accountnum) {
+        this.accountnum = accountnum;
+    }
 
     public String getId() {
         return id;

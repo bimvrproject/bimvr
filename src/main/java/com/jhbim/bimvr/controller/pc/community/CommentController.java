@@ -108,6 +108,7 @@ public class CommentController {
             }else{
                 commentVo.setState(0);
             }
+            commentVo.setAccountnum(c.getAccountnum());
             list.add(commentVo);
         }
         return new Result(ResultStatusCode.OK,list);
