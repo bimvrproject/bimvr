@@ -142,4 +142,18 @@ public class CommentController {
         return new Result(ResultStatusCode.FAIL,"删除失败...");
     }
 
+    /**
+     * 删除子级评论
+     * @param commentid
+     * @return
+     */
+    @RequestMapping("/deletereplyid")
+    public Result deletereplyid(String commentid){
+       int i = replyMapper.deleteByPrimaryKey(commentid);
+       if(i > 0){
+           return new Result(ResultStatusCode.OK,"删除评论成功...");
+       }
+        return new Result(ResultStatusCode.FAIL,"删除失败...");
+    }
+
 }
