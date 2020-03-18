@@ -1,9 +1,7 @@
 package com.jhbim.bimvr.config;
 
 /**
- * @Description: 支付宝支付配置类(公钥证书)
- * @Author: chen
- * @Date: 2019/9/10
+ * 支付宝支付配置类(公钥证书)
  */
 public class AliPayCertConfig {
     /**
@@ -39,7 +37,7 @@ public class AliPayCertConfig {
     /**
      * 回调地址
      */
-    public static String ALIPAY_NOTIFY_URL = "http://21z9804m0.zicp.vip:9090/alipayapp/alipayCertNotify";
+    public static String ALIPAY_NOTIFY_URL = "http://123.57.207.37:9090/alipayapp/aliPayCertNotify";
 
     /**
      * 字符集

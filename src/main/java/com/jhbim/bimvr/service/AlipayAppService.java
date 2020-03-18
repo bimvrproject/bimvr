@@ -7,11 +7,7 @@ import com.jhbim.bimvr.utils.ResultStatus;
 import java.math.BigDecimal;
 import java.util.Map;
 
-/**
- * @Description:
- * @Author: chen
- * @Date: 2019/9/10
- */
+
 public interface AlipayAppService {
     /**
      * 支付宝支付统一下单接口(公钥证书方式)
