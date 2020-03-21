@@ -83,9 +83,8 @@ public class PlaceModelController {
         if(type==0){
             List<PlaceModel> placeModel =  placeModelMapper.selectByUserphone(userphone);
             for (PlaceModel p : placeModel) {
-                if(p.getModelid()==null){
+                if(p.getModelid()==null|| p.getModelid().isEmpty()){
                     p.setPicture(null);
-
                 }else{
                     Project project = projectMapper.selectByPrimaryKey(p.getModelid());
                     p.setPicture(project.getProjectModelAddr());
