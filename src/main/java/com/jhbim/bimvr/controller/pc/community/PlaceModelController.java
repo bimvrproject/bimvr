@@ -113,7 +113,7 @@ public class PlaceModelController {
             p.setZ(pm.getZ());
             p.setCreatetime(pm.getCreatetime());
             p.setPrice(pm.getPrice());
-            if(pm.getModelid()==null){
+            if(pm.getModelid()==null || pm.getModelid().isEmpty()){
                 p.setPicture(null);
             }else{
                 p.setPicture(project.getProjectModelAddr());
