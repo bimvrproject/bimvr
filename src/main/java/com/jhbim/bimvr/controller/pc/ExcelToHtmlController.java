@@ -132,10 +132,11 @@ public class ExcelToHtmlController {
      * 存储excel数据
      * @param projectid 项目id
      * @param name  excel名称
+     * @param excelname excel文件名称（源文件）
      * @return
      */
     @RequestMapping("/addexcel")
-    public Result addexcel(String projectid,String name){
+    public Result addexcel(String projectid,String name,String excelname){
         if(projectid.isEmpty() || name.isEmpty()){
             return new Result(ResultStatusCode.BAD_REQUEST);
         }
@@ -145,7 +146,7 @@ public class ExcelToHtmlController {
         meterial.setProjectId(projectid);   //项目id
         meterial.setUserId(user.getUserId());   //用户id
         meterial.setUrl("/project/"+projectid+"/Price/"+name); //存储地址
-        meterial.setMeterialName(name); //excel名称
+        meterial.setMeterialName(excelname); //excel名称
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         meterial.setMtime(sdf.format(new Date()));  //上传时间
         meterialMapper.insertSelective(meterial);

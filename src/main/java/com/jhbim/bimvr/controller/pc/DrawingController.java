@@ -113,10 +113,11 @@ public class DrawingController {
      * 存储CAD图纸
      * @param projectid 项目id
      * @param name  cad图纸名称
+     * @param cadname cad图纸文件名称（源文件）
      * @return
      */
     @RequestMapping("/addDrawing")
-    public Result addDrawing(String projectid,String name){
+    public Result addDrawing(String projectid,String name,String cadname){
         if(projectid.isEmpty() || name.isEmpty()){
             return new Result(ResultStatusCode.BAD_REQUEST);
         }
@@ -126,7 +127,7 @@ public class DrawingController {
         drawing.setProjectId(projectid);        //项目id
         drawing.setUserId(user.getUserId());       //用户id
         drawing.setUrl("/project/"+projectid+"/Drawing/"+name); //存储笛之爱
-        drawing.setDrawName(name);  //图纸名称
+        drawing.setDrawName(cadname);  //图纸名称
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         drawing.setDtime(sdf.format(new Date())); //上传时间
         drawingMapper.insertSelective(drawing);
