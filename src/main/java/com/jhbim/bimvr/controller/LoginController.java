@@ -3,6 +3,7 @@ package com.jhbim.bimvr.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.aliyuncs.exceptions.ClientException;
 import com.jhbim.bimvr.dao.entity.pojo.MemberEnd;
 import com.jhbim.bimvr.dao.entity.pojo.User;
 import com.jhbim.bimvr.dao.entity.pojo.UserWallet;
@@ -13,6 +14,7 @@ import com.jhbim.bimvr.dao.mapper.UserWalletMapper;
 import com.jhbim.bimvr.service.IUserService;
 import com.jhbim.bimvr.system.enums.ResultStatusCode;
 import com.jhbim.bimvr.system.shiro.LoginType;
+import com.jhbim.bimvr.utils.AlipaySmsUtils;
 import com.jhbim.bimvr.utils.SMSConfig;
 import com.jhbim.bimvr.system.shiro.UserToken;
 import com.jhbim.bimvr.utils.MD5Util;
@@ -94,10 +96,14 @@ public class LoginController {
     public String sendSms(String mobile){
         String random= RandomStringUtils.randomNumeric(6);
         System.out.println(mobile+"随机数:"+random);
-        //5分钟过期
-        redisTemplate.opsForValue().set(mobile,random+"",5, TimeUnit.MINUTES);
-        SMSConfig.send(mobile,random);
-        return "验证码发送成功";
+        //1分钟过期
+        redisTemplate.opsForValue().set(mobile,random+"",1, TimeUnit.MINUTES);
+        try {
+            AlipaySmsUtils.sendSms(mobile,random);
+        } catch (ClientException e) {
+            e.printStackTrace();
+        }
+        return "已发送...";
     }
 
 

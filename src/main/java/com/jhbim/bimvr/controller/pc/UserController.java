@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -63,10 +64,22 @@ public class UserController {
         userVo.setCompanyname(user.getCompanyname());
         userVo.setRemarks(user.getRemarks());
         userVo.setFriendphone(stringList);
-        userVo.setRoleid(user.getRoleId());
+
         MemberEnd memberEnd = memberEndMapper.selectbyuserid(user.getUserId());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        userVo.setVipendtime(sdf.format(memberEnd.getEndtime()));
+        String vipendtime = sdf.format(memberEnd.getEndtime());
+        String nowtime = sdf.format(new Date());
+        if(nowtime.equals(vipendtime)){
+            User u = new User();
+            u.setRoleId(4);
+            u.setPhone(phone);
+            int i = userMapper.updaterole(u);
+            if(i > 0){
+                userVo.setRoleid(u.getRoleId());
+            }
+        }else{
+            userVo.setRoleid(user.getRoleId());
+        }
         return new Result(ResultStatusCode.UserVo,userVo);
     }
 

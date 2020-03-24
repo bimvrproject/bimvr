@@ -25,16 +25,6 @@ public class UserVo {
 
     private Integer roleid;
 
-    private String vipendtime;
-
-    public String getVipendtime() {
-        return vipendtime;
-    }
-
-    public void setVipendtime(String vipendtime) {
-        this.vipendtime = vipendtime;
-    }
-
     public Integer getRoleid() {
         return roleid;
     }

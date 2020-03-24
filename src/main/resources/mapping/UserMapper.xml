@@ -262,6 +262,13 @@
       set  password = #{password,jdbcType=VARCHAR}
       where phone = #{phone,jdbcType=VARCHAR}
   </update>
+<!--修改会员等级-->
+  <update id="updaterole">
+    update user
+      set  role_id = #{roleId,jdbcType=INTEGER}
+      where phone = #{phone,jdbcType=VARCHAR}
+  </update>
+
   <!--根据用户手机号或昵称查询-->
   <select id="findByuserphoneorusername" parameterType="java.lang.String" resultMap="BaseResultMap">
     select

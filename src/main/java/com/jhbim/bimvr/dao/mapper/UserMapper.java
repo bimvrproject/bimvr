@@ -38,6 +38,8 @@ public interface UserMapper {
     int updatepicture(User user);
     //修改密码
     int updatepwd(User user);
+    //修改会员等级
+    int updaterole(User user);
     //根据用户手机号或昵称查询
     List<User> findByuserphoneorusername(@Param("phone") String phone,@Param("userName") String userName);
 
