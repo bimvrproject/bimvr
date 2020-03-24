@@ -14,4 +14,7 @@ public interface MemberEndMapper {
     int updateByPrimaryKeySelective(MemberEnd record);
 
     int updateByPrimaryKey(MemberEnd record);
+
+    //根据用户编号查询
+    MemberEnd selectbyuserid(Integer userid);
 }

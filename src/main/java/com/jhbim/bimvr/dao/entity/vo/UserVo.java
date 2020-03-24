@@ -1,5 +1,6 @@
 package com.jhbim.bimvr.dao.entity.vo;
 
+import java.util.Date;
 import java.util.List;
 
 public class UserVo {
@@ -23,6 +24,16 @@ public class UserVo {
     private List<String> friendphone;
 
     private Integer roleid;
+
+    private String vipendtime;
+
+    public String getVipendtime() {
+        return vipendtime;
+    }
+
+    public void setVipendtime(String vipendtime) {
+        this.vipendtime = vipendtime;
+    }
 
     public Integer getRoleid() {
         return roleid;

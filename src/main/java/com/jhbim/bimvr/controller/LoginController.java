@@ -3,9 +3,11 @@ package com.jhbim.bimvr.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.jhbim.bimvr.dao.entity.pojo.MemberEnd;
 import com.jhbim.bimvr.dao.entity.pojo.User;
 import com.jhbim.bimvr.dao.entity.pojo.UserWallet;
 import com.jhbim.bimvr.dao.entity.vo.Result;
+import com.jhbim.bimvr.dao.mapper.MemberEndMapper;
 import com.jhbim.bimvr.dao.mapper.UserMapper;
 import com.jhbim.bimvr.dao.mapper.UserWalletMapper;
 import com.jhbim.bimvr.service.IUserService;
@@ -28,6 +30,8 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -44,6 +48,8 @@ public class LoginController {
     UserWalletMapper userWalletMapper;
     @Value("${version}")
     private volatile  String version;
+    @Resource
+    MemberEndMapper memberEndMapper;
     /**
      * 用户密码登录
      * @param username
@@ -189,7 +195,7 @@ public class LoginController {
                 result.setMsg("短信验证码错误!");
             }else{
                 User user=new User();
-                user.setRoleId(4);
+                user.setRoleId(3);
                 user.setPhone(phone);
                 String regex = "[a-z0-9A-Z]+$";
                 if(pwd.matches(regex)==false){
@@ -207,6 +213,15 @@ public class LoginController {
                        UserWallet userWallet = new UserWallet();
                        userWallet.setUserphone(phone);
                        userWalletMapper.insertSelective(userWallet);
+                       User user1 = userMapper.selectByPrimaryKey(phone);
+                       MemberEnd memberEnd = new MemberEnd();
+                       memberEnd.setUserId(user1.getUserId());
+                       memberEnd.setRoleId(user1.getRoleId());
+                       Calendar cal = Calendar.getInstance();
+                       cal.add(Calendar.DATE, 30);
+                       Date date = cal.getTime();
+                       memberEnd.setEndtime(date);
+                       memberEndMapper.insertSelective(memberEnd);
                    }
                 }
                 return new Result(ResultStatusCode.RegiterSuccess);
@@ -214,7 +229,6 @@ public class LoginController {
         }
         return result;
     }
-
     /**
      *  登录获取redis里面的验证码 判断是否一致 完成用户登录
      * @param smsCode 验证码

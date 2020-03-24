@@ -13,6 +13,7 @@ import org.apache.shiro.SecurityUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +28,8 @@ public class UserController {
     UserFriendMapper userFriendMapper;
     @Resource
     RedisTemplate redisTemplate;
+    @Resource
+    MemberEndMapper memberEndMapper;
     /**
      *   根据token去获取用户信息
      * */
@@ -61,6 +64,9 @@ public class UserController {
         userVo.setRemarks(user.getRemarks());
         userVo.setFriendphone(stringList);
         userVo.setRoleid(user.getRoleId());
+        MemberEnd memberEnd = memberEndMapper.selectbyuserid(user.getUserId());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        userVo.setVipendtime(sdf.format(memberEnd.getEndtime()));
         return new Result(ResultStatusCode.UserVo,userVo);
     }
 
