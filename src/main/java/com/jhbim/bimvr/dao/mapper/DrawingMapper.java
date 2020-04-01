@@ -19,11 +19,11 @@ public interface DrawingMapper {
     int updateByPrimaryKey(Drawing record);
 
     /**
-     * 查询该项目下的图纸
+     * 根据图纸分类查询该项目下的图纸
      * @param projectid
      * @return
      */
-    List<Drawing> getprojectdrawing(String projectid);
+    List<Drawing> getprojectdrawing(@Param("projectId") String projectid,@Param("foldername") String foldername);
 
     /**
      * 拖拽图纸批量修改type

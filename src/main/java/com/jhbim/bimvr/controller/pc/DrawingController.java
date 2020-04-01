@@ -24,16 +24,16 @@ public class DrawingController {
     @Resource
     DrawingFolderMapper drawingFolderMapper;
     /**
-     * 查询该项目下的图纸
+     * 根据图纸分类查询该项目下的图纸
      * @param projectid
      * @return
      */
     @RequestMapping("/getProjectDrawing")
-    public Result getProjectDrawing(String projectid){
-        if(projectid==null || projectid == "" || projectid.isEmpty()){
+    public Result getProjectDrawing(String projectid,String foldername){
+        if(projectid.isEmpty() || foldername.isEmpty()){
             return new Result(ResultStatusCode.BAD_REQUEST);
         }
-        return new Result(ResultStatusCode.OK,drawingMapper.getprojectdrawing(projectid));
+        return new Result(ResultStatusCode.OK,drawingMapper.getprojectdrawing(projectid,foldername));
     }
 
     /**
@@ -114,10 +114,11 @@ public class DrawingController {
      * @param projectid 项目id
      * @param name  cad图纸名称
      * @param cadname cad图纸文件名称（源文件）
+     * @param foldername 图纸文件类型(平面图、立面图、安装图、节点图)
      * @return
      */
     @RequestMapping("/addDrawing")
-    public Result addDrawing(String projectid,String name,String cadname){
+    public Result addDrawing(String projectid,String name,String cadname,String foldername){
         if(projectid.isEmpty() || name.isEmpty()){
             return new Result(ResultStatusCode.BAD_REQUEST);
         }
@@ -126,10 +127,11 @@ public class DrawingController {
         drawing.setModelId(1);      //类型1表示建筑模型 2表示管道模型
         drawing.setProjectId(projectid);        //项目id
         drawing.setUserId(user.getUserId());       //用户id
-        drawing.setUrl("/project/"+projectid+"/Drawing/"+name); //存储笛之爱
+        drawing.setUrl("/project/"+projectid+"/Drawing/"+name); //存储路径
         drawing.setDrawName(cadname);  //图纸名称
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         drawing.setDtime(sdf.format(new Date())); //上传时间
+        drawing.setFoldername(foldername);   //图纸文件类型
         drawingMapper.insertSelective(drawing);
         return new Result(ResultStatusCode.OK,"CAD图纸数据存储成功...");
     }

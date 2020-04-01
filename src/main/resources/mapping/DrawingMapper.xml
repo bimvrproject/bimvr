@@ -138,11 +138,11 @@
       type = #{type,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <!--查询该项目下的图纸-->
+  <!--根据图纸分类查询该项目下的图纸-->
   <select id="getprojectdrawing" resultMap="BaseResultMap" parameterType="java.lang.String">
     select
     <include refid="Base_Column_List" />
-    from drawing where  project_id = #{projectId,jdbcType=VARCHAR} and type=0 order by id desc
+    from drawing where  project_id = #{projectId,jdbcType=VARCHAR} and foldername = #{foldername,jdbcType=VARCHAR} and type=0 order by id desc
   </select>
   <!--拖拽图纸批量修改type-->
   <update id="drawingbatchUpdate" parameterType="java.lang.Integer">
