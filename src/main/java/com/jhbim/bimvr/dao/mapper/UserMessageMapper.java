@@ -21,4 +21,7 @@ public interface UserMessageMapper {
     List<UserMessage> messaheList(@Param("hairuserPhone") String hairuserPhone, @Param("closeduserPhone")String closeduserPhone );
 
     int updateMessage(@Param("stauts")Integer stauts,@Param("hairuserPhone") String hairuserPhone, @Param("closeduserPhone")String closeduserPhone);
+
+    //获取未读消息条数
+    int unreadcount(@Param("hairuserPhone") String hairuserPhone, @Param("closeduserPhone")String closeduserPhone);
 }

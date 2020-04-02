@@ -57,8 +57,8 @@ public interface UserMapper {
     //根据用户id查询
     User findByuserid(Integer userid);
     //用户列表
-    UserMessageVo userListMessage(String friendPhone);
-    UserMessageVo userLists(String friendPhone);
+//    UserMessageVo userListMessage(String friendPhone);
+//    UserMessageVo userLists(String friendPhone);
 
     //用户排行榜
     List<UserRankVo> userRank();

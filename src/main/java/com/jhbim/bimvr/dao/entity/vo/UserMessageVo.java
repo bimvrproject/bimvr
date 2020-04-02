@@ -22,7 +22,27 @@ public class UserMessageVo {
 
     private Integer unread;
 
+    private Integer roleid;
+
+    private String roleimg;
+
     public UserMessageVo(){}
+
+    public Integer getRoleid() {
+        return roleid;
+    }
+
+    public void setRoleid(Integer roleid) {
+        this.roleid = roleid;
+    }
+
+    public String getRoleimg() {
+        return roleimg;
+    }
+
+    public void setRoleimg(String roleimg) {
+        this.roleimg = roleimg;
+    }
 
     public String getPosotion() {
         return posotion;

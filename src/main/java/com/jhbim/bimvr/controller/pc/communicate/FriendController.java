@@ -9,6 +9,7 @@ import com.jhbim.bimvr.dao.entity.vo.UserMessageVo;
 import com.jhbim.bimvr.dao.mapper.RoleMapper;
 import com.jhbim.bimvr.dao.mapper.UserFriendMapper;
 import com.jhbim.bimvr.dao.mapper.UserMapper;
+import com.jhbim.bimvr.dao.mapper.UserMessageMapper;
 import com.jhbim.bimvr.system.enums.ResultStatusCode;
 import com.jhbim.bimvr.utils.IdWorker;
 import com.jhbim.bimvr.utils.ShiroUtil;
@@ -38,6 +39,8 @@ public class FriendController {
     RoleMapper roleMapper;
     @Resource
     IdWorker idWorker;
+    @Resource
+    UserMessageMapper userMessageMapper;
 
     /**
      *  获取好友信息列表
@@ -52,11 +55,25 @@ public class FriendController {
         }
         List<UserMessageVo> userMessageVos=new ArrayList<>();
         list.stream().forEach(mess->{
-            UserMessageVo userMessageVo = userMapper.userListMessage(mess);
-            if (userMessageVo.getUnread() == 0){
-                userMessageVo = userMapper.userLists(mess);
-                userMessageVo.setUnread(0);
-            }
+            User u = userMapper.selectByPrimaryKey(mess);
+            Role role = roleMapper.selectByPrimaryKey(u.getRoleId());
+            //未读消息条数
+            int unread = userMessageMapper.unreadcount(mess,user.getPhone());
+            UserMessageVo userMessageVo = new UserMessageVo();
+            userMessageVo.setUserName(u.getUserName());
+            userMessageVo.setPhone(u.getPhone());
+            userMessageVo.setPricture(u.getPricture());
+            userMessageVo.setState(u.getState());
+            userMessageVo.setLoginFlag(u.getLoginFlag());
+            userMessageVo.setPosotion(u.getPosotion());
+            userMessageVo.setUnread(unread);
+            userMessageVo.setRoleid(role.getId());
+            userMessageVo.setRoleimg(role.getImage());
+//            UserMessageVo userMessageVo = userMapper.userListMessage(mess);
+//            if (userMessageVo.getUnread() == 0){
+//                userMessageVo = userMapper.userLists(mess);
+//                userMessageVo.setUnread(0);
+//            }
             userMessageVos.add(userMessageVo);
         });
         return new Result(ResultStatusCode.SUCCESS,userMessageVos);

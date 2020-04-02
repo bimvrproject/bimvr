@@ -325,16 +325,16 @@
     where user_id = #{userId,jdbcType=INTEGER}
   </select>
 
-  <select id="userListMessage" parameterType="java.lang.String" resultMap="ResultList">
-   select user.phone,user.user_name ,user.pricture,user.login_flag,user.posotion,user.state,count(user_message.stauts) as unread
-    from user  inner join user_message on user.phone = user_message.Hairuser_phone
-    and user.phone = #{phone,jdbcType=VARCHAR}
-  </select>
+  <!--<select id="userListMessage" parameterType="java.lang.String" resultMap="ResultList">-->
+   <!--select user.phone,user.user_name ,user.pricture,user.login_flag,user.posotion,user.state,IFNULL(count(user_message.stauts),0) as unread-->
+    <!--from user  inner join user_message on user.phone = user_message.Hairuser_phone-->
+    <!--and user.phone = #{phone,jdbcType=VARCHAR}  and user_message.stauts = 0-->
+  <!--</select>-->
 
-   <select id="userLists" parameterType="java.lang.String" resultMap="ResultList">
-   select phone,user_name ,pricture,login_flag,posotion,state
-    from user where phone = #{phone,jdbcType=VARCHAR}
-  </select>
+   <!--<select id="userLists" parameterType="java.lang.String" resultMap="ResultList">-->
+   <!--select phone,user_name ,pricture,login_flag,posotion,state-->
+    <!--from user where phone = #{phone,jdbcType=VARCHAR}-->
+  <!--</select>-->
 
   <select id="userRank" resultMap="ResultRank">
    select user.pricture,user.phone,user.user_name,role.Image,user.posotion,user.account,count(model.user_id) as modelNum
