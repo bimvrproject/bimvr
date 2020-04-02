@@ -18,9 +18,19 @@ public class UserMessageVo {
 
     private Integer loginFlag;
 
+    private String posotion;
+
     private Integer unread;
 
     public UserMessageVo(){}
+
+    public String getPosotion() {
+        return posotion;
+    }
+
+    public void setPosotion(String posotion) {
+        this.posotion = posotion;
+    }
 
     public String getUserName() {
         return userName;
