@@ -119,9 +119,10 @@
       and groupno = #{groupno,jdbcType=VARCHAR}
       and to_time > #{toTime,jdbcType=VARCHAR}
   </select>
-  <!--推荐群根据热度显示-->
+  <!--根据是否推荐群的热度查询-->
   <select id="getAllheat" resultMap="BaseResultMap">
-        SELECT COUNT(groupno),groupno FROM `group_message_type` GROUP BY groupno ORDER BY COUNT(groupno) desc
+        SELECT COUNT(gmt.groupno),gmt.groupno FROM group_message_type gmt LEFT JOIN group_cluster gc ON gmt.groupno = gc.groupno
+        WHERE gc.isrecommend = 1 GROUP BY gmt.groupno ORDER BY COUNT(gmt.groupno) DESC
     </select>
   <!--修改最后一次离开时间-->
   <update id="updatefromtime" parameterType="com.jhbim.bimvr.dao.entity.pojo.GroupMessageType" >

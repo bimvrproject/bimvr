@@ -23,7 +23,7 @@ public interface GroupMessageTypeMapper {
     List<GroupMessageType> findbyuserphone(@Param("toUser") String toUser,@Param("groupno") String groupno);
    //是否已读
     List<GroupMessageType> getusercount(@Param("toUser") String toUser,@Param("groupno") String groupno,@Param("toTime") String toTime);
-    //推荐群根据热度显示
+    //根据是否推荐群的热度查询
     List<GroupMessageType> getAllheat();
     //修改最后一次离开时间
     int updatefromtime(@Param("fromTime") String fromTime,@Param("groupno") String groupno,@Param("toUser") String toUser,@Param("toTime") String toTime);
