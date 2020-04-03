@@ -73,12 +73,14 @@ public class ProjectController {
         project.setCompletion(0);       //是否完工  1完工 0未完工
         project.setProjectStatus(3);        //项目状态 1已经完成 2正在进行中 3试用阶段
         project.setProjectAddress(address);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        try {
-            project.setCreateTime(sdf.parse(createtime));   //开始时间
-            project.setEndTime(sdf.parse(endtime));     //结束时间
-        } catch (ParseException e) {
-            e.printStackTrace();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        if(createtime !="" || endtime != ""){
+            try {
+                project.setCreateTime(sdf.parse(createtime));   //开始时间
+                project.setEndTime(sdf.parse(endtime));     //结束时间
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
         FTPClient ftpClient = new FTPClient();
         try {
@@ -148,13 +150,16 @@ public class ProjectController {
      */
     @RequestMapping("/Addproject")
     public Result Addproject(String name,String address,String createtime,String endtime){
+        if(name.isEmpty()){
+            return new Result(ResultStatusCode.BAD_REQUEST);
+        }
         User user= ShiroUtil.getUser();
         if(user.getRoleId()==4){
             return new Result(ResultStatusCode.ORDINARY);
         }
         int up = userProjectMapper.selectUserProjectnum(user.getUserId());
         if(user.getRoleId()==1){    //超级会员
-            if(up<5){
+            if(up<6){
                 CreateProject(name,address,createtime,endtime);
             }else{
                 return new Result(ResultStatusCode.CREATE_PROJECT_CEILING);
@@ -192,7 +197,7 @@ public class ProjectController {
         project.setProjectName(projectname);
         project.setProjectAddress(address);
         project.setProjectContent(content);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try {
             project.setCreateTime(sdf.parse(createtime));
             project.setEndTime(sdf.parse(endtime));
