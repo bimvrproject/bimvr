@@ -276,21 +276,23 @@
     from user
     <where>
       <if test="phone!=null and phone!=''">
-        phone =#{phone,jdbcType=VARCHAR}
+        phone like concat("%",#{phone,jdbcType=VARCHAR},"%")
+        <!--phone =#{phone,jdbcType=VARCHAR}-->
       </if>
       <if test="userName!=null and userName!=''">
-        or user_name = #{userName,jdbcType=VARCHAR}
-      </if>
-    </where>
-  </select>
+        or user_name like concat("%",#{userName,jdbcType=VARCHAR},"%")
+        <!--or user_name = #{userName,jdbcType=VARCHAR}-->
+</if>
+</where>
+</select>
 
-  <select id="userList" resultMap="BaseResultMap">
-    select * from user where phone in
-    <foreach close=")" collection="list" index="index" item="phone" open="(" separator=",">
-      #{phone,jdbcType=VARCHAR}
-    </foreach>
-  </select>
-  <!--随机查询在线人员-->
+<select id="userList" resultMap="BaseResultMap">
+select * from user where phone in
+<foreach close=")" collection="list" index="index" item="phone" open="(" separator=",">
+#{phone,jdbcType=VARCHAR}
+</foreach>
+</select>
+<!--随机查询在线人员-->
   <select id="randomgetAll" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />

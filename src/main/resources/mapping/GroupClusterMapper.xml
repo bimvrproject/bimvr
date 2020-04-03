@@ -157,16 +157,19 @@
       where groupno = #{groupno,jdbcType=VARCHAR} and isrecommend = 1
   </select>
   <!--根据群号和群昵称查询-->
+
   <select id="findBygroupnoandgroupname" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from group_cluster
     <where>
       <if test="groupno !=null and groupno != ''">
-        groupno = #{groupno,jdbcType=VARCHAR}
+        groupno like concat("%",#{groupno,jdbcType=VARCHAR},"%")
+        <!--groupno = #{groupno,jdbcType=VARCHAR}-->
       </if>
       <if test="groupname!=null and groupname != ''">
-        or groupname = #{groupname,jdbcType=VARCHAR}
+        or groupname like concat("%",#{groupname,jdbcType=VARCHAR},"%")
+        <!-- or groupname = #{groupname,jdbcType=VARCHAR}-->
       </if>
     </where>
   </select>
