@@ -84,6 +84,7 @@ public class ProjectController {
         }
         FTPClient ftpClient = new FTPClient();
         try {
+            System.out.println(HOST+"--"+PROT+"--"+USERNAME+"--"+PASSWROD);
             ftpClient.connect(HOST, PROT);
             ftpClient.login(USERNAME, PASSWROD);
             int reply = ftpClient.getReplyCode();
