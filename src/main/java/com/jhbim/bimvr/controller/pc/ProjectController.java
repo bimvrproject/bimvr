@@ -287,7 +287,7 @@ public class ProjectController {
         userProject.setUserId(user.getUserId());
         int i =userProjectMapper.deleteprojectid(userProject);
         if(i > 0){
-            projectMapper.deleteByPrimaryKey(projectid);
+//            projectMapper.deleteByPrimaryKey(projectid);
             return new Result(ResultStatusCode.OK,"删除成功...");
         }
         return new Result(ResultStatusCode.FAIL,"删除失败...");
