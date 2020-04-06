@@ -72,6 +72,18 @@ public class PlaceModelController {
     }
 
     /**
+     * 根据手机号查询地块
+     * @param userphone 手机号
+     * @return
+     */
+    @RequestMapping("/findbyphone")
+    public Result findbyphone(String userphone){
+        if(userphone.isEmpty()){
+            return new Result(ResultStatusCode.BAD_REQUEST);
+        }
+       return new Result(ResultStatusCode.OK, placeModelMapper.selectByUserphone(userphone));
+    }
+    /**
      * 展示本人的地块和查询地块
      * @param plotname 地块名称
      * @param type 0 是查询自己的 1 是根据地块查询
