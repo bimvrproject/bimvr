@@ -131,10 +131,10 @@
       where Hairuser_phone = #{hairuserPhone,jdbcType=VARCHAR} and
       Closeduser_phone = #{closeduserPhone,jdbcType=VARCHAR}
   </update>
-
+<!--and stauts = 0-->
   <select id="messaheList"  resultMap="BaseResultMap">
     select * from user_message where Hairuser_phone = #{hairuserPhone,jdbcType=VARCHAR} and
-      Closeduser_phone = #{closeduserPhone,jdbcType=VARCHAR} and stauts = 0
+      Closeduser_phone = #{closeduserPhone,jdbcType=VARCHAR}
   </select>
   <select id="unreadcount"  resultType="int">
     select
