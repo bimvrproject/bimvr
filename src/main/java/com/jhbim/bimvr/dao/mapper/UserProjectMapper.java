@@ -32,4 +32,7 @@ public interface UserProjectMapper {
 
     //根据项目id查询
     UserProject findbyprojectid(String projectid);
+
+    //根据项目id删除项目
+    int deleteprojectid(UserProject record);
 }

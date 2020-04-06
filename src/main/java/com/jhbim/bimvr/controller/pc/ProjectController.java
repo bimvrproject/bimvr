@@ -34,6 +34,8 @@ public class ProjectController {
     RvtMapper rvtMapper;
     @Resource
     ProjectGroupMapper projectGroupMapper;
+    @Resource
+    UserMapper userMapper;
 
     @Value("${host}")
     private volatile String HOST;
@@ -270,5 +272,25 @@ public class ProjectController {
             list.add(map1);
         }
         return new Result(ResultStatusCode.OK,list);
+    }
+
+    /**
+     * 根据项目id删除项目
+     * @param projectid 项目id
+     * @param phone 手机号
+     * @return
+     */
+    @RequestMapping("/deleteprojectid")
+    public Result deleteprojectid(String projectid,String phone){
+        User user = userMapper.selectByPrimaryKey(phone);
+        UserProject userProject = new UserProject();
+        userProject.setProjectId(projectid);
+        userProject.setUserId(user.getUserId());
+        int i =userProjectMapper.deleteprojectid(userProject);
+        if(i > 0){
+            projectMapper.deleteByPrimaryKey(projectid);
+            return new Result(ResultStatusCode.OK,"删除成功...");
+        }
+        return new Result(ResultStatusCode.FAIL,"删除失败...");
     }
 }
