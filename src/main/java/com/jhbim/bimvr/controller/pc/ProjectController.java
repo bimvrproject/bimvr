@@ -71,7 +71,7 @@ public class ProjectController {
         Project project=new Project();
         project.setId(projectid);       //项目id
         project.setProjectName("新建项目");   //项目名称
-        project.setProjectModelAddr("http://36.112.65.110:8080/project/res_picture/0.png");     //项目的缩略图
+        project.setProjectModelAddr(null);     //项目的缩略图http://36.112.65.110:8080/project/res_picture/0.png
         project.setCompletion(0);       //是否完工  1完工 0未完工
         project.setProjectStatus(3);        //项目状态 1已经完成 2正在进行中 3试用阶段
         project.setProjectAddress(address);
