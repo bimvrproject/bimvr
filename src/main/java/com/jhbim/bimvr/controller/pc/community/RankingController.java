@@ -388,6 +388,8 @@ public class RankingController {
                     Project project = projectMapper.selectByPrimaryKey(placeModel.getModelid());
                     User user = userMapper.selectByPrimaryKey(placeModel.getUsephone());
                     int accountnum = modelMapper.getmodelid(placeModel.getModelid());
+                    String phone = placeModel.getUsephone();
+                    String phoneNumber = phone.substring(0, 3) + "****" + phone.substring(7);
                     DatingVo d = new DatingVo();
                     d.setId(z.getWorkId());
                     d.setUsername(user.getUserName());
@@ -395,6 +397,7 @@ public class RankingController {
                     d.setProimg(project.getProjectModelAddr());
                     d.setAccount(accountnum);
                     d.setPlotname(placeModel.getPlotname());
+                    d.setPhone(phoneNumber);
                     contentlist.add(d);
                     stringList.add(z.getWorkId());
                 }
@@ -406,13 +409,25 @@ public class RankingController {
                 User user = userMapper.selectByPrimaryKey(pm.getUsephone());
                 Project project = projectMapper.selectByPrimaryKey(pm.getModelid());
                 int accountnum = modelMapper.getmodelid(pm.getModelid());
-                map.put("id",pm.getModelid());
-                map.put("username",user.getUserName());
-                map.put("picture",user.getPricture());
-                map.put("proimg",project.getProjectModelAddr());
-                map.put("plotname",pm.getPlotname());
-                map.put("account",accountnum);
-                contentlist.add(map);
+                String phone = pm.getUsephone();
+                String phoneNumber = phone.substring(0, 3) + "****" + phone.substring(7);
+//                map.put("id",pm.getModelid());
+//                map.put("username",user.getUserName());
+//                map.put("picture",user.getPricture());
+//                map.put("proimg",project.getProjectModelAddr());
+//                map.put("plotname",pm.getPlotname());
+//                map.put("account",accountnum);
+//                map.put("phone",phoneNumber);
+//                contentlist.add(map);
+                DatingVo dt = new DatingVo();
+                dt.setId(pm.getModelid());
+                dt.setPhone(phoneNumber);
+                dt.setPlotname(pm.getPlotname());
+                dt.setAccount(accountnum);
+                dt.setProimg(project.getProjectModelAddr());
+                dt.setUsername(user.getUserName());
+                dt.setPicture(user.getPricture());
+                contentlist.add(dt);
             }
         }
         return new Result(ResultStatusCode.OK,contentlist);
