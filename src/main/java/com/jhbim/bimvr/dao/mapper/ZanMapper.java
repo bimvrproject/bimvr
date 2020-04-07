@@ -21,4 +21,8 @@ public interface ZanMapper {
     int updateByPrimaryKey(Zan record);
 
     List<Zan> list( @Param("list")List<String> list, @Param("genre") Integer genre,@Param("userId") String userId);
+
+    //根据点赞类型查看24小时之内的
+    List<Zan> thumbup(int type);
+
 }

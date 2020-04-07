@@ -44,4 +44,11 @@ public interface PlaceModelMapper {
 
     //根据id、大陆名称、以及地块名称查询
     PlaceModel findByidandmainlandnameandplotname(PlaceModel record);
+
+    //根据模型id查询
+    PlaceModel findnbymodelid(String modelid);
+    //排除24小时之内点赞的 其他的随机展示
+    List<PlaceModel> randthumbup(List<String> list);
+
+    List<PlaceModel> findBymodelidAll(String modelid);
 }

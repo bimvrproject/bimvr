@@ -2,6 +2,7 @@ package com.jhbim.bimvr.controller.pc.community;
 
 
 import com.jhbim.bimvr.dao.entity.pojo.*;
+import com.jhbim.bimvr.dao.entity.vo.DatingVo;
 import com.jhbim.bimvr.dao.entity.vo.Result;
 import com.jhbim.bimvr.dao.entity.vo.UserRankVo;
 import com.jhbim.bimvr.dao.mapper.*;
@@ -19,9 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -34,25 +33,22 @@ public class RankingController {
 
     @Autowired
     private UserMapper userMapper;
-
     @Autowired
     private ZanMapper zanMapper;
-
     @Autowired
     private ModelMapper modelMapper;
-
     @Autowired
     private ModelPayMapper modelPayMapper;
-
     @Resource
     ScShoppingMapper scShoppingMapper;
-
     @Resource
     CommentMapper commentMapper;
-
     @Resource
     ReplyMapper replyMapper;
-
+    @Resource
+    ProjectMapper projectMapper;
+    @Resource
+    PlaceModelMapper placeModelMapper;
     /**
      * 获取用户排行
      * @return
@@ -373,6 +369,53 @@ public class RankingController {
             }
         }
         return new Result(ResultStatusCode.SUCCESS,listRank);
+    }
+
+    /**
+     * 24小时刷新大厅数据 并在最后随机追加数据
+     * @return
+     */
+    @GetMapping("/thumbuptheheathour")
+    public Result thumbuptheheathour(){
+        List<Zan> list = zanMapper.thumbup(2);
+        List contentlist = new ArrayList();
+        //存储24小时之内点赞的模型
+        List<String> stringList = new ArrayList<>();
+        for (Zan z : list) {
+            Map<String,Object> map = new HashMap<>();
+                List<PlaceModel> placeModelList1 = placeModelMapper.findBymodelidAll(z.getWorkId());
+                for (PlaceModel placeModel:placeModelList1) {
+                    Project project = projectMapper.selectByPrimaryKey(placeModel.getModelid());
+                    User user = userMapper.selectByPrimaryKey(placeModel.getUsephone());
+                    int accountnum = modelMapper.getmodelid(placeModel.getModelid());
+                    DatingVo d = new DatingVo();
+                    d.setId(z.getWorkId());
+                    d.setUsername(user.getUserName());
+                    d.setPicture(user.getPricture());
+                    d.setProimg(project.getProjectModelAddr());
+                    d.setAccount(accountnum);
+                    d.setPlotname(placeModel.getPlotname());
+                    contentlist.add(d);
+                    stringList.add(z.getWorkId());
+                }
+        }
+        List<PlaceModel> placeModelList = placeModelMapper.randthumbup(stringList);
+        for (PlaceModel pm : placeModelList) {
+            if(pm.getModelid() != null && pm.getModelid().length() != 0 && pm.getModelid() != ""){
+                Map<String,Object> map = new HashMap<>();
+                User user = userMapper.selectByPrimaryKey(pm.getUsephone());
+                Project project = projectMapper.selectByPrimaryKey(pm.getModelid());
+                int accountnum = modelMapper.getmodelid(pm.getModelid());
+                map.put("id",pm.getModelid());
+                map.put("username",user.getUserName());
+                map.put("picture",user.getPricture());
+                map.put("proimg",project.getProjectModelAddr());
+                map.put("plotname",pm.getPlotname());
+                map.put("account",accountnum);
+                contentlist.add(map);
+            }
+        }
+        return new Result(ResultStatusCode.OK,contentlist);
     }
 }
 

@@ -20,7 +20,7 @@
     create_time, end_time, completion, rvtaddress, priceaddress, drawingaddress
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from project
     where id = #{id,jdbcType=VARCHAR}
@@ -174,4 +174,10 @@
       drawingaddress = #{drawingaddress,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  <select id="findByidAll" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from project
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
 </mapper>

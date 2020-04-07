@@ -253,7 +253,7 @@ public class PlaceModelController {
         List<PlaceModel> placeModelList = placeModelMapper.selectByUserphone(userphone);
         List<Project> projectList=new ArrayList<>();
         for (PlaceModel p : placeModelList) {
-            if(p.getModelid() != null || p.getModelid().length() != 0 || p.getModelid() != ""){
+            if(p.getModelid() != null && p.getModelid().length() != 0 && p.getModelid() != ""){
                 Project project = projectMapper.selectByPrimaryKey(p.getModelid());
                 project.setPlacemodelname(p.getPlotname());
                 project.setPlacemodelid(p.getId());

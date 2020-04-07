@@ -2,6 +2,8 @@ package com.jhbim.bimvr.dao.mapper;
 
 import com.jhbim.bimvr.dao.entity.pojo.Project;
 
+import java.util.List;
+
 public interface ProjectMapper {
     int deleteByPrimaryKey(String id);
 
@@ -14,4 +16,7 @@ public interface ProjectMapper {
     int updateByPrimaryKeySelective(Project record);
 
     int updateByPrimaryKey(Project record);
+
+    //根据id查看多个
+    List<Project> findByidAll(String id);
 }

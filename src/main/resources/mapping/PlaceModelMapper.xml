@@ -241,4 +241,25 @@
     from placemodel
     where id = #{id,jdbcType=VARCHAR} and mainlandname = #{mainlandname,jdbcType=VARCHAR} and plotname = #{plotname,jdbcType=VARCHAR}
   </select>
+
+  <select id="findnbymodelid" resultMap="BaseResultMap" parameterType="com.jhbim.bimvr.dao.entity.pojo.PlaceModel" >
+    select
+    <include refid="Base_Column_List" />
+    from placemodel
+    where  modelid = #{modelid,jdbcType=VARCHAR}
+  </select>
+    <select id="randthumbup" resultMap="BaseResultMap">
+        select * from placemodel
+        where modelid not in
+        <foreach close=")" collection="list" index="index" item="modelid" open="(" separator=",">
+            #{modelid,jdbcType=VARCHAR}
+        </foreach>
+        ORDER BY RAND()
+    </select>
+  <select id="findBymodelidAll" resultMap="BaseResultMap" parameterType="com.jhbim.bimvr.dao.entity.pojo.PlaceModel" >
+    select
+    <include refid="Base_Column_List" />
+    from placemodel
+    where  modelid = #{modelid,jdbcType=VARCHAR}
+  </select>
 </mapper>
