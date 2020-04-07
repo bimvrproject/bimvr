@@ -81,7 +81,14 @@ public class PlaceModelController {
         if(userphone.isEmpty()){
             return new Result(ResultStatusCode.BAD_REQUEST);
         }
-       return new Result(ResultStatusCode.OK, placeModelMapper.selectByUserphone(userphone));
+        User  user = userMapper.selectByPrimaryKey(userphone);
+        Map<String,Object> map = new HashMap<>();
+        map.put("content",placeModelMapper.selectByUserphone(userphone));
+        map.put("phone",user.getPhone());
+        map.put("username",user.getUserName());
+        map.put("posotion",user.getPosotion());
+        map.put("picture",user.getPricture());
+       return new Result(ResultStatusCode.OK,map);
     }
     /**
      * 展示本人的地块和查询地块
