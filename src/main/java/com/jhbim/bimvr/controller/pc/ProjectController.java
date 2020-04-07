@@ -64,13 +64,13 @@ public class ProjectController {
         return new Result(ResultStatusCode.OK,projectList);
     }
 
-    public void CreateProject(String name,String address,String createtime,String endtime){
+    public void CreateProject(String address,String createtime,String endtime){
         User user= ShiroUtil.getUser();
         String projectid=idWorker.nextId()+"";
         //保存项目
         Project project=new Project();
         project.setId(projectid);       //项目id
-        project.setProjectName(name);   //项目名称
+        project.setProjectName("新建项目");   //项目名称
         project.setProjectModelAddr("http://36.112.65.110:8080/project/res_picture/0.png");     //项目的缩略图
         project.setCompletion(0);       //是否完工  1完工 0未完工
         project.setProjectStatus(3);        //项目状态 1已经完成 2正在进行中 3试用阶段
@@ -151,10 +151,7 @@ public class ProjectController {
      * @return
      */
     @RequestMapping("/Addproject")
-    public Result Addproject(String name,String address,String createtime,String endtime){
-        if(name.isEmpty()){
-            return new Result(ResultStatusCode.BAD_REQUEST);
-        }
+    public Result Addproject(String address,String createtime,String endtime){
         User user= ShiroUtil.getUser();
         if(user.getRoleId()==4){
             return new Result(ResultStatusCode.ORDINARY);
@@ -162,19 +159,19 @@ public class ProjectController {
         int up = userProjectMapper.selectUserProjectnum(user.getUserId());
         if(user.getRoleId()==1){    //超级会员
             if(up<6){
-                CreateProject(name,address,createtime,endtime);
+                CreateProject(address,createtime,endtime);
             }else{
                 return new Result(ResultStatusCode.CREATE_PROJECT_CEILING);
             }
         }else if(user.getRoleId()==2){  //特权会员
             if(up<3){
-                CreateProject(name,address,createtime,endtime);
+                CreateProject(address,createtime,endtime);
             }else{
                 return new Result(ResultStatusCode.CREATE_PROJECT_CEILING);
             }
         }else if(user.getRoleId()==3){  //专享会员
             if(up<1){
-                CreateProject(name,address,createtime,endtime);
+                CreateProject(address,createtime,endtime);
             }else{
                 return new Result(ResultStatusCode.CREATE_PROJECT_CEILING);
             }
