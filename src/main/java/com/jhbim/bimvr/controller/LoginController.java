@@ -212,7 +212,7 @@ public class LoginController {
                     user.setUserName(phone);
                     user.setPassword(MD5Util.encrypt(pwd));
                     user.setCreateTime(new Date());
-                    user.setPricture("http://36.112.65.110:8080/project/res_picture/0.png");
+                    user.setPricture("http://36.112.65.110:8080/picture/peoplepicture.png");
                    int i = userMapper.insertSelective(user);
                    if(i>0){
                        //用户钱包

@@ -66,7 +66,7 @@ public class GroupController {
         groupCluster.setUsergroupId(groupType);
         groupCluster.setCreatetime(new Date());
         groupCluster.setType(1);
-        groupCluster.setPicture("http://36.112.65.110:8080/project/res_picture/0.png");
+        groupCluster.setPicture("http://36.112.65.110:8080/groupimg/groupimg.png");
         groupCluster.setBrief("久仰大名，快来加入我们吧");
         groupCluster.setRemark("");
         groupCluster.setIsrecommend(1);
