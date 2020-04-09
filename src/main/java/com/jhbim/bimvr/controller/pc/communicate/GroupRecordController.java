@@ -227,6 +227,11 @@ public class GroupRecordController {
         }
         //存储群组GroupVo类
         List<GroupVo> groupVoList = new ArrayList<>();
+        if(list.size() == 0){
+            map.put("data",groupVoList);
+            map.put("size",groupVoList.size());
+            return new Result(ResultStatusCode.OK,map);
+        }
         //根据群号查询群组列表
         List<GroupCluster> groupClusterList = groupClusterMapper.groupcluster(list);
         for (GroupCluster groupCluster:groupClusterList) {
