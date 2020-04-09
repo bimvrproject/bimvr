@@ -256,6 +256,9 @@
         </foreach>
         ORDER BY RAND()
     </select>
+  <select id="randthumbupnot" resultMap="BaseResultMap">
+    select * from placemodel ORDER BY RAND()
+  </select>
   <select id="findBymodelidAll" resultMap="BaseResultMap" parameterType="com.jhbim.bimvr.dao.entity.pojo.PlaceModel" >
     select
     <include refid="Base_Column_List" />

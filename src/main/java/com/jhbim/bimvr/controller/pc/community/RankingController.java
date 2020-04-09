@@ -402,15 +402,37 @@ public class RankingController {
                     stringList.add(z.getWorkId());
                 }
         }
-        List<PlaceModel> placeModelList = placeModelMapper.randthumbup(stringList);
-        for (PlaceModel pm : placeModelList) {
-            if(pm.getModelid() != null && pm.getModelid().length() != 0 && pm.getModelid() != ""){
-                Map<String,Object> map = new HashMap<>();
-                User user = userMapper.selectByPrimaryKey(pm.getUsephone());
-                Project project = projectMapper.selectByPrimaryKey(pm.getModelid());
-                int accountnum = modelMapper.getmodelid(pm.getModelid());
-                String phone = pm.getUsephone();
-                String phoneNumber = phone.substring(0, 3) + "****" + phone.substring(7);
+        //没有点赞时候随机展示
+        if(stringList.size() == 0 ){
+            List<PlaceModel> placeModelList = placeModelMapper.randthumbupnot();
+            for (PlaceModel p : placeModelList) {
+                if(p.getModelid() != null && p.getModelid().length() != 0 && p.getModelid() != ""){
+                    User user = userMapper.selectByPrimaryKey(p.getUsephone());
+                    Project project = projectMapper.selectByPrimaryKey(p.getModelid());
+                    int accountnum = modelMapper.getmodelid(p.getModelid());
+                    String phone = p.getUsephone();
+                    String phoneNumber = phone.substring(0, 3) + "****" + phone.substring(7);
+                    DatingVo dt = new DatingVo();
+                    dt.setId(p.getModelid());
+                    dt.setPhone(phoneNumber);
+                    dt.setPlotname(p.getPlotname());
+                    dt.setAccount(accountnum);
+                    dt.setProimg(project.getProjectModelAddr());
+                    dt.setUsername(user.getUserName());
+                    dt.setPicture(user.getPricture());
+                    contentlist.add(dt);
+                }
+            }
+        }else{
+            List<PlaceModel> placeModelList = placeModelMapper.randthumbup(stringList);
+            for (PlaceModel pm : placeModelList) {
+                if(pm.getModelid() != null && pm.getModelid().length() != 0 && pm.getModelid() != ""){
+                    Map<String,Object> map = new HashMap<>();
+                    User user = userMapper.selectByPrimaryKey(pm.getUsephone());
+                    Project project = projectMapper.selectByPrimaryKey(pm.getModelid());
+                    int accountnum = modelMapper.getmodelid(pm.getModelid());
+                    String phone = pm.getUsephone();
+                    String phoneNumber = phone.substring(0, 3) + "****" + phone.substring(7);
 //                map.put("id",pm.getModelid());
 //                map.put("username",user.getUserName());
 //                map.put("picture",user.getPricture());
@@ -419,15 +441,16 @@ public class RankingController {
 //                map.put("account",accountnum);
 //                map.put("phone",phoneNumber);
 //                contentlist.add(map);
-                DatingVo dt = new DatingVo();
-                dt.setId(pm.getModelid());
-                dt.setPhone(phoneNumber);
-                dt.setPlotname(pm.getPlotname());
-                dt.setAccount(accountnum);
-                dt.setProimg(project.getProjectModelAddr());
-                dt.setUsername(user.getUserName());
-                dt.setPicture(user.getPricture());
-                contentlist.add(dt);
+                    DatingVo dt = new DatingVo();
+                    dt.setId(pm.getModelid());
+                    dt.setPhone(phoneNumber);
+                    dt.setPlotname(pm.getPlotname());
+                    dt.setAccount(accountnum);
+                    dt.setProimg(project.getProjectModelAddr());
+                    dt.setUsername(user.getUserName());
+                    dt.setPicture(user.getPricture());
+                    contentlist.add(dt);
+                }
             }
         }
         return new Result(ResultStatusCode.OK,contentlist);

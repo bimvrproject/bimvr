@@ -49,6 +49,7 @@ public interface PlaceModelMapper {
     PlaceModel findnbymodelid(String modelid);
     //排除24小时之内点赞的 其他的随机展示
     List<PlaceModel> randthumbup(List<String> list);
+    List<PlaceModel> randthumbupnot();
 
     List<PlaceModel> findBymodelidAll(String modelid);
 }
