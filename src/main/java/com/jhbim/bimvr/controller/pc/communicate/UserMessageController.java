@@ -3,6 +3,7 @@ package com.jhbim.bimvr.controller.pc.communicate;
 import com.jhbim.bimvr.dao.entity.pojo.User;
 import com.jhbim.bimvr.dao.entity.pojo.UserMessage;
 import com.jhbim.bimvr.dao.entity.vo.Result;
+import com.jhbim.bimvr.dao.mapper.UserMapper;
 import com.jhbim.bimvr.dao.mapper.UserMessageMapper;
 import com.jhbim.bimvr.system.enums.ResultStatusCode;
 import com.jhbim.bimvr.utils.IdWorker;
@@ -23,6 +24,8 @@ public class UserMessageController {
     IdWorker idWorker;
     @Resource
     UserMessageMapper userMessageMapper;
+    @Resource
+    UserMapper userMapper;
 
 
     /**
@@ -104,5 +107,26 @@ public class UserMessageController {
             }
         });
         return new Result(ResultStatusCode.OK,messageList);
+    }
+
+    /**
+     * 查询所有人给该手机号发送的未读消息
+     * @param phone 收消息者手机号
+     * @return
+     */
+    @RequestMapping("/findByCloseduserphone")
+    public Result findByCloseduserphone(String phone){
+        List<UserMessage> userMessageList = userMessageMapper.findByCloseduserphone(phone);
+        List list = new ArrayList();
+        for (UserMessage um : userMessageList) {
+            Map<String,Object> map = new HashMap<>();
+            User user = userMapper.selectByPrimaryKey(um.getHairuserPhone());
+            map.put("name",user.getUserName());
+            map.put("phone",um.getHairuserPhone());
+            map.put("information",um.getInformation());
+            map.put("time",um.getCreatetine());
+            list.add(map);
+        }
+        return new Result(ResultStatusCode.OK,list);
     }
 }

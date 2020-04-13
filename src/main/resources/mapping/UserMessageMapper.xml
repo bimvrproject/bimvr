@@ -142,4 +142,9 @@
 		from user_message where Hairuser_phone = #{hairuserPhone,jdbcType=VARCHAR} and
       Closeduser_phone = #{closeduserPhone,jdbcType=VARCHAR} and stauts = 0
   </select>
+  <select id="findByCloseduserphone"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+      from user_message where Closeduser_phone = #{closeduserPhone,jdbcType=VARCHAR} and stauts = 0 ORDER BY Createtine desc
+  </select>
 </mapper>

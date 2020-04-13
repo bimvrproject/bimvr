@@ -24,4 +24,7 @@ public interface UserMessageMapper {
 
     //获取未读消息条数
     int unreadcount(@Param("hairuserPhone") String hairuserPhone, @Param("closeduserPhone")String closeduserPhone);
+
+    //查询所有人给该手机号发送的未读消息
+    List<UserMessage> findByCloseduserphone(String phone);
 }
