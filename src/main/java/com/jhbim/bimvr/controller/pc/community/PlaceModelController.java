@@ -274,4 +274,18 @@ public class PlaceModelController {
         map.put("picture",user.getPricture());
         return new Result(ResultStatusCode.OK,map);
     }
+
+    /**
+     * 根据模型id查询
+     * @param modelid
+     * @return
+     */
+    @RequestMapping("/findBymodelid")
+    public Result findBymodelid(String modelid){
+        if(modelid.isEmpty()){
+            return new Result(ResultStatusCode.BAD_REQUEST);
+        }
+       PlaceModel placeModel =  placeModelMapper.selectmodelid(modelid);
+        return new Result(ResultStatusCode.OK,placeModel);
+    }
 }
