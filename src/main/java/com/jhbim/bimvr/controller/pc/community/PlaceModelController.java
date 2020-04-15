@@ -194,7 +194,8 @@ public class PlaceModelController {
             model.setModelId(modelid);      //模型id
             model.setModelName(placeModel1.getMainlandname()+placeModel1.getPlotname());       //模型名称 大陆+地块名称
             model.setUserId(user.getPhone());       //用户手机号
-            model.setThumbnail("https://cn.bing.com/th?id=OIP.aEDqlO75im7TYzuNTf1NlQHaE8&pid=Api&rs=1");  //缩略图
+//            model.setThumbnail("https://cn.bing.com/th?id=OIP.aEDqlO75im7TYzuNTf1NlQHaE8&pid=Api&rs=1");  //缩略图
+            model.setThumbnail(null);  //缩略图
             modelMapper.insertSelective(model);
             return new Result(ResultStatusCode.OK,"操作成功...");
         }
@@ -216,6 +217,8 @@ public class PlaceModelController {
         p.setId(id);
         p.setPlotname(plotname);
         PlaceModel placeModel = placeModelMapper.findByidandplotname(p);
+        Project project = projectMapper.selectByPrimaryKey(placeModel.getModelid());
+        placeModel.setPicture(project.getProjectModelAddr());
         return new Result(ResultStatusCode.OK,placeModel);
     }
 
@@ -240,6 +243,8 @@ public class PlaceModelController {
         Model model = new Model();
         model.setModelId(p.getModelid());
         model.setModelName(p.getMainlandname()+p.getPlotname());
+        Project project = projectMapper.selectByPrimaryKey(p.getModelid());
+        p.setPicture(project.getProjectModelAddr());   //缩略图
         int account = modelMapper.accountcount(model); //模型点赞数
         int comment = commentMapper.composeidnum(p.getModelid()); //模型评论数
         map.put("accountnum",account);
@@ -285,7 +290,9 @@ public class PlaceModelController {
         if(modelid.isEmpty()){
             return new Result(ResultStatusCode.BAD_REQUEST);
         }
-       PlaceModel placeModel =  placeModelMapper.selectmodelid(modelid);
+        Project project = projectMapper.selectByPrimaryKey(modelid);
+        PlaceModel placeModel =  placeModelMapper.selectmodelid(modelid);
+        placeModel.setPicture(project.getProjectModelAddr());
         return new Result(ResultStatusCode.OK,placeModel);
     }
 }
