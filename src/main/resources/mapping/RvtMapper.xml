@@ -8,9 +8,10 @@
     <result column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
     <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, model_id, project_id, user_id, createtime, url
+    id, model_id, project_id, user_id, createtime, url, type
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -24,11 +25,11 @@
   </delete>
   <insert id="insert" parameterType="com.jhbim.bimvr.dao.entity.pojo.Rvt" >
     insert into rvt (id, model_id, project_id, 
-      user_id, createtime, url
-      )
+      user_id, createtime, url, 
+      type)
     values (#{id,jdbcType=INTEGER}, #{modelId,jdbcType=INTEGER}, #{projectId,jdbcType=VARCHAR}, 
-      #{userId,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, #{url,jdbcType=VARCHAR}
-      )
+      #{userId,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, #{url,jdbcType=VARCHAR}, 
+      #{type,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.jhbim.bimvr.dao.entity.pojo.Rvt" >
     insert into rvt
@@ -51,6 +52,9 @@
       <if test="url != null" >
         url,
       </if>
+      <if test="type != null" >
+        type,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -70,6 +74,9 @@
       </if>
       <if test="url != null" >
         #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -91,6 +98,9 @@
       <if test="url != null" >
         url = #{url,jdbcType=VARCHAR},
       </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -100,7 +110,14 @@
       project_id = #{projectId,jdbcType=VARCHAR},
       user_id = #{userId,jdbcType=INTEGER},
       createtime = #{createtime,jdbcType=TIMESTAMP},
-      url = #{url,jdbcType=VARCHAR}
+      url = #{url,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="findByprojectid" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from rvt
+    where project_id = #{projectId,jdbcType=VARCHAR}
+  </select>
 </mapper>

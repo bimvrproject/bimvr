@@ -14,4 +14,7 @@ public interface RvtMapper {
     int updateByPrimaryKeySelective(Rvt record);
 
     int updateByPrimaryKey(Rvt record);
+
+    //根据项目id查询
+    Rvt findByprojectid(String projectid);
 }

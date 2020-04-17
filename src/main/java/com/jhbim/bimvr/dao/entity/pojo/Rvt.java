@@ -16,6 +16,8 @@ public class Rvt implements Serializable {
 
     private String url;
 
+    private Integer type;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -66,6 +68,14 @@ public class Rvt implements Serializable {
         this.url = url == null ? null : url.trim();
     }
 
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -78,6 +88,7 @@ public class Rvt implements Serializable {
         sb.append(", userId=").append(userId);
         sb.append(", createtime=").append(createtime);
         sb.append(", url=").append(url);
+        sb.append(", type=").append(type);
         sb.append("]");
         return sb.toString();
     }
