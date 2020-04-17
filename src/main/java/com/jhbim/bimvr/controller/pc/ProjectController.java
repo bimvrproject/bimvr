@@ -126,6 +126,17 @@ public class ProjectController {
                 ftpClient.changeWorkingDirectory(pa);
             }
 
+            // 切换到根目录
+            ftpClient.changeWorkingDirectory("/TomcatRoot/project/");
+            String path3 =projectid+"/Paks/";
+            String[] pah3 = path3.split("/");
+            // 分层创建目录 Drawing
+            for (String pa : pah3) {
+                ftpClient.makeDirectory(pa);
+                // 切到到对应目录
+                ftpClient.changeWorkingDirectory(pa);
+            }
+
             if (ftpClient != null && ftpClient.isConnected()) {
                 ftpClient.logout();
                 ftpClient.disconnect();
