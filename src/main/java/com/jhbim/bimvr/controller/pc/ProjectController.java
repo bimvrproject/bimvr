@@ -300,4 +300,14 @@ public class ProjectController {
         }
         return new Result(ResultStatusCode.FAIL,"删除失败...");
     }
+
+    /**
+     * 查看该项目中的是否有rvt文件
+     * @param id
+     * @return
+     */
+    @RequestMapping("/isExistsrvt")
+    public Result isExistsrvt(String id){
+        return new Result(ResultStatusCode.OK,rvtMapper.findByprojectid(id));
+    }
 }
