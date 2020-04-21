@@ -6,13 +6,14 @@
     <result column="groupid" property="groupid" jdbcType="VARCHAR" />
     <result column="Role_id" property="roleId" jdbcType="INTEGER" />
     <result column="userphone" property="userphone" jdbcType="VARCHAR" />
+    <result column="invitephone" property="invitephone" jdbcType="VARCHAR" />
     <result column="level" property="level" jdbcType="INTEGER" />
     <result column="islike" property="islike" jdbcType="INTEGER" />
     <result column="message" property="message" jdbcType="VARCHAR" />
     <result column="grtime" property="grtime" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, groupid, Role_id, userphone, level, islike, message, grtime
+    id, groupid, Role_id, userphone, invitephone, level, islike, message, grtime
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -26,11 +27,13 @@
   </delete>
   <insert id="insert" parameterType="com.jhbim.bimvr.dao.entity.pojo.GroupRecord" >
     insert into group_record (id, groupid, Role_id, 
-      userphone, level, islike, 
-      message, grtime)
+      userphone, invitephone, level, 
+      islike, message, grtime
+      )
     values (#{id,jdbcType=VARCHAR}, #{groupid,jdbcType=VARCHAR}, #{roleId,jdbcType=INTEGER}, 
-      #{userphone,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER}, #{islike,jdbcType=INTEGER}, 
-      #{message,jdbcType=VARCHAR}, #{grtime,jdbcType=VARCHAR})
+      #{userphone,jdbcType=VARCHAR}, #{invitephone,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER}, 
+      #{islike,jdbcType=INTEGER}, #{message,jdbcType=VARCHAR}, #{grtime,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.jhbim.bimvr.dao.entity.pojo.GroupRecord" >
     insert into group_record
@@ -46,6 +49,9 @@
       </if>
       <if test="userphone != null" >
         userphone,
+      </if>
+      <if test="invitephone != null" >
+        invitephone,
       </if>
       <if test="level != null" >
         level,
@@ -73,6 +79,9 @@
       <if test="userphone != null" >
         #{userphone,jdbcType=VARCHAR},
       </if>
+      <if test="invitephone != null" >
+        #{invitephone,jdbcType=VARCHAR},
+      </if>
       <if test="level != null" >
         #{level,jdbcType=INTEGER},
       </if>
@@ -99,6 +108,9 @@
       <if test="userphone != null" >
         userphone = #{userphone,jdbcType=VARCHAR},
       </if>
+      <if test="invitephone != null" >
+        invitephone = #{invitephone,jdbcType=VARCHAR},
+      </if>
       <if test="level != null" >
         level = #{level,jdbcType=INTEGER},
       </if>
@@ -119,6 +131,7 @@
     set groupid = #{groupid,jdbcType=VARCHAR},
       Role_id = #{roleId,jdbcType=INTEGER},
       userphone = #{userphone,jdbcType=VARCHAR},
+      invitephone = #{invitephone,jdbcType=VARCHAR},
       level = #{level,jdbcType=INTEGER},
       islike = #{islike,jdbcType=INTEGER},
       message = #{message,jdbcType=VARCHAR},
@@ -142,8 +155,8 @@
   <!--修改是否同意进群-->
   <update id="updateislike">
     update group_record
-      set  islike = #{islike,jdbcType=INTEGER}
-      where userphone = #{userphone,jdbcType=VARCHAR} and groupid in
+    set  islike = #{islike,jdbcType=INTEGER}
+    where userphone = #{userphone,jdbcType=VARCHAR} and groupid in
     <foreach collection="groupid" item="item" index="index" open="(" separator="," close=")">
       #{item}
     </foreach>
@@ -187,15 +200,14 @@
     update group_record
     set  islike = #{islike,jdbcType=INTEGER}
     where userphone in
-      <foreach collection="userphone" item="item" index="index" open="(" separator="," close=")">
-        #{item}
-      </foreach> and groupid = #{groupid,jdbcType=VARCHAR}
+    <foreach collection="userphone" item="item" index="index" open="(" separator="," close=")">
+      #{item}
+    </foreach> and groupid = #{groupid,jdbcType=VARCHAR}
   </update>
   <!--阻止重复增加进群记录-->
   <select id="getnotexistgroupuser" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-     from group_record where groupid = #{groupid,jdbcType=VARCHAR} and userphone = #{userphone,jdbcType=VARCHAR}  and islike=#{islike,jdbcType=INTEGER}
+    from group_record where groupid = #{groupid,jdbcType=VARCHAR} and userphone = #{userphone,jdbcType=VARCHAR}  and islike=#{islike,jdbcType=INTEGER}
   </select>
-
 </mapper>

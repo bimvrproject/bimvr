@@ -356,12 +356,13 @@ public class GroupController {
 
     /**
      * 邀请别人进群 项目群非会员无法加入
-     * @param userphone
-     * @param groupid
+     * @param userphone 被邀请人手机号
+     * @param groupid  群号
+     * @param invitephone 邀请人手机号
      * @return
      */
     @RequestMapping("/addgroupuser")
-    public Result addgroupuser(String userphone,String groupid){
+    public Result addgroupuser(String userphone,String groupid,String invitephone){
         User user = userMapper.selectByPrimaryKey(userphone);
        GroupCluster groupCluster = groupClusterMapper.findbygroupid(groupid);
         GroupRecord record =  groupRecordMapper.getnotexistgroupuser(groupid,user.getPhone(),0);
@@ -380,6 +381,7 @@ public class GroupController {
             groupRecord.setLevel(2);
             groupRecord.setIslike(0);
             groupRecord.setMessage("");
+            groupRecord.setInvitephone(invitephone);
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             groupRecord.setGrtime(sdf.format(new Date()));
             groupRecordMapper.insertSelective(groupRecord);
@@ -394,6 +396,7 @@ public class GroupController {
         groupRecord.setLevel(2);
         groupRecord.setIslike(0);
         groupRecord.setMessage("");
+        groupRecord.setInvitephone(invitephone);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         groupRecord.setGrtime(sdf.format(new Date()));
         groupRecordMapper.insertSelective(groupRecord);

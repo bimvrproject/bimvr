@@ -11,6 +11,8 @@ public class GroupRecord implements Serializable {
 
     private String userphone;
 
+    private String invitephone;
+
     private Integer level;
 
     private Integer islike;
@@ -51,6 +53,14 @@ public class GroupRecord implements Serializable {
 
     public void setUserphone(String userphone) {
         this.userphone = userphone == null ? null : userphone.trim();
+    }
+
+    public String getInvitephone() {
+        return invitephone;
+    }
+
+    public void setInvitephone(String invitephone) {
+        this.invitephone = invitephone == null ? null : invitephone.trim();
     }
 
     public Integer getLevel() {
@@ -95,6 +105,7 @@ public class GroupRecord implements Serializable {
         sb.append(", groupid=").append(groupid);
         sb.append(", roleId=").append(roleId);
         sb.append(", userphone=").append(userphone);
+        sb.append(", invitephone=").append(invitephone);
         sb.append(", level=").append(level);
         sb.append(", islike=").append(islike);
         sb.append(", message=").append(message);

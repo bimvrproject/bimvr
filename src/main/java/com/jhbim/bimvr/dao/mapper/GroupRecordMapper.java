@@ -19,11 +19,11 @@ public interface GroupRecordMapper {
     int updateByPrimaryKey(GroupRecord record);
 
     //查看本人是否在所对应的群组里
-    GroupRecord fingByGroupIdandIslike(@Param("groupid") String groupid,@Param("userphone") String userphone);
+    GroupRecord fingByGroupIdandIslike(@Param("groupid") String groupid, @Param("userphone") String userphone);
     //我加入的群
-     List<GroupRecord> findByusergroup(@Param("userphone") String userphone,@Param("islike") String islike);
-     //修改是否同意进群
-     int updateislike(@Param("groupid") String [] groupid,@Param("userphone") String userphone,@Param("islike") Integer islike);
+    List<GroupRecord> findByusergroup(@Param("userphone") String userphone, @Param("islike") String islike);
+    //修改是否同意进群
+    int updateislike(@Param("groupid") String [] groupid,@Param("userphone") String userphone,@Param("islike") Integer islike);
     //退出群组
     int deletegroupid(@Param("groupid") String groupid,@Param("userphone") String userphone);
     //解散群组

@@ -1,10 +1,7 @@
 package com.jhbim.bimvr.controller.pc.communicate;
 
 import com.jhbim.bimvr.dao.entity.pojo.*;
-import com.jhbim.bimvr.dao.entity.vo.GroupLevelVo;
-import com.jhbim.bimvr.dao.entity.vo.GroupUserVo;
-import com.jhbim.bimvr.dao.entity.vo.GroupVo;
-import com.jhbim.bimvr.dao.entity.vo.Result;
+import com.jhbim.bimvr.dao.entity.vo.*;
 import com.jhbim.bimvr.dao.mapper.*;
 import com.jhbim.bimvr.system.enums.ResultStatusCode;
 import com.jhbim.bimvr.utils.IdWorker;
@@ -264,13 +261,19 @@ public class GroupRecordController {
     @RequestMapping("/bvinvitedgroup")
     public Result bvinvitedgroup(){
         User user = ShiroUtil.getUser();
-        List<GroupCluster> recordList = new ArrayList<>();
+        System.out.println(user.getPhone()+"--userphone");
+        List<GroupRecordVo> groupRecordVos = new ArrayList<>();
         List<GroupRecord> groupRecordList = groupRecordMapper.findByusergroup(user.getPhone(),"0");
         for (GroupRecord groupRecord : groupRecordList){
+            System.out.println(groupRecord.getUserphone());
+            GroupRecordVo groupRecordVo = new GroupRecordVo();
             GroupCluster groupCluster = groupClusterMapper.findbygroupid(groupRecord.getGroupid());
-            recordList.add(groupCluster);
+            User user1 = userMapper.selectByPrimaryKey(groupRecord.getInvitephone());
+            groupRecordVo.setGroupCluster(groupCluster);
+            groupRecordVo.setInviteUser(user1);
+            groupRecordVos.add(groupRecordVo);
         }
-        return new Result(ResultStatusCode.OK,recordList);
+        return new Result(ResultStatusCode.OK,groupRecordVos);
     }
 
 
