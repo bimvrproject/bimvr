@@ -64,6 +64,24 @@ public class ProjectController {
         return new Result(ResultStatusCode.OK,projectList);
     }
 
+    /**
+     * 展示本人的模型（依据是有项目的缩略图）
+     * @return
+     */
+    @RequestMapping("/modelproject")
+    public Result modelproject(){
+        User user= ShiroUtil.getUser();
+        List<UserProject> userProjectList=userProjectMapper.selectuserid(user.getUserId());
+        List<Project> projectList=new ArrayList<>();
+        for (UserProject userProject:userProjectList) {
+            Project project=projectMapper.selectByPrimaryKey(userProject.getProjectId());
+            if(project.getProjectModelAddr() != null && project.getProjectModelAddr().length()!=0){
+                projectList.add(project);
+            }
+        }
+        return new Result(ResultStatusCode.OK,projectList);
+    }
+
     public void CreateProject(String address,String createtime,String endtime){
         User user= ShiroUtil.getUser();
         String projectid=idWorker.nextId()+"";
