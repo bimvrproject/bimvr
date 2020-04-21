@@ -261,11 +261,9 @@ public class GroupRecordController {
     @RequestMapping("/bvinvitedgroup")
     public Result bvinvitedgroup(){
         User user = ShiroUtil.getUser();
-        System.out.println(user.getPhone()+"--userphone");
         List<GroupRecordVo> groupRecordVos = new ArrayList<>();
         List<GroupRecord> groupRecordList = groupRecordMapper.findByusergroup(user.getPhone(),"0");
         for (GroupRecord groupRecord : groupRecordList){
-            System.out.println(groupRecord.getUserphone());
             GroupRecordVo groupRecordVo = new GroupRecordVo();
             GroupCluster groupCluster = groupClusterMapper.findbygroupid(groupRecord.getGroupid());
             User user1 = userMapper.selectByPrimaryKey(groupRecord.getInvitephone());
