@@ -267,8 +267,10 @@ public class GroupRecordController {
             GroupRecordVo groupRecordVo = new GroupRecordVo();
             GroupCluster groupCluster = groupClusterMapper.findbygroupid(groupRecord.getGroupid());
             User user1 = userMapper.selectByPrimaryKey(groupRecord.getInvitephone());
+            Role role = roleMapper.selectByPrimaryKey(user1.getRoleId());
             groupRecordVo.setGroupCluster(groupCluster);
             groupRecordVo.setInviteUser(user1);
+            groupRecordVo.setRoleimg(role.getImage());
             groupRecordVos.add(groupRecordVo);
         }
         return new Result(ResultStatusCode.OK,groupRecordVos);

@@ -6,6 +6,15 @@ import com.jhbim.bimvr.dao.entity.pojo.User;
 public class GroupRecordVo {
     private GroupCluster groupCluster;
     private User inviteUser;
+    private String roleimg;
+
+    public String getRoleimg() {
+        return roleimg;
+    }
+
+    public void setRoleimg(String roleimg) {
+        this.roleimg = roleimg;
+    }
 
     public GroupCluster getGroupCluster() {
         return groupCluster;
