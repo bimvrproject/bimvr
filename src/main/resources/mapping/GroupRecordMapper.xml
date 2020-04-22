@@ -210,4 +210,10 @@
     <include refid="Base_Column_List" />
     from group_record where groupid = #{groupid,jdbcType=VARCHAR} and userphone = #{userphone,jdbcType=VARCHAR}  and islike=#{islike,jdbcType=INTEGER}
   </select>
+  <select id="findbyusersphone" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from group_record
+    where userphone = #{userphone,jdbcType=VARCHAR} and (level = 0 or level = 1)
+  </select>
 </mapper>

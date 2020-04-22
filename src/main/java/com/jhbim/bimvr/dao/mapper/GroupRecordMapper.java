@@ -40,5 +40,6 @@ public interface GroupRecordMapper {
     int updategroupislike(@Param("userphone") String[] userphone,@Param("groupid")String groupid,@Param("islike") Integer islike);
     //阻止重复增加进群记录
     GroupRecord getnotexistgroupuser(@Param("groupid") String groupid,@Param("userphone") String userphone,@Param("islike") Integer islike);
-
+    //查询我管理和我创建的群
+    List<GroupRecord> findbyusersphone(String userphone);
 }

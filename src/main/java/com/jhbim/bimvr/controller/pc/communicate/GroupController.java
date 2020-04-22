@@ -275,20 +275,46 @@ public class GroupController {
      * @param groupno
      * @return
      */
-    @RequestMapping("/findbygroupnoid")
-    public Result findbygroupnoid(String groupno){
-        List<GroupRecord> recordList = groupRecordMapper.findbygroupnoid(groupno,0);
+//    @RequestMapping("/findbygroupnoid")
+//    public Result findbygroupnoid(String groupno){
+//        List<GroupRecord> recordList = groupRecordMapper.findbygroupnoid(groupno,0);
+//        List<GrouptoapplyUserVo> grouptoapplyUserVos = new ArrayList<>();
+//        for (GroupRecord g : recordList) {
+//            GrouptoapplyUserVo grouptoapplyUserVo = new GrouptoapplyUserVo();
+//            User user = userMapper.selectByPrimaryKey(g.getUserphone());
+//            Role role = roleMapper.selectByPrimaryKey(user.getRoleId());
+//            grouptoapplyUserVo.setUsername(user.getUserName());
+//            grouptoapplyUserVo.setPicture(user.getPricture());
+//            grouptoapplyUserVo.setMessage(g.getMessage());
+//            grouptoapplyUserVo.setRoleimg(role.getImage());
+//            grouptoapplyUserVo.setPhone(g.getUserphone());
+//            grouptoapplyUserVos.add(grouptoapplyUserVo);
+//        }
+//        return new Result(ResultStatusCode.OK,grouptoapplyUserVos);
+//    }
+
+    @RequestMapping("/findBygroups")
+    public Result findBygroups(String userphone){
+        List<GroupRecord> groupRecordList = groupRecordMapper.findbyusersphone(userphone);
         List<GrouptoapplyUserVo> grouptoapplyUserVos = new ArrayList<>();
-        for (GroupRecord g : recordList) {
-            GrouptoapplyUserVo grouptoapplyUserVo = new GrouptoapplyUserVo();
-            User user = userMapper.selectByPrimaryKey(g.getUserphone());
-            Role role = roleMapper.selectByPrimaryKey(user.getRoleId());
-            grouptoapplyUserVo.setUsername(user.getUserName());
-            grouptoapplyUserVo.setPicture(user.getPricture());
-            grouptoapplyUserVo.setMessage(g.getMessage());
-            grouptoapplyUserVo.setRoleimg(role.getImage());
-            grouptoapplyUserVo.setPhone(g.getUserphone());
-            grouptoapplyUserVos.add(grouptoapplyUserVo);
+        for (GroupRecord gr : groupRecordList) {
+//            System.out.println(gr.getGroupid()+"------");
+            List<GroupRecord> recordList = groupRecordMapper.findbygroupnoid(gr.getGroupid(),0);
+            for (GroupRecord g : recordList) {
+//                System.out.println(g.getGroupid());
+                GroupCluster groupCluster =  groupClusterMapper.findbygroupid(g.getGroupid());
+                GrouptoapplyUserVo grouptoapplyUserVo = new GrouptoapplyUserVo();
+                User user = userMapper.selectByPrimaryKey(g.getUserphone());
+                Role role = roleMapper.selectByPrimaryKey(user.getRoleId());
+                grouptoapplyUserVo.setGroupid(groupCluster.getGroupno());
+                grouptoapplyUserVo.setGroupname(groupCluster.getGroupname());
+                grouptoapplyUserVo.setUsername(user.getUserName());
+                grouptoapplyUserVo.setPicture(user.getPricture());
+                grouptoapplyUserVo.setMessage(g.getMessage());
+                grouptoapplyUserVo.setRoleimg(role.getImage());
+                grouptoapplyUserVo.setPhone(g.getUserphone());
+                grouptoapplyUserVos.add(grouptoapplyUserVo);
+            }
         }
         return new Result(ResultStatusCode.OK,grouptoapplyUserVos);
     }
