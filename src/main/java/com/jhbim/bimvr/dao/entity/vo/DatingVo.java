@@ -1,14 +1,15 @@
 package com.jhbim.bimvr.dao.entity.vo;
 
 public class DatingVo {
-    private String id;
-    private String plotname;
-    private String username;
-    private String picture;
-    private Integer account;
-    private String proimg;
-    private String phone;
-    private String mainlandname;
+    private String id;   //模型id
+    private String plotname;  //地块名称
+    private String username;       //用户昵称
+    private String picture;     //用户头像
+    private Integer account;    //点赞数量
+    private String proimg;      //模型缩略图
+    private String phone;       //用户手机号
+    private String mainlandname;    //大陆名称
+    private String plotid;      //地块id
 
     public String getPhone() {
         return phone;
@@ -72,5 +73,13 @@ public class DatingVo {
 
     public void setMainlandname(String mainlandname) {
         this.mainlandname = mainlandname;
+    }
+
+    public String getPlotid() {
+        return plotid;
+    }
+
+    public void setPlotid(String plotid) {
+        this.plotid = plotid;
     }
 }
