@@ -398,6 +398,7 @@ public class RankingController {
                     d.setAccount(accountnum);
                     d.setPlotname(placeModel.getPlotname());
                     d.setPhone(phoneNumber);
+                    d.setMainlandname(placeModel.getMainlandname());
                     contentlist.add(d);
                     stringList.add(z.getWorkId());
                 }
@@ -449,6 +450,7 @@ public class RankingController {
                     dt.setProimg(project.getProjectModelAddr());
                     dt.setUsername(user.getUserName());
                     dt.setPicture(user.getPricture());
+                    dt.setMainlandname(pm.getMainlandname());
                     contentlist.add(dt);
                 }
             }

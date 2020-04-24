@@ -16,6 +16,10 @@ spring:
     host: 123.57.207.37
     port: 6379
     password: bimvr55@
+  servlet:
+    multipart:
+      max-file-size: 1024MB
+      max-request-size: 10240MB
 logging:
   config: classpath:log/logback-spring.xml
   path: F:/log/bimvr

@@ -64,6 +64,6 @@ public interface UserMapper {
     List<UserRankVo> userRank();
     List<UserRankVo> userRanks();
 
-
-
+    //根据手机手机号和会员等级查询
+    List<User> listAll(@Param("phone") String phone,@Param("roleId") Integer roleId);
 }

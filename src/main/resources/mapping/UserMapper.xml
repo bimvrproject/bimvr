@@ -350,5 +350,17 @@ select * from user where phone in
    from user inner join role on user.role_id = role.id
    order by account desc
   </select>
-
+  <select id="listAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    <where>
+      <if test="phone != null and phone != ''">
+        phone like concat('%',#{phone,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="roleId != null and roleId != '' and roleId != -1">
+        and  role_id = #{roleId,jdbcType=INTEGER}
+      </if>
+    </where>
+  </select>
 </mapper>

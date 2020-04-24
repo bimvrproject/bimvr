@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jhbim.bimvr.dao.mapper.ManagementFeedbackUserMapper" >
+  <resultMap id="BaseResultMap" type="com.jhbim.bimvr.dao.entity.pojo.ManagementFeedbackUser" >
+    <result column="id" property="id" jdbcType="VARCHAR" />
+    <result column="userphone" property="userphone" jdbcType="VARCHAR" />
+    <result column="feedback_content" property="feedbackContent" jdbcType="VARCHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="com.jhbim.bimvr.dao.entity.pojo.ManagementFeedbackUser" >
+    insert into management_feedback_user (id, userphone, feedback_content
+      )
+    values (#{id,jdbcType=VARCHAR}, #{userphone,jdbcType=VARCHAR}, #{feedbackContent,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jhbim.bimvr.dao.entity.pojo.ManagementFeedbackUser" >
+    insert into management_feedback_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userphone != null" >
+        userphone,
+      </if>
+      <if test="feedbackContent != null" >
+        feedback_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userphone != null" >
+        #{userphone,jdbcType=VARCHAR},
+      </if>
+      <if test="feedbackContent != null" >
+        #{feedbackContent,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByphone" parameterType="com.jhbim.bimvr.dao.entity.pojo.ManagementFeedbackUser" >
+    update management_feedback_user
+    set feedback_content = #{feedbackContent,jdbcType=VARCHAR}
+    where userphone = #{userphone,jdbcType=VARCHAR}
+  </update>
+  <select id="findByuserphone"  resultMap="BaseResultMap" parameterType="java.lang.String">
+
+    select * from management_feedback_user  where userphone = #{userphone,jdbcType=VARCHAR}
+  </select>
+</mapper>

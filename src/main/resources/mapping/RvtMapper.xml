@@ -120,4 +120,19 @@
     from rvt
     where project_id = #{projectId,jdbcType=VARCHAR}
   </select>
+    <select id="findAll" resultMap="BaseResultMap"  parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List" />
+        from rvt
+        <where>
+          <if test="url !=null and url != ''">
+            url like concat('%',#{url,jdbcType=VARCHAR},'%')  ORDER BY FIELD(type,0,1)
+          </if>
+        </where>
+    </select>
+    <update id="updatervttype" parameterType="com.jhbim.bimvr.dao.entity.pojo.Rvt" >
+    update rvt
+    set type = #{type,jdbcType=INTEGER}
+    where project_id = #{projectId,jdbcType=VARCHAR}
+  </update>
 </mapper>

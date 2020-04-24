@@ -292,7 +292,13 @@ public class PlaceModelController {
         }
         Project project = projectMapper.selectByPrimaryKey(modelid);
         PlaceModel placeModel =  placeModelMapper.selectmodelid(modelid);
-        placeModel.setPicture(project.getProjectModelAddr());
+        if(placeModel != null){
+            if(project != null){
+                placeModel.setPicture(project.getProjectModelAddr());
+                return new Result(ResultStatusCode.OK,placeModel);
+            }
+            placeModel.setPicture(null);
+        }
         return new Result(ResultStatusCode.OK,placeModel);
     }
 }

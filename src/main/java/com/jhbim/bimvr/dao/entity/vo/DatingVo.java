@@ -8,6 +8,7 @@ public class DatingVo {
     private Integer account;
     private String proimg;
     private String phone;
+    private String mainlandname;
 
     public String getPhone() {
         return phone;
@@ -63,5 +64,13 @@ public class DatingVo {
 
     public void setProimg(String proimg) {
         this.proimg = proimg;
+    }
+
+    public String getMainlandname() {
+        return mainlandname;
+    }
+
+    public void setMainlandname(String mainlandname) {
+        this.mainlandname = mainlandname;
     }
 }
