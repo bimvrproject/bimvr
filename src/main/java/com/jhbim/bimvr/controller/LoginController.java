@@ -224,7 +224,8 @@ public class LoginController {
                        memberEnd.setUserId(user1.getUserId());
                        memberEnd.setRoleId(user1.getRoleId());
                        Calendar cal = Calendar.getInstance();
-                       cal.add(Calendar.DATE, 30);
+                       //新用户首次注册免费使用15天
+                       cal.add(Calendar.DATE, 15);
                        Date date = cal.getTime();
                        memberEnd.setEndtime(date);
                        memberEndMapper.insertSelective(memberEnd);
