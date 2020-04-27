@@ -126,9 +126,10 @@
         from rvt
         <where>
           <if test="url !=null and url != ''">
-            url like concat('%',#{url,jdbcType=VARCHAR},'%')  ORDER BY FIELD(type,0,1)
+            url like concat('%',#{url,jdbcType=VARCHAR},'%')
           </if>
         </where>
+        ORDER BY FIELD(type,0,1)
     </select>
     <update id="updatervttype" parameterType="com.jhbim.bimvr.dao.entity.pojo.Rvt" >
     update rvt

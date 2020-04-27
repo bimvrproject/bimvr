@@ -88,8 +88,12 @@ public class GroupRecordController {
         User user = ShiroUtil.getUser();
         GroupRecord groupRecord = groupRecordMapper.fingByGroupIdandIslike(groupid,user.getPhone());
         GroupLevelVo groupLevelVo = new GroupLevelVo();
-        groupLevelVo.setList(groupUserVos);
-        groupLevelVo.setLevel(groupRecord.getLevel());
+        //查看本人在这群里的等级以及展示群员
+        if(groupRecord != null){
+            groupLevelVo.setList(groupUserVos);
+            groupLevelVo.setLevel(groupRecord.getLevel());
+            return new Result(ResultStatusCode.OK,groupLevelVo);
+        }
         return new Result(ResultStatusCode.OK,groupLevelVo);
     }
 
