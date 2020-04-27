@@ -280,6 +280,7 @@ public class ProjectController {
             map.put("createTime",project.getCreateTime());
             map.put("endTime",project.getEndTime());
             map.put("grouptype",null);
+            map.put("groupno",null);
             return new Result(ResultStatusCode.OK,map);
         }
         List list = new ArrayList<Map<String, Object>>();
