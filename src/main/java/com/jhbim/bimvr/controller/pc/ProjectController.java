@@ -279,8 +279,8 @@ public class ProjectController {
             map.put("projectContent",project.getProjectContent());
             map.put("createTime",project.getCreateTime());
             map.put("endTime",project.getEndTime());
-            map.put("grouptype",null);
-            map.put("groupno",null);
+            map.put("grouptype",-1);
+            map.put("groupno",-1);
             return new Result(ResultStatusCode.OK,map);
         }
         List list = new ArrayList<Map<String, Object>>();
