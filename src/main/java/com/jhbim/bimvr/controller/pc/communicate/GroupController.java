@@ -93,11 +93,13 @@ public class GroupController {
             groupRecord.setGrtime(sdf.format(new Date()));
             groupRecordMapper.insertSelective(groupRecord);
             //项目与群号对应表
-            ProjectGroup projectGroup = new ProjectGroup();
-            projectGroup.setGroupno(phoneRandom.getTel());
-            projectGroup.setProjectid(projectid);
-            projectGroup.setGrouptype(groupType);
-            projectGroupMapper.insertSelective(projectGroup);
+            if(projectid != "" && projectid != null){
+                ProjectGroup projectGroup = new ProjectGroup();
+                projectGroup.setGroupno(groupCluster.getGroupno());
+                projectGroup.setProjectid(projectid);
+                projectGroup.setGrouptype(groupType);
+                projectGroupMapper.insertSelective(projectGroup);
+            }
             return new Result(ResultStatusCode.SUCCESS,groupCluster);
         }
         return new Result(ResultStatusCode.FAIL,"创建群失败");
