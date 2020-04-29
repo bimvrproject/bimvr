@@ -209,7 +209,8 @@ public class LoginController {
                     result.setMsg("不合法的字符");
                     return result;
                 }else{
-                    user.setUserName(phone);
+//                    user.setUserName(phone);
+                    user.setUserName("此用户无昵称");
                     user.setPassword(MD5Util.encrypt(pwd));
                     user.setCreateTime(new Date());
                     user.setPricture("http://36.112.65.110:8080/picture/peoplepicture.png");
