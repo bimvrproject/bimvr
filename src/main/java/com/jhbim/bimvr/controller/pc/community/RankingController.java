@@ -389,7 +389,7 @@ public class RankingController {
                     User user = userMapper.selectByPrimaryKey(placeModel.getUsephone());
                     int accountnum = modelMapper.getmodelid(placeModel.getModelid());
                     String phone = placeModel.getUsephone();
-                    String phoneNumber = phone.substring(0, 3) + "****" + phone.substring(7);
+//                    String phoneNumber = phone.substring(0, 3) + "****" + phone.substring(7);
                     DatingVo d = new DatingVo();
                     d.setId(z.getWorkId());
                     d.setUsername(user.getUserName());
@@ -397,7 +397,7 @@ public class RankingController {
                     d.setProimg(project.getProjectModelAddr());
                     d.setAccount(accountnum);
                     d.setPlotname(placeModel.getPlotname());
-                    d.setPhone(phoneNumber);
+                    d.setPhone(phone);
                     d.setMainlandname(placeModel.getMainlandname());
                     d.setPlotid(placeModel.getId());
                     contentlist.add(d);
