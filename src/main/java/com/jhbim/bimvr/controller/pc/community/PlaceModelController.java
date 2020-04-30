@@ -1,9 +1,6 @@
 package com.jhbim.bimvr.controller.pc.community;
 
-import com.jhbim.bimvr.dao.entity.pojo.Model;
-import com.jhbim.bimvr.dao.entity.pojo.PlaceModel;
-import com.jhbim.bimvr.dao.entity.pojo.Project;
-import com.jhbim.bimvr.dao.entity.pojo.User;
+import com.jhbim.bimvr.dao.entity.pojo.*;
 import com.jhbim.bimvr.dao.entity.vo.Result;
 import com.jhbim.bimvr.dao.mapper.*;
 import com.jhbim.bimvr.system.enums.ResultStatusCode;
@@ -37,6 +34,8 @@ public class PlaceModelController {
     UserMapper userMapper;
     @Resource
     ProjectMapper projectMapper;
+    @Resource
+    ZanMapper zanMapper;
     /**
      * 创建地块
      * @param mainlandname  大陆名称
@@ -231,6 +230,7 @@ public class PlaceModelController {
      */
     @RequestMapping("/findByidandmainlandnameandplotname")
     public Result findByidandmainlandnameandplotname(String id,String mainlandname,String plotname){
+        User user = ShiroUtil.getUser();
         Map<String,Object> map = new HashMap<>();
         PlaceModel placeModel = new PlaceModel();
         placeModel.setId(id);
@@ -247,6 +247,12 @@ public class PlaceModelController {
         p.setPicture(project.getProjectModelAddr());   //缩略图
         int account = modelMapper.accountcount(model); //模型点赞数
         int comment = commentMapper.composeidnum(p.getModelid()); //模型评论数
+        Zan zan =  zanMapper.select(p.getModelid(),2,user.getPhone());
+        if(zan == null){
+            map.put("zan",0);
+        }else{
+            map.put("zan",1);
+        }
         map.put("accountnum",account);
         map.put("content",p);
         map.put("commentnum",comment);
