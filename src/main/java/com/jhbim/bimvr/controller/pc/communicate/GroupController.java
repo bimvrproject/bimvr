@@ -446,4 +446,16 @@ public class GroupController {
         groupClusterMapper.updategrouppicture(groupCluster);
         return new Result(ResultStatusCode.OK,"修改群头像成功...");
     }
+
+    @RequestMapping("/updategrouppictureanime")
+    public Result updategrouppictureanime(String picture,String groupid){
+        if(picture.isEmpty() || groupid.isEmpty()){
+            return new Result(ResultStatusCode.BAD_REQUEST);
+        }
+        GroupCluster groupCluster = new GroupCluster();
+        groupCluster.setPicture("http://36.112.65.110:8080/anime/"+picture);
+        groupCluster.setGroupno(groupid);
+        groupClusterMapper.updategrouppicture(groupCluster);
+        return new Result(ResultStatusCode.OK,"修改群头像成功...");
+    }
 }
