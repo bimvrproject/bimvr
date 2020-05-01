@@ -148,6 +148,18 @@ public class UserController {
         userMapper.updatepicture(user);
         return new Result(ResultStatusCode.OK,"头像修改成功");
     }
+
+    @RequestMapping("/updatepictureanime")
+    public Result updatepictureanime( String picture,String phone){
+        if(picture.isEmpty() || phone.isEmpty()){
+            return new Result(ResultStatusCode.BAD_REQUEST);
+        }
+        User user = new User();
+        user.setPricture("http://36.112.65.110:8080/anime/"+picture);
+        user.setPhone(phone);
+        userMapper.updatepicture(user);
+        return new Result(ResultStatusCode.OK,"头像修改成功");
+    }
     /**
      * 查询当前用户的信息
      * @param phone
